@@ -1,0 +1,1024 @@
+/*index.html*/
+
+html {
+    scroll-behavior: smooth;
+}
+
+.snap > div:nth-child(2) > img {
+    object-fit: cover;
+    object-position: center top;
+}
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+    --accent-color: #0070c0;
+    --sub-accent-color: #00aaff;
+    --main-text-color: #000;
+}
+
+.snap {
+    -ms-scroll-snap-type: mandatory;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    top: 15px;
+    border-radius: 15px;
+}
+
+.snap::-webkit-scrollbar {
+    display: none;
+}
+
+.snap > div {
+    scroll-snap-align: center;
+}
+
+.gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.47), rgba(0, 0, 0, 0));
+}
+
+.gradient-text {
+    background: linear-gradient(270deg, #1e90ff, #87cefa, #00bfff, #1e90ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.controller {
+
+    background: linear-gradient(#00aaff, rgb(231, 245, 255));
+    backdrop-filter: blur(10px);
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.controller button, .controller span {
+    border-width: 0;
+}
+
+.feature-card {
+    overflow: hidden;
+    border: 2px solid #00aaff;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative; /* Необходимо для абсолютного позиционирования изображения внутри блока */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* Добавляем плавный переход для преобразования и тени */
+}
+
+.feature-card:hover {
+    transform: translateY(-10px); /* Эффект приподнимания */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Эффект тени */
+}
+
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #00aaff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.feature-text {
+    transition: background-color 0.3s ease-out; /* Добавляем плавный переход для фона */
+    border-radius: 15%;
+}
+
+.feature-card:hover .feature-text {
+    border-radius: 15%;
+    background-color: rgba(255, 255, 255, 0.25); /* Добавляем полупрозрачный белый фон при наведении */
+}
+
+.feature-image {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12rem;
+    height: 100%;
+    opacity: 15%;
+    object-fit: cover; /* Для адекватного отображения, если изображение не квадратное */
+}
+
+.feature-card:hover .feature-image {
+    transform: translateY(20px);
+    opacity: 0.3;
+}
+
+/* Переход на состояние без наведения */
+.feature-card .feature-image {
+    animation: headerOutDown 1s ease-out;
+    filter: blur(0px);
+}
+
+.feature-card:hover .feature-image {
+    animation: headerInUp 1s ease-out;
+    filter: blur(15px);
+}
+
+@keyframes headerInUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0.15;
+        filter: blur(0px);
+    }
+
+    100% {
+        transform: translateY(20px);
+        opacity: 0.3;
+        filter: blur(15px);
+    }
+}
+
+@keyframes headerOutDown {
+    0% {
+        transform: translateY(20px);
+        opacity: 0.3;
+        filter: blur(15px);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 0.15;
+        filter: blur(0px);
+    }
+}
+
+
+.task-container {
+    background-color: #f0f8ff;
+    border: 2px solid #00aaff;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.task-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #0070c0;
+}
+
+.task-title img {
+    margin-right: 10px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    counter-reset: step;
+}
+
+.task-item {
+    background-color: #fff;
+    border: 2px solid #00aaff;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    animation: fadeInUp 1s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.task-item .icon {
+    margin-right: 10px;
+    color: #0070c0;
+}
+
+.task-item::before {
+    content: counter(step);
+    counter-increment: step;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: #0070c0;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes backgroundScroll {
+    100% {
+        background-position: 0px -400%;
+    }
+}
+
+.hero-wrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero {
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/abstract-2.png");
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+    background-size: cover;
+    background-position: center top;
+    animation: backgroundScroll 300s linear infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    opacity: 80%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion) {
+    .hero {
+        animation: backgroundScroll 800s linear infinite;
+    }
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+    border: 1px solid transparent;
+    border-radius: 25px;
+    background: inherit;
+    filter: blur(15px);
+    z-index: -1; /* Ensures the blur effect is below the content */
+}
+
+.hero-title {
+    backdrop-filter: blur(30px);
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.hero-subtitle {
+    backdrop-filter: blur(30px);
+    font-size: 1.5em;
+}
+
+
+.schema-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding: 0 10px;
+}
+
+.schema-container object {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+}
+
+.mobile-gallery {
+    display: block;
+    padding: 20px;
+}
+
+.lb-close {
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.lb-prev, .lb-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .schema-container {
+        display: none;
+    }
+
+    .mobile-gallery {
+        display: block;
+    }
+
+    #previewModal button {
+        display: none;
+    }
+
+    #previewModal img {
+        width: 100%;
+    }
+}
+
+.mobile-gallery {
+    display: block;
+    padding: 20px;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal {
+    display: none;
+}
+
+.modal.modal-open {
+    display: flex;
+}
+
+.blue-logo {
+    filter: invert(32%) sepia(78%) saturate(1198%) hue-rotate(175deg) brightness(98%) contrast(104%);
+    background-color: transparent;
+
+}
+
+.blur-img {
+    filter: blur(25px);
+
+}
+
+/*end of index.html*/
+
+/*plan.html*/
+
+:root {
+    --accent-color: #0070c0;
+    --sub-accent-color: #00aaff;
+    --main-text-color: #000;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.semester-btn {
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+    font-size: 1.25rem;
+    width: 100%;
+}
+
+.semester-btn:not(.active) {
+    background-color: white;
+    color: var(--accent-color);
+}
+
+.semester-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: bold;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.course-item {
+    border: 2px solid var(--accent-color);
+    border-radius: 25px;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: white;
+    text-align: center;
+    font-size: 1.25rem;
+    color: var(--accent-color);
+    transition: background-color 0.3s,
+    transform 0.5s ease-out,
+    border-color 0.5s ease-out,
+    box-shadow 0.5s ease-out;
+}
+
+.course-item:hover {
+    background-color: rgba(0, 170, 255, 0.05); /* Замените на нужный цвет фона при наведении */
+
+    transform: scale(1.01);
+    border-color: #3b82f6; /* Синий цвет из Tailwind */
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+.header {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.professor-btn {
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+    font-size: 1.25rem;
+    width: 100%;
+}
+
+.professor-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.professor-btn:not(.active) {
+    background-color: white;
+    color: var(--accent-color);
+}
+
+.professor-info {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 5px 0;
+    background-color: white;
+    transition: background-color 0.3s;
+    animation: fadeInUp 1s ease-in-out;
+    text-align: left;
+}
+
+.professor-info .icon {
+    margin-right: 5px;
+}
+
+.professor-section {
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: white;
+    text-align: left;
+}
+
+.professor-photo {
+    max-width: 35%;
+    margin: auto;
+}
+
+.professor-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.professor-details img {
+    margin-right: 10px;
+}
+
+.professor-details p,
+.professor-details h2 {
+    margin: 0;
+}
+
+.professor-section h3 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 5px;
+}
+
+.professor-section p {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+.professor-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.professor-section ul li {
+    margin: 5px 0;
+}
+
+
+/* Mobile adaptation styles */
+@media (max-width: 768px) {
+    .table-auto {
+        display: none;
+    }
+
+    .md-hidden {
+        display: none;
+    }
+
+}
+
+/*end of plan.html*/
+
+/*enrollment.html*/
+
+:root {
+    --accent-color: #0070c0;
+    --sub-accent-color: #00aaff;
+    --main-text-color: #000;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scroll-to-top i {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    bottom: 0px;
+    right: 0px;
+
+}
+
+.scroll-to-top:hover {
+    background-color: #444;
+}
+
+
+.header-animation {
+    animation: pulse 2s infinite;
+}
+
+.hexagon {
+    width: 80px;
+    height: 45px;
+    background: radial-gradient(circle, rgba(0, 112, 192, 0.75), rgba(0, 64, 128, 0));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.number-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.number-text {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.arrow-down {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.highlight {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.plan-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+
+.plan-item-icon {
+    margin-right: 0.5rem;
+    color: var(--accent-color);
+    font-size: 1.25rem;
+}
+
+.plan-item-content {
+    flex: 1;
+}
+
+.rounded-full {
+    border-radius: 50%;
+    border-width: 1px;
+    border-color: var(--accent-color);
+    border-style: solid;
+}
+
+.content-block h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.content-block p,
+.content-block li {
+    font-size: 1rem;
+    color: var(--main-text-color);
+}
+
+/*end of enrollment.html*/
+
+/*events.html*/
+
+:root {
+    --accent-color: #0070c0;
+    --sub-accent-color: #00aaff;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.news-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    transition: transform 0.3s ease;
+    transform: translateY(-50px);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-image-container {
+    position: relative;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: #f0f4f8;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.modal-image:hover {
+    transform: scale(1.05);
+}
+
+.modal-image-full {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-image-full img {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.modal-image-full.active {
+    display: flex;
+}
+
+.underline-title {
+    display: inline-block;
+    position: relative;
+}
+
+.underline-title::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+    }
+}
+
+.placeholder {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.placeholder::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/*end of events.html*/
+
+
+/*achievements.html*/
+
+:root {
+    --accent-color: #0070c0;
+    --sub-accent-color: #00aaff;
+    --main-text-color: #000;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/*end of achievements.html*/
+
+
+/*partners.html*/
+:root {
+    --accent-color: #0070c0;
+    --sub-accent-color: #00aaff;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.map {
+    position: relative;
+    z-index: -1;
+
+}
+
+.map-marker {
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 1rem;
+    user-select: none;
+}
+
+.map-marker::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background-color: inherit;
+    animation: pulse 5s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.3; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.popover {
+    display: none;
+    position: absolute;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 250px;
+    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    margin-top: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}   
+
+.city-label {
+    color: white;
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.15));
+    border-radius: 15px;
+    position: absolute;
+    font-size: 0.75rem;
+    text-align: center;
+    width: 5rem;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    top: 100%;
+    margin-top: 6px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    padding: 8%;
+}
+
+.company {
+    transition: transform 0.3s ease;
+}
+
+.company:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+    .city-label {
+        font-size: 0.6rem;
+        width: 4rem;
+        margin-top: 4px;
+    }
+
+    .map-marker {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 0.8rem;
+    }
+
+    .map-marker::after {
+        border-radius: 50%;
+    }
+
+    .popover {
+        width: 90vw;
+        max-width: none;
+        padding: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.9rem;
+        top: calc(100% + 8px);
+    }
+}
+
+/*end of partners.html*/
+
+/*contacts.html*/
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.accent {
+    color: #004b87;
+}
+
+.sub-accent {
+    color: #00aaff;
+}
+
+.main-text {
+    color: #000;
+}
+
+@layer utilities {
+    .hover-translate {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-translate:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.burger-menu, .nav-menu a.active {
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        display: none;
+    }
+
+    .nav-menu.show {
+        display: flex;
+    }
+}
+
+/*end contact.html*/

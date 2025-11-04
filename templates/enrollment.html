@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Кафедра - Поступление{% endblock %}
+
+{% block content %}
+<section class="overflow-hidden max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8 animate__animated animate__fadeIn"
+         id="admission-info">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg animate__animated animate__fadeInDown">
+            Инструкция абитуриенту</h1>
+    </div>
+
+    <div class="mt-6 flex justify-around items-start">
+        <div class="number-container animate__animated animate__fadeInLeft">
+            <div class="hexagon">9</div>
+            <p class="number-text text-lg">Бюджетных мест</p>
+        </div>
+        <div class="number-container animate__animated animate__fadeInRight">
+            <div class="hexagon">11</div>
+            <p class="number-text text-lg">Договорных мест<span class="text-blue-500">*</span></p>
+            <p class="text-sm text-gray-600 text-center">Стоимость обучения 263,2 тыс. руб.</p>
+            <p class="text-sm text-gray-600 text-center">при наличии более 61 балла – 226,4 тыс. руб.</p>
+            <p class="text-xs text-gray-500 text-center"><span
+                    class="text-blue-500">*</span> - гарант ТВОЕГО стабильного обучения и последующего <br>трудоустройства
+                при ТВОЕЙ качественной работе.</p>
+        </div>
+    </div>
+
+    <div class="mt-8 bg-blue-50 p-6 rounded-lg animate__animated animate__zoomIn">
+        <div class="text-center">
+            <h2 class="text-2xl font-bold text-blue-700 text-center mb-6">Ты - Потенциальный кандидат!!!</h2>
+            <div class="rounded-full border-solid border-3 border-blue-400 p-2 mx-auto w-24 h-24 flex items-center justify-center">
+                <img alt="profile" class="w-auto h-16 mx-auto" src="{% static 'img/icons/candidate.png' %}">
+            </div>
+            <i class="fas fa-arrow-down arrow-down"></i>
+        </div>
+
+        <div class="relative pt-10 pb-10 flex flex-col items-center">
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    1
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-clipboard-list plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Определиться с тем, где хотелось бы работать (ООО «Газпром ВНИИГАЗ» или компании партнеры)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    2
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-envelope plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Согласие на участие в проекте в виде отправленного резюме</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    3
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-users plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Встречи, онлайн/офлайн собеседования с сотрудниками БК ВНИИГАЗ</span>
+                        <ul class="list-disc list-inside pl-6 space-y-2 text-base">
+                            <li class="flex items-start"><i class="fas fa-comment-alt plan-item-icon text-blue-300"></i><span
+                                    class="highlight"> Собеседование, обсуждение дальнейшей работы с сотрудниками компании-партнера</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    4
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-comments plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Пройти собеседование с HR специалистами потенциального работодателя</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    5
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-file-signature plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">При успешном собеседовании подписать договор с работодателем</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    6
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-user-check plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Пройти вступительные испытания офлайн-устное собеседование</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">11</div>
+                                <div class="text-lg">Июл</div>
+                                <div class="text-sm">2024</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">18</div>
+                                <div class="text-lg">Июл</div>
+                                <div class="text-sm">2024</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">25</div>
+                                <div class="text-lg">Июл</div>
+                                <div class="text-sm">2024</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">1</div>
+                                <div class="text-lg">Авг</div>
+                                <div class="text-sm">2024</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">8</div>
+                                <div class="text-lg">Авг</div>
+                                <div class="text-sm">2024</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">16</div>
+                                <div class="text-lg">Авг</div>
+                                <div class="text-sm">2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    7
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-trophy plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Отпраздновать зачисление!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                    8
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-briefcase plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Приступить к работе над ТВОИМ ПРОЕКТОМ! 01.09.2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- New Content Section with Checklist -->
+<section class="max-w-7xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-8 animate__animated animate__fadeIn"
+         id="documents">
+    <div class="content-block">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Перечень необходимых документов:</h2>
+        <ul class="list-none pl-0">
+            <li class="flex items-center mb-4">
+                <input checked class="form-checkbox h-6 w-6 text-blue-600" disabled type="checkbox">
+                <span class="ml-3 text-lg text-gray-700">Паспорт</span>
+            </li>
+            <li class="flex items-center mb-4">
+                <input checked class="form-checkbox h-6 w-6 text-blue-600" disabled type="checkbox">
+                <span class="ml-3 text-lg text-gray-700">Документ об образовании</span>
+            </li>
+            <li class="flex items-center mb-4">
+                <input checked class="form-checkbox h-6 w-6 text-blue-600" disabled type="checkbox">
+                <span class="ml-3 text-lg text-gray-700">СНИЛС (при наличии)</span>
+            </li>
+            <li class="flex items-center mb-4">
+                <input checked class="form-checkbox h-6 w-6 text-blue-600" disabled type="checkbox">
+                <span class="ml-3 text-lg text-gray-700">Индивидуальные достижения (при желании)</span>
+            </li>
+            <li class="flex items-center mb-4">
+                <input checked class="form-checkbox h-6 w-6 text-blue-600" disabled type="checkbox">
+                <span class="ml-3 text-lg text-gray-700">Иные документы (предоставляются на усмотрение поступающего)</span>
+            </li>
+        </ul>
+        <p class="mt-6 text-gray-600">
+            Всю информацию о способе подаче документов, вступительных испытаниях и зачислении можно узнать тут <a
+                class="text-blue-600 underline" href="">[ccылка]</a>
+        </p>
+    </div>
+</section>
+
+<a class="scroll-to-top" href="#admission-info">
+    <i class="fas fa-arrow-up "></i>
+</a>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    var scroll = new SmoothScroll('a[href*="#"]', {
+        speed: 100,
+        easing: 'easeInOutCubic',
+        offset: 100,
+    });
+</script>
+<script src="{% static 'js/navbar.js' %}"></script>
+{% endblock %}

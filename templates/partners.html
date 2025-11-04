@@ -1,0 +1,95 @@
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block content %}
+
+    <h1 class="text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg"> 
+        Наши партнёры 
+    </h1>
+        <div class="map-container relative w-full max-w-5xl mx-auto mt-8 overflow-hidden">
+            <img alt="Map of Russia" class="map-color w-full" src="{% static 'img/map-full.png' %}">
+            <div class="map-marker bg-blue-500 rounded-full" style="top: 45%; left: 42%; width: 50px; height: 50px;">
+            5
+            <div class="city-label" style="top: 60px; left: 50%;">Новый Уренгой</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>Новый Уренгой</strong><br>
+                <span class="text-gray-600 font-normal">
+                    ООО «Газпромнефть Заполярье», ООО «Газпром добыча Ямбург», АО «Ачимгаз», ООО «Ачим Девелопмент», ОАО «Севернефтегазпром»
+                </span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full" style="top: 87%; left: 57%; width: 30px; height: 30px;">
+            2
+            <div class="city-label" style="top: 40px; left: 50%;">Иркутск</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>Иркутск</strong><br>
+                <span class="text-gray-600 font-normal">ООО «Газпром добыча Иркутск», ООО «Русгазбурение»</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full" style="top: 77%; left: 90%; width: 30px; height: 30px;">
+            2
+            <div class="city-label" style="top: 40px; left: 50%;">Южно-Сахалинск</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg" style="left: -220px;">
+                <strong>Южно-Сахалинск</strong><br>
+                <span class="text-gray-600 font-normal">ООО «Газпром добыча шельф Южно-Сахалинск», ООО «Сахалинская Энергия»</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full z-" style="top: 45.6%; left: 14.3%; width: 20px; height: 20px;">
+            1
+            <div class="city-label" style="top: 25px; left: 50%;">Москва</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>ООО «Газпром бурение»</strong><br>
+                <span class="text-gray-600 font-normal">бурение всех скважин ПАО Газпром</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full" style="top: 58%; left: 19.5%; width: 20px; height: 20px;">
+            1
+            <div class="city-label" style="top: 25px; left: 50%;">Иннополис</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>АНО ВО Университет Иннополис</strong><br>
+                <span class="text-gray-600 font-normal">IT решения по задачам ПАО Газпром</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full" style="top: 73%; left: 44%; width: 20px; height: 20px;">
+            1
+            <div class="city-label" style="top: 25px; left: 50%;">Томск</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>ООО «Компания Ойлтим»</strong><br>
+                <span class="text-gray-600 font-normal">современный сервис по исследованию скважин месторождений ПАО Газпром</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full" style="top: 70%; left: 20.4%; width: 20px; height: 20px;">
+            1
+            <div class="city-label" style="top: 25px; left: 50%;">Оренбург</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>ООО «Газпром добыча Оренбург»</strong>
+            </div>
+        </div>
+
+        <div class="map-marker bg-blue-500 rounded-full z-" style="top: 48%; left: 39%; width: 20px; height: 20px;">
+            1
+            <div class="city-label" style="top: 25px; left: 50%;">Надым</div>
+            <div class="popover absolute bg-white p-4 border border-gray-200 rounded shadow-lg">
+                <strong>ООО «Газпром добыча Надым»</strong>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block extra_js %}
+
+    <script> 
+    $(document).ready(function () {
+        $('.map-marker').hover(function () {
+            $(this).find('.popover').stop(true, true).fadeIn(200);
+        }, function () {
+            $(this).find('.popover').stop(true, true).fadeOut(200);
+        });
+    });
+    </script>
+    {% endblock %}
