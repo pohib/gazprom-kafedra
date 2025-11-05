@@ -757,9 +757,29 @@ body {
     align-items: center;
 }
 
-.modal-image-full img {
-    max-width: 90%;
-    max-height: 90%;
+html body #modal {
+  top: 5rem !important;
+  z-index: 1100 !important;
+}
+
+#modal-image-full.hidden {
+  display: none;
+}
+
+#modal-image-full {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.442);
+  cursor: zoom-out;
+  z-index: 60;
+}
+
+
+.no-scroll {
+    overflow: hidden;
 }
 
 .modal-image-full.active {
@@ -1019,6 +1039,17 @@ body {
     .nav-menu.show {
         display: flex;
     }
+}
+
+.modal-image-full-img {
+  max-width: 90% !important;
+  max-height: 90% !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  display: block !important;
+  transform-origin: center !important;
+  transform: scale(0.8) !important;
+  transition: transform 0.3s ease !important;
 }
 
 /*end contact.html*/

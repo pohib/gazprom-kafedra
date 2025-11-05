@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from news.views import events as news_events
 
 def index(request):
     return render(request, 'index.html')
@@ -7,7 +8,7 @@ def enrollment(request):
     return render(request, 'enrollment.html')
 
 def events(request):
-    return render(request, 'events.html')
+    return news_events(request)
 
 def achievements(request):
     return render(request, 'achievements.html')
