@@ -3,6 +3,10 @@ body {
 
 }
 
+.nav-menu:hover {
+    background-position: 100% 0;
+}
+
 nav {
     position: fixed;
     top: 0;
@@ -89,12 +93,10 @@ body > *:nth-child(2) {
     }
 }
 
-/* Ensure burger-menu icon is hidden on larger screens */
 .burger-menu {
     display: none;
 }
 
-/* Show burger-menu icon on smaller screens */
 @media (max-width: 768px) {
     .burger-menu {
         display: block;

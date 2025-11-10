@@ -11,7 +11,7 @@ html {
 
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: Arial, Helvetica, 'Montserrat', 'Inter', Arial, sans-serif;
 }
 
 :root {
@@ -67,17 +67,17 @@ body {
 }
 
 .feature-card {
-    overflow: hidden;
-    border: 2px solid #00aaff;
-    border-radius: 8px;
-    padding: 20px;
-    position: relative; /* Необходимо для абсолютного позиционирования изображения внутри блока */
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* Добавляем плавный переход для преобразования и тени */
-}
+        overflow: hidden;
+        border: 2px solid #00aaff;
+        border-radius: 8px;
+        padding: 20px;
+        position: relative; /* Необходимо для абсолютного позиционирования изображения внутри блока */
+        transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; 
 
-.feature-card:hover {
-    transform: translateY(-10px); /* Эффект приподнимания */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Эффект тени */
+    .feature-card:hover {
+        transform: translateY(-10px); /* Эффект приподнимания */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Эффект тени */
+    }
 }
 
 
@@ -1023,6 +1023,40 @@ body {
         transform: translateY(-10px);
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     }
+}
+
+@keyframes header-gradient-move {
+    0% { background-position: 25% 50%; }
+    25% { background-position: 75% 50%; }
+    50% { background-position: 75% 0%; }
+    75% { background-position: 25% 0%; }
+    100% { background-position: 25% 50%; }
+}
+
+.glass-header {
+    background:
+        linear-gradient(to right, white 0 112px, transparent 120px 100%),
+        linear-gradient(117deg,
+            rgba(255,255,255,0.87) 0%,
+            rgba(255,255,255,0.66) 18%,
+            rgba(165,165,165,0.08) 44%,
+            rgba(0,121,194,0.07) 68%,
+            rgba(165,165,165,0.06) 100%
+    );
+    background-size: 200% 200%;
+    animation: header-gradient-move 18s ease-in-out infinite;
+    box-shadow:
+    0 6px 38px 0 rgba(0, 40, 100, 0.12),
+    0 2.5px 22px 0 rgba(0,121,194,0.09),
+    0px 0.5px 0px 0px rgba(0,0,0,0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.glass-header:hover {
+    background-position: 100% 50%;
 }
 
 .burger-menu, .nav-menu a.active {

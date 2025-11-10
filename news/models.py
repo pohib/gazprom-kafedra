@@ -1,10 +1,11 @@
 from django.db import models
+from django.utils import timezone
 
 class News(models.Model):
     source_id = models.CharField(max_length=50, unique=True, verbose_name='ID поста')
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     body = models.TextField(verbose_name='Наполнение')
-    date = models.DateTimeField(verbose_name='Дата публикации')
+    date = models.DateTimeField(default=timezone.now, verbose_name='Дата публикации')
     views = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
     is_published = models.BooleanField(default=True, verbose_name='Показывать на сайте')
     is_title_edited = models.BooleanField(default=False, verbose_name='Заголовок отредактирован вручную')

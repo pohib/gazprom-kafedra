@@ -19,14 +19,14 @@
           <div class="mb-4 h-48 overflow-hidden rounded">
             {% if '%' in img.crop_position %}
               <img src="{{ img.image_url }}" 
-                   alt="News Image" 
-                   class="w-full h-full object-cover rounded"
-                   style="object-position: center {{ img.crop_position|default:'center' }};">
+                  alt="News Image" 
+                  class="w-full h-full object-cover rounded"
+                  style="object-position: center {{ img.crop_position|default:'center' }};">
             {% else %}
               <img src="{{ img.image_url }}" 
-                   alt="News Image" 
-                   class="w-full h-full object-cover rounded"
-                   style="object-position: {{ img.crop_position|default:'center' }};">
+                  alt="News Image" 
+                  class="w-full h-full object-cover rounded"
+                  style="object-position: {{ img.crop_position|default:'center' }};">
             {% endif %}
           </div>
         {% endwith %}
@@ -55,7 +55,7 @@
 </div>
 
 <div id="modal"
-     class="hidden fixed inset-x-0 top-20 bottom-0 bg-gray-900 bg-opacity-75 flex items-start justify-center z-50 p-4 overflow-auto">
+    class="hidden fixed inset-x-0 top-20 bottom-0 bg-gray-900 bg-opacity-75 flex items-start justify-center z-50 p-4 overflow-auto">
   <div class="bg-white rounded-lg shadow-lg p-6 relative w-full max-w-full max-h-full overflow-auto">
     <button onclick="closeModal()" aria-label="Close"
       class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 z-10">
@@ -114,7 +114,7 @@ const postsData = [
   }{% if not forloop.last %},{% endif %}
   {% endfor %}
 ];
- 
+
 function openModal(index) {
     currentPostIndex = index;
     window.scrollTo({ top: 0, behavior: 'smooth' });

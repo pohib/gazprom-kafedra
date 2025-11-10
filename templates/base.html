@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description"
-          content="Официальный сайт базовой кафедры ВНИИГАЗ Тюменского индустриального университета. Информация о кафедре, учебном плане, поступлении, событиях, достижениях и партнёрах.">
+        content="Официальный сайт базовой кафедры ВНИИГАЗ Тюменского индустриального университета. Информация о кафедре, учебном плане, поступлении, событиях, достижениях и партнёрах.">
     <meta name="keywords"
-          content="ВНИИГАЗ, ТИУ, базовая кафедра, обучение, учебный план, поступление, события, достижения, партнёры">
+        content="ВНИИГАЗ, ТИУ, базовая кафедра, обучение, учебный план, поступление, события, достижения, партнёры">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Кафедра ВНИИГАЗ{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -27,18 +27,19 @@
 </head>
 <body>
 <header>
-    <nav class="bg-white shadow-lg">
+    <nav class="glass-header shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
-                    <a href="{% url 'index' %}">
-                        <img alt="Логотип Газпром ВНИИГАЗ" class="h-20 w-auto" src="{% static 'img/logo-gazprom-white.png' %}">
-                    </a>
+                <div class="flex items-center space-x-4">
+                <a href="{% url 'index' %}" class="flex items-center space-x-2">
+                    <img alt="Логотип Газпром ВНИИГАЗ" class="h-14 w-auto" src="{% static 'img/logo-gazprom-white.png' %}">
+                    <img alt="Логотип ТИУ" class="h-14 w-auto" src="{% static 'img/logo-tiu.png' %}">
+                </a>
                 </div>
-                <div class="burger-menu md:hidden">
+                <div class="burger-menu md:hidden ml-4">
                     <i class="fas fa-bars fa-2x"></i>
                 </div>
-                <div class="nav-menu hidden md:flex space-x-6">
+                <div class="nav-menu hidden md:flex flex-1 justify-between">
                     <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Главная</a>
                     <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'plan' %}active{% endif %}" href="{% url 'plan' %}">Учебный план</a>
                     <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'enrollment' %}active{% endif %}" href="{% url 'enrollment' %}">Поступление</a>
