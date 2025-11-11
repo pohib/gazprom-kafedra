@@ -29,34 +29,42 @@
 <header>
     <nav class="glass-header shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center space-x-4">
-                <a href="{% url 'index' %}" class="flex items-center space-x-2">
-                    <img alt="Логотип Газпром ВНИИГАЗ" class="h-14 w-auto" src="{% static 'img/logo-gazprom-white.png' %}">
-                    <img alt="Логотип ТИУ" class="h-14 w-auto" src="{% static 'img/logo-tiu.png' %}">
-                </a>
+            <div class="flex flex-nowrap justify-between items-center h-20">
+                <div class="flex items-center space-x-4 flex-shrink-0 min-w-0">
+                    <a href="{% url 'index' %}" class="flex items-center space-x-2">
+                        <img alt="Логотип Газпром ВНИИГАЗ" class="h-14 w-auto max-w-[110px]" src="{% static 'img/logo-gazprom-white.png' %}">
+                        <img alt="Логотип ТИУ" class="h-14 w-auto max-w-[110px]" src="{% static 'img/logo-tiu.png' %}">
+                    </a>
                 </div>
                 <div class="burger-menu md:hidden ml-4">
                     <i class="fas fa-bars fa-2x"></i>
                 </div>
-                <div class="nav-menu hidden md:flex flex-1 justify-between">
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Главная</a>
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'plan' %}active{% endif %}" href="{% url 'plan' %}">Учебный план</a>
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'enrollment' %}active{% endif %}" href="{% url 'enrollment' %}">Поступление</a>
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'events' %}">События</a>
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Достижения</a>
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'partners' %}active{% endif %}" href="{% url 'partners' %}">Партнёры</a>
-                    <a class="nav-item px-3 py-2 rounded-md text-lg font-medium text-black {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Контакты</a>
+                <div class="nav-menu hidden md:flex flex-nowrap flex-1 justify-between items-center min-w-0 overflow-x-auto">
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Главная</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'plan' %}active{% endif %}" href="{% url 'plan' %}">Учебный план</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'enrollment' %}active{% endif %}" href="{% url 'enrollment' %}">Поступление</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'events' %}">События</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Достижения</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'partners' %}active{% endif %}" href="{% url 'partners' %}">Партнёры</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Контакты</a>
                 </div>
             </div>
         </div>
     </nav>
 </header>
+
 <main>
     {% block content %}
     {% endblock %}
 </main>
-<footer class="bg-gray-800 text-gray-200 py-8 mt-10 w-full" x-data="viewStats()" x-init="fetchStats()">
+<footer class="bg-gray-800 text-gray-200 py-8 mt-10 w-full">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>

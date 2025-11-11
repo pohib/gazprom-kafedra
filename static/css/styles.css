@@ -9,9 +9,9 @@ html {
     object-position: center top;
 }
 
-
-body {
-    font-family: Arial, Helvetica, 'Montserrat', 'Inter', Arial, sans-serif;
+.controller span.cursor-pointer:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease;
 }
 
 :root {
@@ -27,6 +27,16 @@ body {
     scroll-behavior: smooth;
     top: 15px;
     border-radius: 15px;
+}
+
+.bg-white {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+button.outline-none:hover {
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    transition: all 0.2s ease;
 }
 
 .snap::-webkit-scrollbar {
@@ -390,10 +400,6 @@ body.modal-open {
     --main-text-color: #000;
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-}
-
 
 .semester-btn {
     border: 2px solid var(--accent-color);
@@ -662,9 +668,73 @@ body {
 
 .rounded-full {
     border-radius: 50%;
-    border-width: 1px;
-    border-color: var(--accent-color);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.7);
     border-style: solid;
+    width: 16px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rounded-full.active {
+    background-color: #fff;
+    box-shadow: 0 0 12px #fff;
+}
+
+.absolute.bottom-2 {
+    bottom: -2px;
+}
+
+.rounded-full:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px #fff;
+}
+
+.carousel-arrow {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.carousel-arrow svg {
+    color: gray;
+    transition: color 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    box-shadow: 0 0 6px rgba(255,255,255,0.6);
+}
+
+.carousel-arrow:hover svg {
+    color: white;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 0px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.carousel-dot:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.carousel-dot-active {
+    background-color: white;
+    box-shadow: 0 0 12px white;
 }
 
 .content-block h2 {
@@ -686,10 +756,6 @@ body {
 :root {
     --accent-color: #0070c0;
     --sub-accent-color: #00aaff;
-}
-
-body {
-    font-family: 'Montserrat', sans-serif;
 }
 
 .news-card {
@@ -744,6 +810,11 @@ body {
     transform: scale(1.05);
 }
 
+.text-2xl {
+    font-size: 1.8rem;
+    line-height: 2rem;
+}
+
 .modal-image-full {
     display: none;
     position: fixed;
@@ -758,23 +829,23 @@ body {
 }
 
 html body #modal {
-  top: 5rem !important;
-  z-index: 1100 !important;
+    top: 5rem !important;
+    z-index: 1100 !important;
 }
 
 #modal-image-full.hidden {
-  display: none;
+    display: none;
 }
 
 #modal-image-full {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.442);
-  cursor: zoom-out;
-  z-index: 60;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.442);
+    cursor: zoom-out;
+    z-index: 60;
 }
 
 
@@ -849,10 +920,6 @@ html body #modal {
     --main-text-color: #000;
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-}
-
 
 /*end of achievements.html*/
 
@@ -861,10 +928,6 @@ body {
 :root {
     --accent-color: #0070c0;
     --sub-accent-color: #00aaff;
-}
-
-body {
-    font-family: 'Montserrat', sans-serif;
 }
 
 .header {
@@ -998,10 +1061,6 @@ body {
 
 /*contacts.html*/
 
-body {
-    font-family: 'Montserrat', sans-serif;
-}
-
 .accent {
     color: #004b87;
 }
@@ -1076,14 +1135,14 @@ body {
 }
 
 .modal-image-full-img {
-  max-width: 90% !important;
-  max-height: 90% !important;
-  object-fit: contain !important;
-  margin: 0 auto !important;
-  display: block !important;
-  transform-origin: center !important;
-  transform: scale(0.8) !important;
-  transition: transform 0.3s ease !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+    display: block !important;
+    transform-origin: center !important;
+    transform: scale(0.8) !important;
+    transition: transform 0.3s ease !important;
 }
 
 /*end contact.html*/
