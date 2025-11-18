@@ -294,19 +294,33 @@ button.outline-none:hover {
     border: 1px solid transparent;
     border-radius: 25px;
     background: inherit;
-    filter: blur(15px);
+    filter: blur(5px);
     z-index: -1; /* Ensures the blur effect is below the content */
 }
 
+.flex.justify-center.space-x-2.mb-4 {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+
+.rounded-full2 {
+    border-radius: 50%;
+    border-width: 1px;
+    border-color: var(--accent-color);
+    border-style: solid;
+    height: 70px;
+    width: 70px;
+}
+
 .hero-title {
-    backdrop-filter: blur(30px);
     font-size: 2.5em;
     font-weight: bold;
 }
 
 .hero-subtitle {
-    backdrop-filter: blur(30px);
-    font-size: 1.5em;
+    font-size: 1.1em;
 }
 
 
@@ -402,6 +416,8 @@ body.modal-open {
 
 
 .semester-btn {
+    flex: 1 1 auto;
+    min-width: 100px;
     border: 2px solid var(--accent-color);
     border-radius: 10px;
     padding: 15px;
@@ -569,6 +585,17 @@ body.modal-open {
     --accent-color: #0070c0;
     --sub-accent-color: #00aaff;
     --main-text-color: #000;
+}
+
+.h-custom {
+    height: 40rem;
+}
+
+.text-gray-702 {
+    --tw-text-opacity: 1;
+    color: rgba(55, 65, 81, var(--tw-text-opacity));
+    font-size: 1.2rem;
+    line-height: 2rem;
 }
 
 body {

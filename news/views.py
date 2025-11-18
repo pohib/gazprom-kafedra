@@ -1,6 +1,5 @@
 import requests
 from django.shortcuts import render
-from django.utils import timezone
 from datetime import datetime, timezone as dt_timezone
 from .models import News, NewsImage, NewsSettings
 

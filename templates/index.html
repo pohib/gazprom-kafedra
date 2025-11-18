@@ -29,16 +29,16 @@
                         <span class="block text-sm text-gray-700">Договор:</span>
                         <span class="block text-2xl font-bold gradient-text">6</span>
                     </div>
-                    <div class="animate__delay-2s animate__animated animate__fadeInUp">
-                        <span class="block text-sm text-gray-700">Форма обучения:</span>
-                        <span class="block text-2xl font-bold gradient-text">очная</span>
+                    <div class="animate__delay-2s animate__animated animate__fadeInUp col-span-2">
+                        <span class="block text-sm text-gray-702">Форма обучения:</span>
+                        <span class="text-2xl font-bold gradient-text">очная</span>
                     </div>
-                    
+                    <!--
                     <div class="animate__delay-2s animate__animated animate__fadeInUp">
                         <span class="block text-sm text-gray-700">Сроки подачи:</span>
                         <span class="block text-2xl font-bold gradient-text">11.07 - 16.08</span>
                     </div>
-                    
+                    -->
                 </div>
             </div>
 
@@ -61,17 +61,18 @@
                 { src: '{% static 'img/carousel/image-4.jpg' %}', title: '«Энергия опыта»', description: 'Магистранты знакомятся с учеными Института в рамках проекта «Энергия опыта».' },
                 { src: '{% static 'img/carousel/image-5.jpg' %}', title: 'Чемпионат по инжинирингу', description: 'Магистранты выступили на Командном чемпионате по инжинирингу освоения месторождений на площадке БЦ «Атриум» (г. Тюмень).' },
                 { src: '{% static 'img/carousel/image-6.jpg' %}', title: 'Практика в Тюмени', description: 'Магистранты проходят практику в Тюменском центре исследований пластовых систем ООО «Газпром ВНИИГАЗ».' },
-                { src: '{% static 'img/carousel/image-7.jpg' %}', title: 'Посещение Сибирского Учебного Центра', description: 'Магистранты базовой кафедры ООО «Газпром ВНИИГАЗ» ТИУ посетили один из крупнейших тренинговых центров Тюменской области, Сибирский Учебный Центр.' }
+                { src: '{% static 'img/carousel/image-7.jpg' %}', title: 'Посещение Сибирского Учебного Центра', description: 'Магистранты базовой кафедры ООО «Газпром ВНИИГАЗ» ТИУ посетили один из крупнейших тренинговых центров Тюменской области, Сибирский Учебный Центр.' },
+                { src: '{% static 'img/carousel/image-8.jpg' %}', title: 'Выступление на международной олимпиаде', description: 'Студенты базовой кафедры «Газпром ВНИИГАЗ» ТИУ выступили в Лиге Северной Евразии Международной олимпиады PetroCup.' }
             ],
             active: 0
         }">
-            <div class="relative w-full h-96">
+            <div class="relative w-full h-custom">
                 <div class="snap overflow-auto relative flex-nowrap flex transition-all"
                     style="scroll-behavior: smooth; scroll-snap-type: x mandatory;"
                     x-on:scroll.debounce="active = Math.round($event.target.scrollLeft / ($event.target.scrollWidth / items.length))"
                     x-ref="slider">
                     <template x-for="(item, index) in items" :key="index">
-                        <div class="w-full flex-shrink-0 h-96 relative scroll-snap-align-start">
+                        <div class="w-full flex-shrink-0 h-custom relative scroll-snap-align-start">
                             <img :src="item.src" alt="..." class="block w-full h-full object-cover rounded-lg shadow-lg">
                             <div class="gradient-overlay"></div>
                             <div class="absolute bottom-10 left-10 text-white">
@@ -99,7 +100,7 @@
                             $refs.slider.scrollLeft = Math.max(0, $refs.slider.scrollLeft + $refs.slider.clientWidth);
                             startAutoSlide();
                         ">
-                    <svg class="h-12 w-12 text-gray-400 hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <svg class="h-12 w-12 text-gray-400 hover:text-white transition-colors duration-300" style="margin-top: 30px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
                 <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
                     <template x-for="(item, index) in items" :key="index">
@@ -203,7 +204,7 @@
     <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700">
     <section class="hero-wrapper">
         <div class="hero">
-            <div class="shadow-xl hero-title wow animate__slideInDown">О формате обучения по Учебному плану 2024</div>
+            <div class="shadow-xl hero-title wow animate__slideInDown">О формате обучения по Учебному плану 2025</div>
             <div class="shadow-xl hero-subtitle wow animate__slideInDown">Концептуальный инжиниринг — базовый элемент обучения
             </div>
         </div>
@@ -237,14 +238,14 @@
             <div class="flex flex-col md:flex-row justify-around">
                 <div class="flex flex-row justify-around w-full items-center">
                     <div class="flex flex-col items-center mb-4 md:mb-0">
-                        <div class="shadow-xl w-24 h-24 bg-gradient-to-r from-blue-200 to-blue-400 text-4xl font-bold text-gray-700 flex items-center justify-center rounded-full mb-2">
-                            9
+                        <div class="shadow-xl w-24 h-24 bg-gradient-to-r from-blue-200 to-blue-400 text-4xl font-bold text-gray-700 flex items-center justify-center rounded-full2 mb-2">
+                            14
                         </div>
                         <p class="text-lg font-medium text-gray-700 text-center">Бюджетных мест</p>
                     </div>
                     <div class="flex flex-col items-center">
-                        <div class="shadow-xl w-24 h-24 bg-gradient-to-r from-blue-200 to-blue-400 text-4xl font-bold text-gray-700 flex items-center justify-center rounded-full mb-2">
-                            11
+                        <div class="shadow-xl w-24 h-24 bg-gradient-to-r from-blue-200 to-blue-400 text-4xl font-bold text-gray-700 flex items-center justify-center rounded-full2 mb-2">
+                            6
                         </div>
                         <p class="text-lg font-medium text-gray-700 text-center">Договорных мест<span class="text-blue-500">*</span></p>
                     </div>
@@ -252,8 +253,8 @@
             </div>
             <div class="text-left text-sm text-blue-500 mt-4">
                 <div class="text-sm text-gray-600 text-right">
-                    <p>Стоимость обучения 263,2 тыс. руб.</p>
-                    <p>при наличии более 61 балла – 226,4 тыс. руб.</p>
+                    <p>Стоимость обучения – 298,9 тыс. руб.</p>
+                    <p>при наличии более 61 балла – 276,4 тыс. руб.</p>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@
         content="ВНИИГАЗ, ТИУ, базовая кафедра, обучение, учебный план, поступление, события, достижения, партнёры">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Кафедра ВНИИГАЗ{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
@@ -70,10 +71,10 @@
             <div>
                 <h3 class="font-bold text-lg mb-4"><i class="fa-solid fa-address-card"></i> Адреса</h3>
                 <p>
-                    ВНИИГАЗ Газпром<br>
+                    ВНИИГАЗ Газпром:<br>
                     ул. Перекопская, 19, Тюмень, Россия<br><br>
-                    Тюменский индустриальный университет<br>
-                    Адрес: ул. Мельникайте, 70, Тюмень, Россия
+                    Тюменский индустриальный университет:<br>
+                    ул. Мельникайте, 70, Тюмень, Россия
                 </p>
             </div>
             <div>
@@ -86,8 +87,8 @@
             <div>
                 <h3 class="font-bold text-lg mb-4"><i class="fa-solid fa-star"></i> Социальные сети</h3>
                 <ul class="flex space-x-4">
-                    <li><a class="hover:text-gray-400" href="vk.com/bk_gazpromvniigaz">ВКонтакте</a></li>
-                    <li><a class="hover:text-gray-400" href="taplink.io/id:010939312:fb8a">Официальный сайт</a></li>
+                    <li><a class="hover:text-gray-400" href="https://vk.com/bk_gazpromvniigaz">ВКонтакте</a></li>
+                    <li><a class="hover:text-gray-400" href="https://taplink.io/id:010939312:fb8a">Официальный сайт</a></li>
                 </ul>
             </div>
             <div>
@@ -104,7 +105,7 @@
             </div>
         </div>
         <div class="text-center mt-8">
-            <p>&copy; 2025 ООО Газпром ВНИИГАЗ ФГБОУ ВО ТИУ</p>
+            <p>&copy; {% now "Y" %} ООО Газпром ВНИИГАЗ ФГБОУ ВО ТИУ</p>
         </div>
     </div>
 </footer>
