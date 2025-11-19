@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const navMenu = document.querySelector('.nav-menu');
 
     burgerMenu.addEventListener('click', function () {
-        navMenu.classList.toggle('active');
+        navMenu.classList.toggle('mobile-hidden');
     });
 });
-
-
-

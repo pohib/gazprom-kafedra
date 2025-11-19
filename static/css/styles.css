@@ -567,14 +567,11 @@ body.modal-open {
 
 /* Mobile adaptation styles */
 @media (max-width: 768px) {
-    .table-auto {
-        display: none;
+    .table-auto th,
+    .table-auto td {
+        padding: 6px;
+        font-size: 14px;
     }
-
-    .md-hidden {
-        display: none;
-    }
-
 }
 
 /*end of plan.html*/
@@ -1138,27 +1135,20 @@ html body #modal {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 0;
-    overflow: hidden;
+    overflow: visible;
 }
-
+@media (max-width: 768px){
+    .glass-header
+        {
+            background: white;
+        }
+}
 .glass-header:hover {
     background-position: 100% 50%;
 }
 
 .burger-menu, .nav-menu a.active {
     cursor: pointer;
-}
-
-@media (max-width: 768px) {
-    .nav-menu {
-        flex-direction: column;
-        align-items: flex-start;
-        display: none;
-    }
-
-    .nav-menu.show {
-        display: flex;
-    }
 }
 
 .modal-image-full-img {
@@ -1171,5 +1161,3 @@ html body #modal {
     transform: scale(0.8) !important;
     transition: transform 0.3s ease !important;
 }
-
-/*end contact.html*/

@@ -37,10 +37,10 @@
                         <img alt="Логотип ТИУ" class="h-14 w-auto max-w-[110px]" src="{% static 'img/logo-tiu.png' %}">
                     </a>
                 </div>
-                <div class="burger-menu md:hidden ml-4">
+                <div class="burger-menu md:hidden ml-4 cursor-pointer">
                     <i class="fas fa-bars fa-2x"></i>
                 </div>
-                <div class="nav-menu hidden md:flex flex-nowrap flex-1 justify-between items-center min-w-0 overflow-x-auto">
+                <div class="nav-menu mobile-hidden md:flex flex-nowrap flex-1 justify-between items-center min-w-0 overflow-x-auto">
                     <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
                         {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Главная</a>
                     <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black

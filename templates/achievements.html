@@ -148,13 +148,13 @@
 
                 <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <template :key="index" x-for="(image, index) in [
-                        '{% static "img/achievements/student-goal-1.jpg" %}',
-                        '{% static "img/achievements/student-goal-2.jpg" %}',
-                        '{% static "img/achievements/student-goal-3.jpg" %}',
-                        '{% static "img/achievements/student-goal-4.jpg" %}',
-                        '{% static "img/achievements/student-goal-5.jpg" %}',
-                        '{% static "img/achievements/student-goal-6.jpg" %}',
-                        '{% static "img/achievements/student-goal-7.jpg" %}'
+                        '{% static 'img/achievements/student-goal-1.jpg' %}',
+                        '{% static 'img/achievements/student-goal-2.jpg' %}',
+                        '{% static 'img/achievements/student-goal-3.jpg' %}',
+                        '{% static 'img/achievements/student-goal-4.jpg' %}',
+                        '{% static 'img/achievements/student-goal-5.jpg' %}',
+                        '{% static 'img/achievements/student-goal-6.jpg' %}',
+                        '{% static 'img/achievements/student-goal-7.jpg' %}'
                         ]">
                         <div @click="open = true; imageUrl = image" class="relative cursor-pointer">
                             <img :alt="'Achievement ' + (index + 1)" :src="image" class="w-full h-48 object-top object-cover rounded-lg shadow-lg">
@@ -252,8 +252,8 @@
 
 {% endblock %}
 
+
 {% block extra_scripts %}
-<script src="{% static 'js/navbar.js' %}"></script>
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('gallery', () => ({
@@ -263,3 +263,5 @@
     });
 </script>
 {% endblock %}
+
+
