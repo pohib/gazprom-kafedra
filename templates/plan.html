@@ -10,6 +10,7 @@
     Учебный план
 </h2>
 
+
 <div class="mt-6 flex justify-center">
     <div class="max-w-xl w-full rounded-xl shadow-lg bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 border-l-8 border-blue-800 px-6 py-5 flex items-center">
         <svg width="36" height="36" fill="none" viewBox="0 0 36 36" class="mr-4 text-white opacity-80">
@@ -218,6 +219,86 @@
         </table>
     </div>
 </div>
+<div class="container mx-auto mt-10">
+    <h1 class="header">Используемое программное обеспечение</h1>
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- ТНавигатор -->
+            <a href="{% static 'docs/tnavigator.pdf' %}" target="_blank" 
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r from-red-500 to-blue-600"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br from-red-50 to-blue-100 group-hover:from-red-100 group-hover:to-blue-200 transition-all duration-300">
+                        <img src="{% static 'img/po/tNavigator.png' %}" alt="тНавигатор" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2 group-hover:text-red-600 transition-colors">тНавигатор</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4"> Корпоративная платформа для интегрированного моделирования и анализа месторождений</p>
+                    <div class="flex items-center text-red-500 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Isoline GIS -->
+            <a href="{% static 'docs/IsolineGIS.pdf' %}" target="_blank"
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <!-- Зелено-синий градиент -->
+                <div class="h-1 bg-gradient-to-r from-green-500 to-blue-600"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br from-green-50 to-blue-100 group-hover:from-green-100 group-hover:to-blue-300 transition-all duration-300">
+                        <img src="{% static 'img/po/isolinegis.png' %}" alt="Isoline GIS" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2 group-hover:text-green-600 transition-colors">Isoline GIS</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Геоинформационная система для анализа и визуализации пространственных данных месторождений</p>
+                    <div class="flex items-center text-green-500 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+            <a href="{% static 'docs/РН-ГРИД.pdf' %}" target="_blank"
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r-from-orange-500-to-amber-600"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br-from-orange-50-to-amber-100 group-hover:bg-gradient-to-br-from-orange-100-to-amber-200 transition-all duration-300">
+                        <img src="{% static 'img/po/rn-grid.png' %}" alt="РН-Грид" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <h3 class="font-bold text-black text-lg mb-2 text-orange transition-colors">РН-Грид</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Программный комплекс для построения и анализа сеточных моделей пластов</p>
+                    <div class="flex items-center text-orange text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+            <a href="{% static 'docs/monitoring-gdis.pdf' %}" target="_blank"
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r-from-cyan-500-to-blue-400"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br-from-cyan-50-to-blue-100 group-hover:from-cyan-100 group-hover:to-blue-200 transition-all duration-300">
+                        <img src="{% static 'img/po/monitoring-gdis.png' %}" alt="Мониторинг-ГДИС" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <h3 class="font-bold text-lg mb-2 transition-colors text-gray">Мониторинг-ГДИС</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Система оперативного контроля и анализа данных гидродинамических исследований скважин</p>
+                    <div class="flex items-center text-cyan text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_scripts %}

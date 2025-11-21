@@ -1161,3 +1161,51 @@ html body #modal {
     transform: scale(0.8) !important;
     transition: transform 0.3s ease !important;
 }
+
+.bg-gradient-to-r-from-orange-500-to-amber-600 {
+    background-image: linear-gradient(to right, #f97316, #d97706);
+}
+.bg-gradient-to-br-from-orange-50-to-amber-100 {
+    background-image: linear-gradient(to bottom right, #fff7ed, #ffedd5);
+}
+.bg-gradient-to-br-from-orange-100-to-amber-200 {
+    background-image: linear-gradient(to bottom right, #fed7aa, #fde68a);
+}
+
+.bg-gradient-to-r-from-cyan-500-to-blue-400 {
+    background-image: linear-gradient(to right, #06b6d4, #60a5fa);
+}
+.bg-gradient-to-br-from-cyan-50-to-blue-100 {
+    background-image: linear-gradient(to bottom right, #ecfeff, #1f70dd);
+}
+.bg-gradient-to-br-from-cyan-100-to-blue-200 {
+    background-image: linear-gradient(to bottom right, #cffafe, #bfdbfe);
+}
+
+.text-orange {
+    color: rgb(255 130 56);
+}
+
+.text-cyan {
+    color: #06b6d4;
+}
+
+
+.group:hover .text-black {
+    color: rgb(255 130 56);
+}
+
+.text-black {
+    color: rgb(31, 41, 55);
+    transition: color 0.3s;
+}
+
+.text-gray {
+    color: rgb(31,41,55);
+    transition: color 0.3s;
+}
+
+.group:hover .text-gray {
+    color: #06b6d4; 
+}
+
