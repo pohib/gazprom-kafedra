@@ -690,32 +690,13 @@ body {
     flex: 1;
 }
 
-.rounded-full {
-    border-radius: 50%;
-    border-width: 2px;
-    border-color: rgba(255, 255, 255, 0.7);
-    border-style: solid;
-    width: 16px;
-    height: 16px;
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
 
-.rounded-full.active {
-    background-color: #fff;
-    box-shadow: 0 0 12px #fff;
-}
 
 .absolute.bottom-2 {
     bottom: -2px;
 }
 
-.rounded-full:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 8px #fff;
-}
+
 
 .carousel-arrow {
     width: 50px;
@@ -862,7 +843,7 @@ html body #modal {
 }
 
 #modal-image-full {
-    display: flex !important;
+    display: flex;
     align-items: center !important;
     justify-content: center !important;
     position: fixed;
@@ -875,6 +856,7 @@ html body #modal {
 
 .no-scroll {
     overflow: hidden;
+    height: 100vh;
 }
 
 .modal-image-full.active {
@@ -1163,7 +1145,7 @@ html body #modal {
 }
 
 .bg-gradient-to-r-from-orange-500-to-amber-600 {
-    background-image: linear-gradient(to right, #f97316, #d97706);
+        background-image: linear-gradient(to right, #f97316, #e1d000);
 }
 .bg-gradient-to-br-from-orange-50-to-amber-100 {
     background-image: linear-gradient(to bottom right, #fff7ed, #ffedd5);
@@ -1173,7 +1155,7 @@ html body #modal {
 }
 
 .bg-gradient-to-r-from-cyan-500-to-blue-400 {
-    background-image: linear-gradient(to right, #06b6d4, #60a5fa);
+    background-image: linear-gradient(to right, #06b6d4, #1b6fd7);
 }
 .bg-gradient-to-br-from-cyan-50-to-blue-100 {
     background-image: linear-gradient(to bottom right, #ecfeff, #1f70dd);
@@ -1209,3 +1191,10 @@ html body #modal {
     color: #06b6d4; 
 }
 
+.bg-blue-custom {
+    background-color: rgb(0 121 194);
+}
+
+.bg-gradient-to-r-block {
+    background-image: linear-gradient(to right, rgba(0, 112, 192, 0.1), rgba(0, 170, 255, 0.1));
+}

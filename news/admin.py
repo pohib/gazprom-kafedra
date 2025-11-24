@@ -28,7 +28,7 @@ class NewsAdmin(admin.ModelAdmin):
     inlines = [NewsImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'body', 'date', 'views', 'is_published', 'source_id', 'is_title_edited', 'is_body_edited')
+            'fields': ('title', 'body', 'date', 'views', 'is_published', 'source_id', 'is_title_edited', 'is_body_edited', 'auto_title_sentences',)
         }),
     )
     readonly_fields = ('source_id',)

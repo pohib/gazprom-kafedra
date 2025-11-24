@@ -3,13 +3,18 @@ from django.utils import timezone
 
 class News(models.Model):
     source_id = models.CharField(max_length=50, unique=True, verbose_name='ID поста')
-    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    title = models.CharField(max_length=1000, verbose_name='Заголовок')
     body = models.TextField(verbose_name='Наполнение')
     date = models.DateTimeField(default=timezone.now, verbose_name='Дата публикации')
     views = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
     is_published = models.BooleanField(default=True, verbose_name='Показывать на сайте')
     is_title_edited = models.BooleanField(default=False, verbose_name='Заголовок отредактирован вручную')
     is_body_edited = models.BooleanField(default=False, verbose_name='Текст отредактирован вручную')
+    auto_title_sentences = models.PositiveSmallIntegerField(
+        default=2,
+        verbose_name='Обрезать заголовок до N предложений (авто)',
+        help_text='Число предложений для автоматического заголовка'
+    )
 
     def __str__(self):
         return self.title

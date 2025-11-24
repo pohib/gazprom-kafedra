@@ -2,6 +2,7 @@ import requests
 from django.shortcuts import render
 from datetime import datetime, timezone as dt_timezone
 from .models import News, NewsImage, NewsSettings
+import random
 
 VK_GROUP_ID = '218299724'
 VK_ACCESS_TOKEN = '5b329a175b329a175b329a177d580e1f6b55b325b329a173239fc2f75bfa8b099b910f8'
@@ -25,6 +26,7 @@ def events(request):
         news_qs = News.objects.filter(is_published=True).order_by('-date')[:NEWS_COUNT]
         return render(request, 'events.html', {'posts': news_qs})
 
+    
     posts = data['response']['items']
     vk_ids = set()
 
@@ -32,7 +34,7 @@ def events(request):
         source_id = str(post['id'])
         vk_ids.add(source_id)
 
-        new_title = (post['text'][:60] + '...') if len(post['text']) > 60 else post['text']
+        new_title = post['text']
         new_body = post['text']
         date = datetime.fromtimestamp(post['date'], tz=dt_timezone.utc)
 
@@ -68,8 +70,22 @@ def events(request):
                     )
 
     News.objects.filter(source_id__isnull=False).exclude(source_id__in=vk_ids).delete()
-
+    
+    news_obj.auto_title_sentences = 1
+    
     news_to_display = News.objects.filter(is_published=True).order_by('-date')[:NEWS_COUNT]
 
-    return render(request, 'events.html', {'posts': news_to_display})
+    logo_variants = ['blue', 'white']
+    extended_posts = []
+    for post in news_to_display:
+        has_images = post.images.exists()
+        logo_choice = None
+        if not has_images:
+            logo_choice = random.choice(logo_variants)
+        extended_posts.append({
+            'post': post,
+            'logo_choice': logo_choice,
+        })
+        
+    return render(request, 'events.html', {'posts_extended': extended_posts})
 
