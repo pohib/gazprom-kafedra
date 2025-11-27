@@ -157,7 +157,10 @@
                         '{% static 'img/achievements/student-goal-7.jpg' %}'
                         ]">
                         <div @click="open = true; imageUrl = image" class="relative cursor-pointer">
-                            <img :alt="'Achievement ' + (index + 1)" :src="image" class="w-full h-48 object-top object-cover rounded-lg shadow-lg">
+                            <div class="aspect-w-1 aspect-h-1 w-full h-64">
+                                <img :alt="'Achievement ' + (index + 1)" :src="image" 
+                                    class="w-full h-full object-cover rounded-lg">
+                            </div>
                             <div class="absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity duration-300 flex items-center justify-center">
                                 <span class="text-white text-lg font-bold">Просмотр</span>
                             </div>
@@ -166,10 +169,10 @@
                 </div>
             </div>
         </div>
-        <div @click.self="open = false" @keydown.escape.window="open = false" class="fixed backdrop-filter backdrop-blur-sm inset-0 flex items-center justify-center z-50" x-cloak x-show="open">
-            <div class="relative bg-white p-4 rounded-lg w-auto h-5/6 mx-auto translate-x-full">
-                <button @click="open = false" class="absolute top-2 right-2 bg-red-500 text-white py-1 px-2 rounded">✕</button>
-                <img :src="imageUrl" alt="Enlarged image" class="w-auto h-5/6 self-center">
+        <div @click.self="open = false" @keydown.escape.window="open = false" class="fixed backdrop-filter backdrop-blur-sm inset-0 flex items-start justify-center z-50 pt-custom" x-show="open">
+            <div class="relative bg-white p-4 rounded-lg max-w-xs sm:max-w-sm  md:max-w-lg lg:max-w-xl max-h-full mx-auto">
+                <button @click="open = false" class="absolute top-4 right-4 bg-red-500 text-white py-1 px-3 rounded-full z-10">✕</button>
+                <img :src="imageUrl" alt="Enlarged image" class="max-w-full max-h-[80vh] object-contain rounded">
             </div>
         </div>
     </div>
@@ -197,8 +200,8 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg mb-4">
-            <h2 class="text-2xl font-bold text-accent-color wow animate__fadeInDown">Достижения профессиональной деятельности</h2>
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+            <h2 class="text-2xl font-bold text-accent-color wow animate__fadeInDown mb-6">Достижения профессиональной деятельности</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-gradient-to-r-block p-4 rounded-lg wow animate__fadeIn">
                     <h3 class="text-lg font-bold"><i class="fas fa-project-diagram"></i> БЛОК ГРП ГММ</h3>
