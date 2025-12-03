@@ -9,9 +9,9 @@
 <div class="map-container relative w-full max-w-6xl h-[600px] mx-auto mt-8 bg-gradient-to-b from-gray-900/80 to-transparent rounded-2xl shadow-2xl border-4 border-blue-500/30 overflow-hidden">
     <div id="map-zoom-wrapper" class="w-full h-full transition-all duration-500 ease-out relative origin-center scale-marker draggable">
         <img alt="Map of Russia" class="w-full h-full" src="{% static 'img/russia.svg' %}" style="object-fit: contain;">
-        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 33.5%; left: 56%; width: 50px; height: 50px; transform: translate(-50%, -50%);">
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 33.5%; left: 56%; width: 55px; height: 55px; transform: translate(-50%, -50%);">
             <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-lg">5</div>
-            <div class="city-label" style="top: 60px; left: 50%;">Новый Уренгой</div>
+            <div class="city-label" style="top: 55px; left: 50%;">Новый Уренгой</div>
             <div class="popover map-popover">
                 <strong>Новый Уренгой</strong><br>
                 <span class="text-gray-600 font-normal">
@@ -20,16 +20,16 @@
             </div>
         </div>
 
-        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 87%; left: 57%; width: 30px; height: 30px; transform: translate(-50%, -50%);">
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 87%; left: 57%; width: 32px; height: 32px; transform: translate(-50%, -50%);">
             <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm drop-shadow-lg">2</div>
-            <div class="city-label" style="top: 40px; left: 50%;">Иркутск</div>
+            <div class="city-label" style="top: 30px; left: 50%;">Иркутск</div>
             <div class="popover map-popover">
                 <strong>Иркутск</strong><br>
                 <span class="text-gray-600 font-normal">ООО «Газпром добыча Иркутск», ООО «Русгазбурение»</span>
             </div>
         </div>
 
-        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 77%; left: 90%; width: 30px; height: 30px; transform: translate(-50%, -50%);">
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 77%; left: 90%; width: 32px; height: 32px; transform: translate(-50%, -50%);">
             <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm drop-shadow-lg">2</div>
             <div class="city-label" style="top: 40px; left: 50%;">Южно-Сахалинск</div>
             <div class="popover map-popover" style="left: -220px;">
@@ -106,10 +106,32 @@ $(document).ready(function () {
     let isDragging = false;
     let lastX, lastY;
     let hoverTimeout, isHoveringMarker = false;
+    let containerRect = {};
+    let maxTranslateX = 0, minTranslateX = 0;
+    let maxTranslateY = 0, minTranslateY = 0;
+
+    function updateBoundaries() {
+        const $container = $('.map-container');
+        containerRect = $container[0].getBoundingClientRect();
+
+        const baseMaxX = (containerRect.width * (1 - 1/scale)) / 2;
+        const baseMaxY = (containerRect.height * (1 - 1/scale)) / 2;
+
+        const expandX = 1.2;
+        maxTranslateX = baseMaxX * expandX;
+        minTranslateX = -maxTranslateX;
+
+        maxTranslateY = baseMaxY;
+        minTranslateY = -maxTranslateY;
+    }
 
     function applyZoom(value) {
         scale = value / 100;
         
+        updateBoundaries();
+        translateX = Math.max(minTranslateX, Math.min(maxTranslateX, translateX));
+        translateY = Math.max(minTranslateY, Math.min(maxTranslateY, translateY));
+
         const markerScale = Math.max(0.35, Math.min(1.1, 1 / Math.sqrt(scale) * 0.98));
         const labelScale = Math.max(0.45, Math.min(1.15, 1 / Math.sqrt(scale) * 1.02));
         const popoverScale = Math.max(0.4, Math.min(1.1, 1 / Math.sqrt(scale) * 0.95));
@@ -121,6 +143,7 @@ $(document).ready(function () {
             translateX = 0;
             translateY = 0;
         }
+
         
         $wrapper.css({
             'transform': `scale(${scale}) translate(${translateX}px, ${translateY}px)`
@@ -154,6 +177,8 @@ $(document).ready(function () {
 
     applyZoom(80);
 
+    updateBoundaries();
+
     setTimeout(() => {
         $zoomValue.css('transform', 'translateX(-50%) scale(0)');
     }, 1500);
@@ -167,10 +192,10 @@ $(document).ready(function () {
         }, 1500);
     });
 
-    const mapWrapper = $wrapper[0];
+    const mapContainer = $('.map-container')[0];
     
-    mapWrapper.addEventListener('mousedown', startDrag, { passive: false });
-    mapWrapper.addEventListener('touchstart', startDrag, { passive: false });
+    mapContainer.addEventListener('mousedown', startDrag, { passive: false });
+    mapContainer.addEventListener('touchstart', startDrag, { passive: false });
     
     document.addEventListener('mousemove', drag, { passive: false });
     document.addEventListener('touchmove', drag, { passive: false });
@@ -178,13 +203,15 @@ $(document).ready(function () {
     document.addEventListener('touchend', endDrag, { passive: false });
     
     function startDrag(e) {
-        if (scale <= 1.2) return;
-        
+        if (e.target.closest('.zoom-control-container')) return;
+        if (scale <= 1.1) return;
         isDragging = true;
         $wrapper.addClass('dragging');
         
         lastX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
         lastY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+        
+        updateBoundaries();
         
         e.preventDefault();
     }
@@ -195,8 +222,11 @@ $(document).ready(function () {
         const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
         const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
         
-        translateX += clientX - lastX;
-        translateY += clientY - lastY;
+        const deltaX = clientX - lastX;
+        const deltaY = clientY - lastY;
+
+        translateX = Math.max(minTranslateX, Math.min(maxTranslateX, translateX + deltaX));
+        translateY = Math.max(minTranslateY, Math.min(maxTranslateY, translateY + deltaY));
         
         $wrapper.css({
             'transform': `scale(${scale}) translate(${translateX}px, ${translateY}px)`
@@ -204,13 +234,30 @@ $(document).ready(function () {
         
         lastX = clientX;
         lastY = clientY;
-        
         e.preventDefault();
     }
     
     function endDrag() {
+        if (!isDragging) return;
+        
         isDragging = false;
         $wrapper.removeClass('dragging');
+
+        const clampX = Math.max(minTranslateX, Math.min(maxTranslateX, translateX));
+        const clampY = Math.max(minTranslateY, Math.min(maxTranslateY, translateY));
+        
+        if (Math.abs(translateX - clampX) > 0.5 || Math.abs(translateY - clampY) > 0.5) {
+            $wrapper.css({
+                'transition': 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                'transform': `scale(${scale}) translate(${clampX}px, ${clampY}px)`
+            });
+            
+            setTimeout(() => {
+                translateX = clampX;
+                translateY = clampY;
+                $wrapper.css('transition', '');
+            }, 300);
+        }
     }
 
     $wrapper.on('wheel', function(e) {
@@ -232,15 +279,31 @@ $(document).ready(function () {
 
     $('.map-marker, .city-label').hover(
         function() {
-            clearTimeout(hoverTimeout); isHoveringMarker = true;
-            const $popover = $(this).closest('.map-marker').find('.popover.map-popover');
+            clearTimeout(hoverTimeout); 
+            isHoveringMarker = true;
+            
+            const $marker = $(this).closest('.map-marker');
+            const $label = $marker.find('.city-label');
+            const $popover = $marker.find('.popover.map-popover');
+            
+            $marker.css('z-index', '40');
+            $label.css('z-index', '41');
+            $popover.css('z-index', '49');
+            
             $popover.stop(true, true).css('visibility', 'visible').fadeTo(250, 1);
         },
         function() {
             isHoveringMarker = false;
             hoverTimeout = setTimeout(() => {
                 if (!isHoveringMarker) {
-                    const $popover = $(this).closest('.map-marker').find('.popover.map-popover');
+                    const $marker = $(this).closest('.map-marker');
+                    const $label = $marker.find('.city-label');
+                    const $popover = $marker.find('.popover.map-popover');
+
+                    $marker.css('z-index', '20');
+                    $label.css('z-index', '40');
+                    $popover.css('z-index', '48');
+                    
                     $popover.stop(true, true).fadeTo(200, 0, function() {
                         $(this).css('visibility', 'hidden');
                     });

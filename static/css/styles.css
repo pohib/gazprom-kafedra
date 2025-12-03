@@ -996,19 +996,19 @@ html body #modal {
     backdrop-filter: blur(12px);
     border-radius: 12px;
     position: absolute;
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     font-weight: 600;
     text-align: center;
     min-width: 4.2rem;
     max-width: 11rem;
-    padding: 6px 12px;
+    padding: 4px 8px;
     transform: translateX(-50%);
     white-space: nowrap;
     top: 95%;
     margin-top: 8px;
     box-shadow: 0 4px 24px rgba(32, 56, 90, 0.4);
     opacity: 0.98;
-    border: 1px solid rgba(120, 160, 255, 0.3);
+    border: 1px solid rgba(120, 161, 255, 0.171);
     transition: all 0.2s ease;
 }
 
@@ -1430,6 +1430,7 @@ html body #modal {
     padding: 16px 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.39);
+    z-index: 50 !important;
 }
 
 .map-container .popover.map-popover {
@@ -1453,14 +1454,9 @@ html body #modal {
     visibility: hidden;
     pointer-events: none;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 40 !important;
 }
 
-.map-container .map-marker:hover .popover.map-popover {
-    pointer-events: auto;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateX(-50%) scale(1) translateY(0) !important;
-}
 
 .map-container .city-label {
     visibility: visible !important;
@@ -1488,4 +1484,18 @@ html body #modal {
 
 #map-zoom-wrapper[style*="scale(2"] .map-marker:hover {
     transform: translate(-50%, -50%) scale(calc(var(--marker-scale) * 1.05)) !important;
+}
+
+#map-zoom-wrapper[scale] .popover.map-popover,
+#map-zoom-wrapper.scale-marker .popover.map-popover,
+.map-container #map-zoom-wrapper .popover.map-popover {
+    z-index: 48 !important;
+}
+
+#map-zoom-wrapper .popover.map-popover[style*="z-index"] {
+    z-index: 48 !important;
+}
+
+.map-marker, .city-label {
+    transition: z-index 0s !important;
 }
