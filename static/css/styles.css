@@ -959,54 +959,59 @@ html body #modal {
     border-radius: 50%;
     font-size: 1rem;
     user-select: none;
+    box-shadow: 0 6px 22px 0 rgba(0,30,90,0.25); /* Мягкая тень */
+    background: linear-gradient(135deg, rgba(55,135,255,0.8), rgba(16,67,175,0.82));
+    border: 3px solid #fff;
+    transition: box-shadow 0.2s, background 0.2s;
+    opacity: 0.94;
 }
+.map-marker:hover, .map-marker:focus {
+    box-shadow: 0 10px 32px 0 rgba(36,72,186,0.32);
+    background: linear-gradient(135deg, rgba(90,160,250,0.93), rgba(30,80,205,0.92));
+    opacity: 1;
+}
+
 
 .map-marker::after {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     border-radius: 50%;
-    background-color: inherit;
-    animation: pulse 5s infinite;
+    background: inherit;
+    animation: pulse 4s infinite;
     z-index: -1;
+    opacity: 0.27;
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.2); opacity: 0.3; }
-    100% { transform: scale(1.5); opacity: 0; }
+    0%   { transform: scale(1); opacity: 0.45; }
+    50%  { transform: scale(1.2); opacity: 0.25;}
+    100% { transform: scale(1.45); opacity: 0; }
 }
 
-.popover {
-    display: none;
-    position: absolute;
-    background: white;
-    color: black;
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 250px;
-    z-index: 10;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 100%;
-    margin-top: 12px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}   
 
 .city-label {
-    color: white;
-    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.15));
-    border-radius: 15px;
+    color: #f4f8ff;
+    background: rgb(24 36 68 / 68%);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
     position: absolute;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
     text-align: center;
-    width: 5rem;
+    min-width: 4.2rem;
+    max-width: 11rem;
+    padding: 6px 12px;
     transform: translateX(-50%);
     white-space: nowrap;
-    top: 100%;
-    margin-top: 6px;
+    top: 95%;
+    margin-top: 8px;
+    box-shadow: 0 4px 24px rgba(32, 56, 90, 0.4);
+    opacity: 0.98;
+    border: 1px solid rgba(120, 160, 255, 0.3);
+    transition: all 0.2s ease;
 }
+
 
 .card {
     background-color: white;
@@ -1037,32 +1042,146 @@ html body #modal {
 
 @media (max-width: 768px) {
     .city-label {
-        font-size: 0.6rem;
-        width: 4rem;
-        margin-top: 4px;
+        font-size: 0.7rem;
+        min-width: 3.5rem;
+        max-width: 85vw;
+        padding: 4px 10px;
+        margin-top: 6px;
+        border-radius: 10px;
     }
 
     .map-marker {
-        width: 30px !important;
-        height: 30px !important;
-        font-size: 0.8rem;
+        width: 26px !important;
+        height: 26px !important;
+    }
+
+    .map-marker .absolute.inset-0 {
+        font-size: 0.75rem !important;
+    }
+
+    .map-marker:hover .popover {
+        transform: translateX(-50%) scale(1) translateY(0) !important;
     }
 
     .map-marker::after {
         border-radius: 50%;
     }
 
+    .zoom-control-container {
+        max-width: 250px !important;
+        width: 90vw !important;
+    }
+
     .popover {
-        width: 90vw;
-        max-width: none;
-        padding: 8px;
-        left: 50%;
-        transform: translateX(-50%);
+        width: 92vw !important;
+        max-width: 320px;
+        padding: 12px;
         font-size: 0.9rem;
-        top: calc(100% + 8px);
+        left: 50% !important;
+        transform: translateX(-50%) scale(0.95) translateY(10px);
+        top: calc(100% + 8px) !important;
+        border-radius: 14px;
+        box-shadow: 0 16px 32px rgba(0,0,0,0.2);
+    }
+
+    #map-zoom::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+        margin-top: -6px;
+        border-width: 2px;
+    }
+
+    #map-zoom::-webkit-slider-thumb:hover,
+    #map-zoom::-webkit-slider-thumb:active {
+        transform: scale(1.1) !important;
+    }
+
+    #map-zoom::-moz-range-thumb {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    #zoom-value {
+        font-size: 0.9rem !important;
+        padding: 6px 12px !important;
+        top: -48px !important;
+    }
+
+    #map-zoom-wrapper.draggable {
+        touch-action: pan-x pan-y !important;
     }
 }
 
+@media (max-width: 480px) {
+    .popover {
+        width: 95vw !important;
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+    
+    .zoom-control-container {
+        max-width: 200px !important;
+        width: 90vw !important;
+    }
+
+    .city-label {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+}
+
+#zoom-value {
+    background: linear-gradient(135deg, rgb(119 180 255 / 61%) 0%, rgb(231 238 255 / 89%) 50%, rgb(209 255 251 / 69%) 100%) !important;
+    backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 32px rgb(255 255 255 / 43%), 0 4px 12px rgb(0 0 0 / 46%), inset 0 1px 0 rgb(219 206 206 / 78%);
+    width: 54px !important;
+    height: 34px !important;
+    border-radius: 9999px;
+    padding: 0 !important;
+    min-width: unset !important;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    
+    position: absolute !important;
+    left: 0;
+    top: -50px;
+    transform: translateX(-50%) scale(0);
+    pointer-events: none;
+    z-index: 60;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1e40af;
+    text-align: center;
+    letter-spacing: 0.3px;
+    opacity: 0;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: visible;
+}
+
+#zoom-value::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    background: inherit !important;
+    backdrop-filter: inherit;
+    border: inherit;
+    border-radius: inherit;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+    z-index: -1;
+}
+
+#zoom-value[style*="scale(1)"] {
+    opacity: 1 !important;
+}
 /*end of partners.html*/
 
 /*contacts.html*/
@@ -1201,4 +1320,172 @@ html body #modal {
 
 .pt-custom {
     padding-top: 5.95rem;
+}
+
+#map-zoom {
+    width: 100%;
+    height: 12px;
+    background: transparent;
+}
+
+#map-zoom-wrapper {
+    touch-action: none;
+    transform-origin: center center !important;
+}
+
+#map-zoom-wrapper.scale-marker .map-marker {
+    transform: translate(-50%, -50%) scale(var(--marker-scale, 1)) !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#map-zoom-wrapper.scale-marker .city-label {
+    transform: translateX(-50%) scale(var(--label-scale, 1)) !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#map-zoom-wrapper.scale-marker .popover.map-popover {
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(var(--popover-y, 15px)) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#map-zoom-wrapper.scale-marker .map-marker:hover .popover.map-popover {
+    transform: translateX(-50%) scale(calc(var(--popover-scale) * 1.02)) translateY(0) !important;
+}
+
+#map-zoom-wrapper.dragging {
+    cursor: grabbing;
+    user-select: none;
+    touch-action: none;
+}
+
+#map-zoom-wrapper.draggable {
+    touch-action: pan-x pan-y;
+    cursor: grab;
+}
+
+#map-zoom-wrapper.draggable.dragging {
+    cursor: grabbing;
+}
+
+
+#map-zoom-wrapper:active {
+    cursor: grabbing;
+}
+
+#map-zoom::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 70%, #1e40af 100%);
+    border: 3px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: -8px;
+    cursor: grab !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#map-zoom::-webkit-slider-thumb:hover,
+#map-zoom::-webkit-slider-thumb:active {
+    transform: scale(1.15) !important;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.6), 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: grabbing !important;
+    border-color: rgba(255, 255, 255, 1);
+}
+
+#map-zoom::-webkit-slider-runnable-track {
+    height: 12px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.3) 0%, transparent 50%, rgba(59, 130, 246, 0.3) 100%);
+    border-radius: 9999px;
+}
+
+#map-zoom::-moz-range-thumb {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 70%, #1e40af 100%);
+    border: 3px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: grab !important;
+    border: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#map-zoom::-moz-range-thumb:hover,
+#map-zoom::-moz-range-thumb:active {
+    transform: scale(1.15) !important;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.6), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.zoom-control-container {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.205);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 16px 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.39);
+}
+
+.map-container .popover.map-popover {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    color: #1f2937;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 16px;
+    width: 280px;
+    z-index: 50;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8) translateY(15px);
+    top: 100%;
+    margin-top: 12px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-container .map-marker:hover .popover.map-popover {
+    pointer-events: auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) scale(1) translateY(0) !important;
+}
+
+.map-container .city-label {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#map-zoom-wrapper .map-marker {
+    transform: translate(-50%, -50%) scale(var(--marker-scale, 1)) !important;
+    transition: transform 0.3s ease !important;
+}
+
+#map-zoom-wrapper .city-label {
+    transform: translateX(-50%) scale(var(--label-scale, 1)) !important;
+    transition: transform 0.3s ease !important;
+}
+
+#map-zoom-wrapper .popover.map-popover {
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(15px) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#map-zoom-wrapper .map-marker:hover .popover.map-popover {
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(0) !important;
+}
+
+#map-zoom-wrapper[style*="scale(2"] .map-marker:hover {
+    transform: translate(-50%, -50%) scale(calc(var(--marker-scale) * 1.05)) !important;
 }

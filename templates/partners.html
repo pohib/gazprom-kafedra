@@ -1,95 +1,254 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Партнёры{% endblock %}
-
 {% block content %}
-    <h1 class="text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg animate__animated animate__fadeInDown">
-        Наши партнёры
-    </h1>
-    
-    <div id="map" class="w-full max-w-6xl mx-auto mt-8 rounded-lg shadow-2xl border-4 border-[#0079C2]" style="height: 650px;"></div>
-{% endblock %}
+<h1 class="text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg"> 
+    Наши партнёры 
+</h1>
 
-{% block extra_css %}
-<link rel="stylesheet" href="https://api-maps.yandex.ru/2.1/?apikey=89fc0b90-6407-4d1f-8057-b1706cd35a07&lang=ru_RU" />
-<link href="{% static 'css/map.css' %}" rel="stylesheet">
+<div class="map-container relative w-full max-w-6xl h-[600px] mx-auto mt-8 bg-gradient-to-b from-gray-900/80 to-transparent rounded-2xl shadow-2xl border-4 border-blue-500/30 overflow-hidden">
+    <div id="map-zoom-wrapper" class="w-full h-full transition-all duration-500 ease-out relative origin-center scale-marker draggable">
+        <img alt="Map of Russia" class="w-full h-full" src="{% static 'img/russia.svg' %}" style="object-fit: contain;">
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 33.5%; left: 56%; width: 50px; height: 50px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-lg">5</div>
+            <div class="city-label" style="top: 60px; left: 50%;">Новый Уренгой</div>
+            <div class="popover map-popover">
+                <strong>Новый Уренгой</strong><br>
+                <span class="text-gray-600 font-normal">
+                    ООО «Газпромнефть Заполярье», ООО «Газпром добыча Ямбург», АО «Ачимгаз», ООО «Ачим Девелопмент», ОАО «Севернефтегазпром»
+                </span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 87%; left: 57%; width: 30px; height: 30px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm drop-shadow-lg">2</div>
+            <div class="city-label" style="top: 40px; left: 50%;">Иркутск</div>
+            <div class="popover map-popover">
+                <strong>Иркутск</strong><br>
+                <span class="text-gray-600 font-normal">ООО «Газпром добыча Иркутск», ООО «Русгазбурение»</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 77%; left: 90%; width: 30px; height: 30px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm drop-shadow-lg">2</div>
+            <div class="city-label" style="top: 40px; left: 50%;">Южно-Сахалинск</div>
+            <div class="popover map-popover" style="left: -220px;">
+                <strong>Южно-Сахалинск</strong><br>
+                <span class="text-gray-600 font-normal">ООО «Газпром добыча шельф Южно-Сахалинск», ООО «Сахалинская Энергия»</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 45.6%; left: 14.3%; width: 20px; height: 20px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs drop-shadow-lg">1</div>
+            <div class="city-label" style="top: 25px; left: 50%;">Москва</div>
+            <div class="popover map-popover">
+                <strong>ООО «Газпром бурение»</strong><br>
+                <span class="text-gray-600 font-normal">бурение всех скважин ПАО Газпром</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 58%; left: 19.5%; width: 20px; height: 20px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs drop-shadow-lg">1</div>
+            <div class="city-label" style="top: 25px; left: 50%;">Иннополис</div>
+            <div class="popover map-popover">
+                <strong>АНО ВО Университет Иннополис</strong><br>
+                <span class="text-gray-600 font-normal">IT решения по задачам ПАО Газпром</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 73%; left: 44%; width: 20px; height: 20px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs drop-shadow-lg">1</div>
+            <div class="city-label" style="top: 25px; left: 50%;">Томск</div>
+            <div class="popover map-popover">
+                <strong>ООО «Компания Ойлтим»</strong><br>
+                <span class="text-gray-600 font-normal">современный сервис по исследованию скважин месторождений ПАО Газпром</span>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 70%; left: 20.4%; width: 20px; height: 20px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs drop-shadow-lg">1</div>
+            <div class="city-label" style="top: 25px; left: 50%;">Оренбург</div>
+            <div class="popover map-popover">
+                <strong>ООО «Газпром добыча Оренбург»</strong>
+            </div>
+        </div>
+
+        <div class="map-marker bg-gradient-to-r from-blue-500 to-blue-600 rounded-full absolute shadow-2xl hover:scale-110 transition-all duration-200 z-20" style="top: 48%; left: 39%; width: 20px; height: 20px; transform: translate(-50%, -50%);">
+            <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs drop-shadow-lg">1</div>
+            <div class="city-label" style="top: 25px; left: 50%;">Надым</div>
+            <div class="popover map-popover">
+                <strong>ООО «Газпром добыча Надым»</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute -translate-x-1/2 bottom-6 z-50 pointer-events-none w-full">
+        <div class="zoom-control-container relative pointer-events-auto mx-auto bg-black/40 backdrop-blur-md rounded-3xl p-4 shadow-2xl border border-white/40">
+            <input id="map-zoom" type="range" min="80" max="800" value="80" step="1" 
+                class="w-full h-3 bg-transparent rounded-full appearance-none cursor-pointer block pointer-events-auto shadow-lg">
+            <div id="zoom-value" class="absolute -top-16 py-2 rounded-2xl text-blue-600 font-bold text-lg shadow-2xl whitespace-nowrap transition-all duration-300 scale-0 origin-bottom z-10">
+                100%
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://api-maps.yandex.ru/2.1/?apikey=89fc0b90-6407-4d1f-8057-b1706cd35a07&lang=ru_RU" type="text/javascript"></script>
 <script>
-ymaps.ready(init);
+$(document).ready(function () {
+    const $zoom = $('#map-zoom');
+    const $wrapper = $('#map-zoom-wrapper');
+    const $zoomValue = $('#zoom-value');
+    
+    let scale = 1;
+    let translateX = 0, translateY = 0;
+    let isDragging = false;
+    let lastX, lastY;
+    let hoverTimeout, isHoveringMarker = false;
 
-function init() {
-    var myMap = new ymaps.Map("map", {
-        center: [61.5240, 105.3188],
-        zoom: 3,
-        controls: ['zoomControl', 'fullscreenControl', 'typeSelector']
-    });
-
-    var partners = [
-        {coords: [66.0833, 76.6833], count: 5, name: "Новый Уренгой", companies: "ООО «Газпромнефть Заполярье», ООО «Газпром добыча Ямбург», АО «Ачимгаз», ООО «Ачим Девелопмент», ОАО «Севернефтегазпром»"},
-        {coords: [52.2864, 104.3050], count: 2, name: "Иркутск", companies: "ООО «Газпром добыча Иркутск», ООО «Русгазбурение»"},
-        {coords: [46.9507, 142.7317], count: 2, name: "Южно-Сахалинск", companies: "ООО «Газпром добыча шельф Южно-Сахалинск», ООО «Сахалинская Энергия»"},
-        {coords: [55.7558, 37.6173], count: 1, name: "ООО «Газпром бурение»", companies: "бурение всех скважин ПАО Газпром"},
-        {coords: [55.7500, 48.5667], count: 1, name: "АНО ВО Университет Иннополис", companies: "IT решения по задачам ПАО Газпром"},
-        {coords: [56.4833, 84.9667], count: 1, name: "ООО «Компания Ойлтим»", companies: "современный сервис по исследованию скважин месторождений ПАО Газпром"},
-        {coords: [51.7667, 55.1000], count: 1, name: "ООО «Газпром добыча Оренбург»"},
-        {coords: [65.5333, 72.5167], count: 1, name: "ООО «Газпром добыча Надым»"}
-    ];
-
-    partners.forEach(function(partner) {
-        var size = partner.count > 2 ? 60 : (partner.count > 1 ? 52 : 46);
+    function applyZoom(value) {
+        scale = value / 100;
         
-        var balloonContent = `
-            <div style="padding: 18px; min-width: 300px;">
-                <div style="background: linear-gradient(135deg, #0079C2 0%, #005a99 100%); 
-                            color: white; 
-                            padding: 14px 18px; 
-                            border-radius: 10px; 
-                            margin: -18px -18px 15px -18px;
-                            box-shadow: 0 4px 12px rgba(0, 121, 194, 0.4);">
-                    <strong style="font-size: 17px;">${partner.name}</strong>
-                    ${partner.count > 1 ? `<span style="background: rgba(255,255,255,0.25); padding: 5px 12px; border-radius: 18px; font-size: 13px; margin-left: 10px;">${partner.count} партнёр${partner.count > 4 ? 'ов' : 'а'}</span>` : ''}
-                </div>
-                <div style="color: #2c3e50; line-height: 1.7; font-size: 14px;">${partner.companies || ''}</div>
-            </div>
-        `;
+        const markerScale = Math.max(0.35, Math.min(1.1, 1 / Math.sqrt(scale) * 0.98));
+        const labelScale = Math.max(0.45, Math.min(1.15, 1 / Math.sqrt(scale) * 1.02));
+        const popoverScale = Math.max(0.4, Math.min(1.1, 1 / Math.sqrt(scale) * 0.95));
 
-        var iconSvg = `
-            <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="glow${Math.random()}">
-                        <stop offset="0%" stop-color="#0079C2" stop-opacity="0.4"/>
-                        <stop offset="70%" stop-color="#0079C2" stop-opacity="0.1"/>
-                    </radialGradient>
-                    <linearGradient id="grad${Math.random()}" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#0079C2"/>
-                        <stop offset="100%" stop-color="#005a99"/>
-                    </linearGradient>
-                </defs>
-                <circle cx="${size/2}" cy="${size/2}" r="${size/2 - 4}" fill="url(#glow${Math.random()})"/>
-                <circle cx="${size/2}" cy="${size/2}" r="${size/2 - 8}" fill="url(#grad${Math.random()})" stroke="white" stroke-width="4"/>
-                <circle cx="${size/2}" cy="${size/2}" r="${size/2 - 16}" fill="white" opacity="0.95"/>
-                <text x="${size/2}" y="${size/2 + 5}" text-anchor="middle" font-size="${size > 55 ? 18 : 15}" font-weight="bold" fill="#0079C2">${partner.count}</text>
-            </svg>
-        `;
+        if (scale > 1) {
+            $wrapper.addClass('draggable');
+        } else {
+            $wrapper.removeClass('draggable');
+            translateX = 0;
+            translateY = 0;
+        }
+        
+        $wrapper.css({
+            'transform': `scale(${scale}) translate(${translateX}px, ${translateY}px)`
+        });
+        
+        $wrapper[0].style.setProperty('--marker-scale', markerScale);
+        $wrapper[0].style.setProperty('--label-scale', labelScale);
+        $wrapper[0].style.setProperty('--popover-scale', popoverScale);
+        
+        const displayValue = Math.round(((value - 80) / (800 - 80)) * 100);
 
-        var placemark = new ymaps.Placemark(
-            partner.coords,
-            { balloonContent: balloonContent, hintContent: partner.name },
-            {
-                iconLayout: 'default#image',
-                iconImageHref: 'data:image/svg+xml;base64,' + btoa(iconSvg),
-                iconImageSize: [size, size],
-                iconImageOffset: [-size/2, -size/2]
-            }
-        );
-        myMap.geoObjects.add(placemark);
+        $zoomValue.text(displayValue + '%');
+
+        const $container = $zoom.closest('.zoom-control-container');
+        const containerRect = $container[0].getBoundingClientRect();
+        const sliderRect = $zoom[0].getBoundingClientRect();
+        const min = parseInt($zoom[0].min);
+        const max = parseInt($zoom[0].max);
+        const range = max - min;
+        const percent = (value - min) / range;
+        
+        const sliderLeftOffset = sliderRect.left - containerRect.left;
+        const thumbLeftInSlider = percent * (sliderRect.width - 24);
+        const thumbLeftInContainer = sliderLeftOffset + thumbLeftInSlider + 12;
+        
+        $zoomValue.css({
+            'left': thumbLeftInContainer + 'px',
+            'transform': 'translateX(-50%) scale(1)'
+        });
+    }
+
+    applyZoom(80);
+
+    setTimeout(() => {
+        $zoomValue.css('transform', 'translateX(-50%) scale(0)');
+    }, 1500);
+
+    $zoom.on('input', function () {
+        const val = parseInt(this.value);
+        applyZoom(val);
+        clearTimeout(window.zoomLabelTimeout);
+        window.zoomLabelTimeout = setTimeout(() => {
+            $zoomValue.css('transform', 'translateX(-50%) scale(0)');
+        }, 1500);
     });
 
-    myMap.setBounds(myMap.geoObjects.getBounds(), { checkZoomRange: true, zoomMargin: 50 });
-}
+    const mapWrapper = $wrapper[0];
+    
+    mapWrapper.addEventListener('mousedown', startDrag, { passive: false });
+    mapWrapper.addEventListener('touchstart', startDrag, { passive: false });
+    
+    document.addEventListener('mousemove', drag, { passive: false });
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('mouseup', endDrag, { passive: false });
+    document.addEventListener('touchend', endDrag, { passive: false });
+    
+    function startDrag(e) {
+        if (scale <= 1.2) return;
+        
+        isDragging = true;
+        $wrapper.addClass('dragging');
+        
+        lastX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+        lastY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+        
+        e.preventDefault();
+    }
+    
+    function drag(e) {
+        if (!isDragging || scale <= 1.2) return;
+        
+        const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+        const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+        
+        translateX += clientX - lastX;
+        translateY += clientY - lastY;
+        
+        $wrapper.css({
+            'transform': `scale(${scale}) translate(${translateX}px, ${translateY}px)`
+        });
+        
+        lastX = clientX;
+        lastY = clientY;
+        
+        e.preventDefault();
+    }
+    
+    function endDrag() {
+        isDragging = false;
+        $wrapper.removeClass('dragging');
+    }
+
+    $wrapper.on('wheel', function(e) {
+        e.preventDefault();
+        
+        const zoomStep = 25;
+        const currentValue = parseInt($zoom.val());
+        
+        let newValue;
+        if (e.deltaY < 0) {
+            newValue = Math.min(800, currentValue + zoomStep);
+        } else {
+            newValue = Math.max(80, currentValue - zoomStep);
+        }
+        
+        $zoom.val(newValue);
+        applyZoom(newValue);
+    });
+
+    $('.map-marker, .city-label').hover(
+        function() {
+            clearTimeout(hoverTimeout); isHoveringMarker = true;
+            const $popover = $(this).closest('.map-marker').find('.popover.map-popover');
+            $popover.stop(true, true).css('visibility', 'visible').fadeTo(250, 1);
+        },
+        function() {
+            isHoveringMarker = false;
+            hoverTimeout = setTimeout(() => {
+                if (!isHoveringMarker) {
+                    const $popover = $(this).closest('.map-marker').find('.popover.map-popover');
+                    $popover.stop(true, true).fadeTo(200, 0, function() {
+                        $(this).css('visibility', 'hidden');
+                    });
+                }
+            }, 50);
+        }
+    );
+});
 </script>
 {% endblock %}
+
