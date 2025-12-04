@@ -52,7 +52,7 @@ class EventAdmin(admin.ModelAdmin):
         ('Основное', {
             'fields': ('title', 'image', 'is_active')
         }),
-        ('Даты', {
+        ('Даты и время', {
             'fields': ('event_date_start', 'event_date_end', 'registration_deadline')
         }),
         ('Место', {

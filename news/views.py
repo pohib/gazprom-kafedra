@@ -96,9 +96,19 @@ def events(request):
 def events_calendar(request, year=None, month=None, day=None):
     now = timezone.now()
 
+    now_year = now.year
+    min_year = now_year - 5
+    max_year = now_year + 5
+    
     selected_year = int(year) if year else now.year
     selected_month = int(month) if month else now.month
     selected_day = int(day) if day else None
+    
+    years = list(range(min_year, max_year + 1))
+    
+    if year and (selected_year < min_year or selected_year > max_year):
+        from django.http import Http404
+        raise Http404("Выбранный год недоступен")
 
     current_year = selected_year
 
@@ -121,8 +131,6 @@ def events_calendar(request, year=None, month=None, day=None):
     page_number = request.GET.get('page')
     events_page = paginator.get_page(page_number)
 
-    years = list(range(now.year - 5, now.year + 6))
-
     months_with_events = set()
     if selected_year:
         months_with_events = set(
@@ -141,6 +149,7 @@ def events_calendar(request, year=None, month=None, day=None):
             .values_list('event_date_start__day', flat=True)
             .distinct()
         )
+    
     
     context = {
         'events': events_page,

@@ -39,11 +39,21 @@
             </div>
             <div class="calendar-visual mx-auto mb-20">
                 <div class="calendar-nav">
+                    {% if current_year > years.0 %}
                     <button class="calendar-nav-btn" onclick="changeYear(-1)">‹ {{ current_year|add:"-1" }}</button>
+                    {% else %}
+                    <button class="calendar-nav-btn opacity-0 cursor-default" disabled>‹</button>
+                    {% endif %}
+
                     <div class="calendar-nav-title">
                         {{ current_year }}
                     </div>
+
+                    {% if current_year < years|last %}
                     <button class="calendar-nav-btn" onclick="changeYear(1)">{{ current_year|add:"1" }} ›</button>
+                    {% else %}
+                    <button class="calendar-nav-btn opacity-0 cursor-default" disabled>›</button>
+                    {% endif %}
                 </div>
 
                 
@@ -257,17 +267,18 @@ function selectMonth(month) {
 
 function changeYear(direction) {
     const currentYear = {{ current_year }};
+    const years = {{ years|safe }};
     const newYear = currentYear + direction;
-    const month = {{ selected_month }};
-    
-    if (month) {
-        const url = `/events/calendar/year/${newYear}/month/${month}/`;
-        window.location.href = url;
-    } else {
-        const url = `/events/calendar/year/${newYear}/`;
+
+    if (years.includes(newYear)) {
+        const month = {{ selected_month }};
+        const url = month 
+            ? `/events/calendar/year/${newYear}/month/${month}/`
+            : `/events/calendar/year/${newYear}/`;
         window.location.href = url;
     }
 }
+
 
 function resetCalendar() {
     window.location.href = '/events/calendar/';
