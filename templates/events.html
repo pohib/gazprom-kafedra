@@ -10,7 +10,15 @@
     Новости кафедры
 </h1>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="flex justify-center mb-8">
+    <a href="{% url 'news:events_calendar' %}"
+      class="px-8 py-4 bg-gradient-to-r from-blue-custom to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold text-xl rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+        📅 Календарь событий
+    </a>
+</div>
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
   {% for item in posts_extended %}
     {% with post=item.post logo_choice=item.logo_choice %}
       <div class="bg-white rounded shadow p-4 news-card cursor-pointer flex flex-col" onclick="openModal({{ forloop.counter0 }})" style="min-height: 400px;">
@@ -100,7 +108,7 @@
           <span class="text-2xl font-bold tracking-wide">Больше новостей</span>
         </div>
         <p class="mb-4 text-lg text-white/90">Актуальные публикации доступны в официальном сообществе ВКонтакте.</p>
-        <a href="https://vk.com/gazpromvniigaz" target="_blank" rel="noopener"
+        <a href="https://vk.com/bk_gazpromvniigaz" target="_blank" rel="noopener"
           class="px-6 py-3 bg-white font-semibold text-blue-700 rounded-lg shadow hover:bg-blue-100 transition"
         >Перейти</a>
       </div>

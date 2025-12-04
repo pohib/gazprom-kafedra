@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import News, NewsImage, NewsSettings
+from .models import News, NewsImage, NewsSettings, Event
 from django.utils.html import format_html
 
 class NewsImageInline(admin.TabularInline):
@@ -39,3 +39,30 @@ class NewsAdmin(admin.ModelAdmin):
 @admin.register(NewsSettings)
 class NewsSettingsAdmin(admin.ModelAdmin):
     list_display = ('news_count',)
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ['title', 'event_date_start', 'event_date_end', 'registration_deadline', 'is_active']
+    list_filter = ['event_date_start', 'is_active']
+    search_fields = ['title', 'description']
+    date_hierarchy = 'event_date_start'
+    list_editable = ['is_active']
+    readonly_fields = ['created_at']
+    fieldsets = (
+        ('Основное', {
+            'fields': ('title', 'image', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('event_date_start', 'event_date_end', 'registration_deadline')
+        }),
+        ('Место', {
+            'fields': ('location', 'venue')
+        }),
+        ('Описание', {
+            'fields': ('description', 'tags')
+        }),
+        ('Системное', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )

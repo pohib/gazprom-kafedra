@@ -1,8 +1,12 @@
 import requests
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timezone as dt_timezone
-from .models import News, NewsImage, NewsSettings
+from django.utils import timezone
+from .models import News, NewsImage, NewsSettings, Event
 import random
+from django.core.paginator import Paginator
+from calendar import monthrange
+from django.db.models import Q, F
 
 VK_GROUP_ID = '218299724'
 VK_ACCESS_TOKEN = '5b329a175b329a175b329a177d580e1f6b55b325b329a173239fc2f75bfa8b099b910f8'
@@ -89,3 +93,118 @@ def events(request):
         
     return render(request, 'events.html', {'posts_extended': extended_posts})
 
+def events_calendar(request, year=None, month=None, day=None):
+    now = timezone.now()
+
+    selected_year = int(year) if year else now.year
+    selected_month = int(month) if month else now.month
+    selected_day = int(day) if day else None
+
+    current_year = selected_year
+
+    all_events = Event.objects.filter(is_active=True)
+
+    events = all_events.order_by('event_date_start')
+
+    if year:
+        events = events.filter(event_date_start__year=selected_year)
+    if month:
+        events = events.filter(event_date_start__month=selected_month)
+    if day:
+        events = events.filter(event_date_start__day=selected_day)
+
+    days_in_month = monthrange(selected_year, selected_month)[1]
+    days = list(range(1, days_in_month + 1))
+    months = list(range(1, 13))
+
+    paginator = Paginator(events, 12)
+    page_number = request.GET.get('page')
+    events_page = paginator.get_page(page_number)
+
+    years = list(range(now.year - 5, now.year + 6))
+
+    months_with_events = set()
+    if selected_year:
+        months_with_events = set(
+            all_events.filter(event_date_start__year=selected_year)
+            .values_list('event_date_start__month', flat=True)
+            .distinct()
+        )
+
+    days_with_events = set()
+    if selected_year and selected_month:
+        days_with_events = set(
+            all_events.filter(
+                event_date_start__year=selected_year,
+                event_date_start__month=selected_month
+            )
+            .values_list('event_date_start__day', flat=True)
+            .distinct()
+        )
+    
+    context = {
+        'events': events_page,
+        'years': years,
+        'months': months,
+        'days': days,
+        'months_with_events': months_with_events,
+        'days_with_events': days_with_events,
+        
+        'current_year': current_year,
+        'selected_year': selected_year,
+        'selected_month': selected_month,
+        'selected_day': selected_day,
+        
+        'now': now,
+        'current_month': now.month,
+        'current_day': now.day,
+    }
+    
+    days_with_events_count = {}
+    if selected_year and selected_month:
+        events_in_month = all_events.filter(
+            event_date_start__year=selected_year,
+            event_date_start__month=selected_month
+        )
+        
+        for day_num in range(1, days_in_month + 1):
+            count = events_in_month.filter(event_date_start__day=day_num).count()
+            if count > 0:
+                days_with_events_count[day_num] = count
+    
+    context.update({
+        'days_with_events_count': days_with_events_count,
+    })
+    
+    return render(request, 'events_calendar.html', context)
+
+def event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk, is_active=True)
+    
+    prev_event = (
+        Event.objects.filter(
+            is_active=True,
+            event_date_start__lt=event.event_date_start
+        )
+        .order_by('-event_date_start')
+        .first()
+    )
+
+    next_event = (
+        Event.objects.filter(
+            is_active=True,
+            event_date_start__gt=event.event_date_start
+        )
+        .order_by('event_date_start')
+        .first()
+    )
+
+    return render(
+        request,
+        'event_detail.html',
+        {
+            'event': event,
+            'prev_event': prev_event,
+            'next_event': next_event,
+        },
+    )

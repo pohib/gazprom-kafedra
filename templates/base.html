@@ -48,7 +48,7 @@
                     <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
                         {% if request.resolver_match.url_name == 'enrollment' %}active{% endif %}" href="{% url 'enrollment' %}">Поступление</a>
                     <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
-                        {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'events' %}">События</a>
+                        {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'news:events' %}">События</a>
                     <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
                         {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Достижения</a>
                     <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
@@ -61,11 +61,11 @@
     </nav>
 </header>
 
-<main>
+<main class="flex-1 flex flex-col">
     {% block content %}
     {% endblock %}
 </main>
-<footer class="bg-gray-800 text-gray-200 py-8 mt-10 w-full">
+<footer class="bg-gray-800 text-gray-200 py-8 mt-auto w-full">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>

@@ -18,7 +18,7 @@
             <path d="M18 12v12M12 18h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
         </svg>
         <a href="https://www.tyuiu.ru/sveden/education/programs/inghiniring-geologorazvedki-i-razrabotki-gazovyh-mestoroghdeniy-21.04.01.html"
-            class="text-lg font-semibold text-white underline hover:text-yellow-200 transition">
+            target="_blank" class="text-lg font-semibold text-white underline hover:text-yellow-200 transition">
             Подробнее о направлении «Инжиниринг геологоразведки и разработки газовых месторождений»
         </a>
     </div>
@@ -221,7 +221,7 @@
 </div>
 <div class="container mx-auto mt-10">
     <h1 class="header">Используемое программное обеспечение</h1>
-    <div class="bg-white rounded-2xl shadow-xl p-8">
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- ТНавигатор -->
             <a href="{% static 'docs/tnavigator.pdf' %}" target="_blank" 
@@ -244,7 +244,6 @@
             <!-- Isoline GIS -->
             <a href="{% static 'docs/IsolineGIS.pdf' %}" target="_blank"
                 class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
-                <!-- Зелено-синий градиент -->
                 <div class="h-1 bg-gradient-to-r from-green-500 to-blue-600"></div>
                 <div class="flex flex-col items-center text-center p-6">
                     <div class="mb-4 p-3 rounded-xl bg-gradient-to-br from-green-50 to-blue-100 group-hover:from-green-100 group-hover:to-blue-300 transition-all duration-300">

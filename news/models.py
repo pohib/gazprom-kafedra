@@ -47,3 +47,35 @@ class NewsSettings(models.Model):
     class Meta:
         verbose_name = "Настройка новостей"
         verbose_name_plural = "Настройки новостей"
+
+class Event(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Название мероприятия')
+    description = models.TextField(verbose_name='Описание')
+    event_date_start = models.DateField('Дата начала', help_text='дд.мм.гггг')
+    event_date_end = models.DateField('Дата окончания', blank=True, null=True)
+    registration_deadline = models.DateField('Дедлайн заявок', blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, verbose_name='Место проведения')
+    venue = models.CharField(max_length=200, blank=True, verbose_name='Площадка')
+    tags = models.CharField(max_length=500, blank=True, verbose_name='Теги', 
+                        help_text='Через запятую: конференция, семинар, хакатон')
+    image = models.ImageField(upload_to='events/', blank=True, null=True, verbose_name='Изображение')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True, verbose_name='Активно')
+    @classmethod
+    def get_month_name(cls, month_num):
+        MONTH_NAMES = {
+            1: 'Январь', 2: 'Февраль', 3: 'Март', 4: 'Апрель',
+            5: 'Май', 6: 'Июнь', 7: 'Июль', 8: 'Август',
+            9: 'Сентябрь', 10: 'Октябрь', 11: 'Ноябрь', 12: 'Декабрь'
+        }
+        return MONTH_NAMES.get(month_num, f'Месяц {month_num}')
+    class Meta:
+        verbose_name = 'Мероприятие'
+        verbose_name_plural = 'Мероприятия'
+        ordering = ['-event_date_start']
+
+    def __str__(self):
+        return self.title
+
+    def get_tags_list(self):
+        return [tag.strip() for tag in self.tags.split(',') if tag.strip()]
