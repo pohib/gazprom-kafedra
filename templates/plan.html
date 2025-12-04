@@ -1,0 +1,885 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Учебный план{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<h2 class="text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg animate__animated animate__fadeInDown">
+    Учебный план
+</h2>
+
+
+<div class="mt-6 flex justify-center">
+    <div class="max-w-xl w-full rounded-xl shadow-lg bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 border-l-8 border-blue-800 px-6 py-5 flex items-center">
+        <svg width="36" height="36" fill="none" viewBox="0 0 36 36" class="mr-4 text-white opacity-80">
+            <circle cx="18" cy="18" r="16" fill="#0078C1"/>
+            <path d="M18 12v12M12 18h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <a href="https://www.tyuiu.ru/sveden/education/programs/inghiniring-geologorazvedki-i-razrabotki-gazovyh-mestoroghdeniy-21.04.01.html"
+            target="_blank" class="text-lg font-semibold text-white underline hover:text-yellow-200 transition">
+            Подробнее о направлении «Инжиниринг геологоразведки и разработки газовых месторождений»
+        </a>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 py-8" x-data="curriculum()">
+    <h1 class="header">Дисциплины</h1>
+    <div class="flex flex-col md:flex-row mt-8">
+        <div class="w-full md:w-1/4 bg-white p-4 rounded shadow-lg flex flex-col items-center mb-4 md:mb-0">
+            <ul class="w-full">
+                <template :key="index" x-for="(semester, index) in semesters">
+                    <li>
+                        <button :class="{'active': selectedSemester === index}" @click="selectSemester(index)"
+                            class="semester-btn" x-text="semester.name"></button>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="w-full md:w-3/4 bg-white p-4 rounded shadow-lg">
+            <ul class="space-y-2 animate__animated animate__fadeIn">
+                <template :key="course.title" x-for="course in semesters[selectedSemester].courses">
+                    <li @click="openModal(course)"
+                        class="course-item cursor-pointer animate__animated animate__fadeInUp"
+                        x-text="course.title"
+                    ></li>
+                </template>
+            </ul>
+        </div>
+    </div>
+    <div @keydown.window.escape="closeModal()" class="fixed hidden z-10 inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50"
+        id="modal" x-show="isModalOpen"
+        x-transition>
+        <div @click.away="closeModal()"
+            class="bg-white p-4 overflow-y-scroll translate-y-4 sm:p-8 rounded-lg shadow-lg w-full max-w-lg mx-4 sm:w-1/2 relative ">
+            <button @click="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+                <i class="fas fa-times text-xl sm:text-3xl"></i>
+            </button>
+            <h2 class="text-l sm:text-xl font-bold mb-2 sm:mb-4 underline-title" x-text="selectedCourse"></h2>
+            <img x-show="courseImage" :src="courseImage" alt="Course Image" class="mb-2 sm:mb-4 w-2/4 rounded-xl shadow-xl" />
+            <p x-text="courseDescription"></p>
+            <p><br></p>
+            <p x-html="coursePO"></p>
+            <button @click="closeModal()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Закрыть</button>
+        </div>
+    </div>
+
+<!-- Professors Section -->
+    <h1 class="header mt-16">Преподавательский состав</h1>
+    <div class="flex flex-col md:flex-row mt-8" x-data="professors()">
+        <!-- Professor Selection -->
+        <div class="w-full md:w-1/4 bg-white p-4 rounded shadow-lg flex flex-col items-center">
+            <ul class="w-full">
+                <template :key="index" x-for="(professor, index) in professorList">
+                    <li class="wow animate__animated animate__fadeInDown">
+                        <button :class="{'active': selectedProfessor === index}" @click="selectProfessor(index)"
+                                class="professor-btn" x-text="professor.shortName"></button>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <!-- Professor Details -->
+        <div class="w-full md:w-3/4 bg-white p-4 ml-0 md:ml-4 mt-4 md:mt-0 rounded shadow-lg ">
+            <div class="professor-info" x-show="selectedProfessor !== null">
+                <div class="flex justify-center mb-4">
+                    <img :src="professorList[selectedProfessor].photo" alt="Professor Photo" class="professor-photo">
+                </div>
+                <div class="text-center mb-4 ">
+                    <div class="professor-details justify-center ">
+                        <img alt="Graduate Icon" src="{% static 'img/icons/graduate.png' %}" width="52">
+                        <h2 class="text-2xl font-bold ml-2" x-text="professorList[selectedProfessor].fullName"></h2>
+                    </div>
+                    <div class="professor-details">
+                        <img alt="Suitcase Icon" src="{% static 'img/icons/suitcase.png' %}" width="24">
+                        <p class="text-xl" x-text="professorList[selectedProfessor].position"></p>
+                    </div>
+                </div>
+                <div class="professor-section" x-data="{ selectedDiscipline: 0 }">
+                    <h3 class="text-xl font-bold">Дисциплины</h3>
+                    <template x-if="professorList[selectedProfessor].disciplines.length > 1">
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <template :key="index"
+                                    x-for="(discipline, index) in professorList[selectedProfessor].disciplines">
+                                <button :class="{'active': selectedDiscipline === index}"
+                                        @click="selectedDiscipline = index" class="semester-btn"
+                                        x-text="discipline.subject"></button>
+                            </template>
+                        </div>
+                    </template>
+                    <div class="professor-details">
+                        <img alt="Subject Icon" src="{% static 'img/icons/subject.png' %}" width="24">
+                        <p class="text-xl ml-2"
+                        x-text="professorList[selectedProfessor].disciplines[selectedDiscipline].subject"></p>
+                    </div>
+                    <p><strong>В результате работы по дисциплине Магистрант сможет:</strong></p>
+                    <ul>
+                        <template
+                                :key="skill"
+                                x-for="skill in professorList[selectedProfessor].disciplines[selectedDiscipline].skills">
+                            <li x-html="skill"></li>
+                        </template>
+                    </ul>
+                </div>
+                <div class="professor-section mt-4">
+                    <h3 class="text-xl font-bold">Круг задач в периметре компании</h3>
+                    <ul>
+                        <template :key="task" x-for="task in professorList[selectedProfessor].tasks">
+                            <li x-text="task"></li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mx-auto mt-10">
+    <h1 class="header md-hidden">Учебный план (таблица)</h1>
+    <div class="overflow-x-auto">
+        <table class="table-auto border-collapse w-full">
+            <thead>
+                <tr>
+                    <th class="border p-2"></th>
+                    <th class="border p-2 text-center bg-blue-100" colspan="2">1 год обучения</th>
+                    <th class="border p-2 text-center bg-blue-100" colspan="2">2 год обучения</th>
+                </tr>
+                <tr>
+                    <th class="border p-2"></th>
+                    <th class="border p-2 text-center bg-blue-200">1 семестр</th>
+                    <th class="border p-2 text-center bg-blue-200">2 семестр</th>
+                    <th class="border p-2 text-center bg-blue-200">3 семестр</th>
+                    <th class="border p-2 text-center bg-blue-400">4 семестр</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-200">Философские проблемы в науке и технике</td>
+                    <td class="border p-2 bg-blue-200">Управление проектами и проектный менеджмент</td>
+                    <td class="border p-2 bg-blue-200">Организация и управление нефтегазовым производством</td>
+                    <td class="border p-2 bg-blue-400">Единый комплекс цифровых моделей месторождения</td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-200">Информационно-коммуникационные технологии</td>
+                    <td class="border p-2 bg-blue-300">Построение и актуализация геологических моделей</td>
+                    <td class="border p-2 bg-blue-300">Технологии геолого-промыслового контроля за газовой, газоконденсатной, нефтегазоконденсатной разработкой месторождений</td>
+                    <td class="border p-2 bg-blue-400">Экономика инвестиционных проектов</td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-200">Системный анализ и моделирование</td>
+                    <td class="border p-2 bg-blue-300">Построение и актуализация геомеханических моделей</td>
+                    <td class="border p-2 bg-blue-300">Цифровое моделирование скважин</td>
+                    <td class="border p-2 bg-blue-400">Экологические аспекты проектирования и сопровождения разработки и эксплуатации газовых, газоконденсатных, нефтегазоконденсатных месторождений</td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-200">Педагогика и психология</td>
+                    <td class="border p-2 bg-blue-300">Основы алгоритмизации и программирования в геологии и разработке месторождений</td>
+                    <td class="border p-2 bg-blue-300">Проектирование обустройства газовых и газоконденсатных месторождений</td>
+                    <td class="border p-2 bg-blue-400">Цифровое вероятностное гидродинамическое моделирование уникальных месторождений</td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-300">Инжиниринг и реинжиниринг технологий добычи газа</td>
+                    <td class="border p-2 bg-blue-300">Проектирование и сопровождение разработки газовых, газоконденсатных, нефтегазоконденсатных месторождений</td>
+                    <td class="border p-2 bg-blue-300">Построение и актуализация гидродинамических моделей</td>
+                    <td class="border p-2"></td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-300">Проектирование и сопровождение геологоразведочных работ</td>
+                    <td class="border p-2 bg-blue-400">Петрофизическое и литофациальное моделирование</td>
+                    <td class="border p-2 bg-blue-300">Построение и актуализация технологических моделей</td>
+                    <td class="border p-2"></td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-300">Нормативно-методическое сопровождение разведки и разработки</td>
+                    <td class="border p-2 bg-blue-400">Цифровые геомеханические модели под задачи бурения и разработки новых месторождений</td>
+                    <td class="border p-2 bg-blue-400">Геологическое моделирование и подсчет запасов</td>
+                    <td class="border p-2"></td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-400">Концептуальный инжиниринг жизненного цикла месторождений</td>
+                    <td class="border p-2 bg-blue-400">Проектирование и научно-техническое сопровождение гидроразрыва пласта</td>
+                    <td class="border p-2 bg-blue-400">Балансовое моделирование подготовки углеводородного сырья</td>
+                    <td class="border p-2"></td>
+                </tr>
+                <tr>
+                    <td class="border p-2 bg-green-50">✓</td>
+                    <td class="border p-2 bg-blue-400">Разработка и внедрение новых передовых технологий в области геологоразведки и подсчета углеводородного сырья</td>
+                    <td class="border p-2 bg-blue-400">Проектирование и сопровождение геолого-технических мероприятий</td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container mx-auto mt-10">
+    <h1 class="header">Используемое программное обеспечение</h1>
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- ТНавигатор -->
+            <a href="{% static 'docs/tnavigator.pdf' %}" target="_blank" 
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r from-red-500 to-blue-600"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br from-red-50 to-blue-100 group-hover:from-red-100 group-hover:to-blue-200 transition-all duration-300">
+                        <img src="{% static 'img/po/tNavigator.png' %}" alt="тНавигатор" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2 group-hover:text-red-600 transition-colors">тНавигатор</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4"> Корпоративная платформа для интегрированного моделирования и анализа месторождений</p>
+                    <div class="flex items-center text-red-500 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Isoline GIS -->
+            <a href="{% static 'docs/IsolineGIS.pdf' %}" target="_blank"
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r from-green-500 to-blue-600"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br from-green-50 to-blue-100 group-hover:from-green-100 group-hover:to-blue-300 transition-all duration-300">
+                        <img src="{% static 'img/po/isolinegis.png' %}" alt="Isoline GIS" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2 group-hover:text-green-600 transition-colors">Isoline GIS</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Геоинформационная система для анализа и визуализации пространственных данных месторождений</p>
+                    <div class="flex items-center text-green-500 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+            <a href="{% static 'docs/РН-ГРИД.pdf' %}" target="_blank"
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r-from-orange-500-to-amber-600"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br-from-orange-50-to-amber-100 group-hover:bg-gradient-to-br-from-orange-100-to-amber-200 transition-all duration-300">
+                        <img src="{% static 'img/po/rn-grid.png' %}" alt="РН-Грид" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <h3 class="font-bold text-black text-lg mb-2 text-orange transition-colors">РН-Грид</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Программный комплекс для построения и анализа сеточных моделей пластов</p>
+                    <div class="flex items-center text-orange text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+            <a href="{% static 'docs/monitoring-gdis.pdf' %}" target="_blank"
+                class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                <div class="h-1 bg-gradient-to-r-from-cyan-500-to-blue-400"></div>
+                <div class="flex flex-col items-center text-center p-6">
+                    <div class="mb-4 p-3 rounded-xl bg-gradient-to-br-from-cyan-50-to-blue-100 group-hover:from-cyan-100 group-hover:to-blue-200 transition-all duration-300">
+                        <img src="{% static 'img/po/monitoring-gdis.png' %}" alt="Мониторинг-ГДИС" 
+                            class="w-28 h-28 object-contain filter group-hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div class="group">
+                        <h3 class="font-bold text-lg mb-2 transition-colors text-gray">Мониторинг-ГДИС</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Система оперативного контроля и анализа данных гидродинамических исследований скважин</p>
+                    <div class="flex items-center text-cyan text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>Открыть документацию</span>
+                        <i class="fas fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function curriculum() {
+    return {
+        selectedSemester: 0,
+        isModalOpen: false,
+        selectedCourse: '',
+        courseDescription: '',
+        coursePO: '',
+        courseImage: '',
+        semesters: [
+            {
+                name: '1 семестр',
+                courses: [
+                    {
+                        title: 'Философские проблемы в науке и технике',
+                        description: 
+                        'Изучение фундаментальных философских концепций науки и техники. Анализ методологических основ научного познания, критериев научности и специфики технического знания. Рассмотрение науки и техники как социокультурных феноменов в историческом и современном контекстах.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/zid/RP_Filosofskie_problemy_v_nauke_i_texniki.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Информационно-коммуникационные технологии',
+                        description: 'Изучение современных информационно-коммуникационных технологий и их применение в нефтегазовой отрасли. Освоение принципов работы ИКТ-систем, технологий Интернета вещей, цифровых двойников и вопросов информационной безопасности. Формирование навыков использования ИКТ для решения профессиональных задач в условиях цифровой трансформации промышленности.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vih/RP_Informacionno-kommunikacionnye_texnologii(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Системный анализ и моделирование',
+                        description: 'Освоение методологии системного анализа и моделирования сложных технических систем. Изучение принципов построения математических моделей, методов оптимизации и принятия решений в нефтегазовой отрасли. Формирование навыков проектирования и совершенствования технологических систем на протяжении их жизненного цикла.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vir/RP_Sistemnyi_analiz_i_modelirovanie(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Педагогика и психология',
+                        description: 'Формирование психолого-педагогической компетентности и развитие навыков межличностного взаимодействия. Изучение основ педагогики высшей школы, психологии личности и профессионального образования. Освоение методов организации образовательного процесса, развития творческого мышления и профилактики профессионального выгорания.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/zit/RP_Pedagogika_i_psixologiya(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Инжиниринг и реинжиниринг технологий добычи газа',
+                        description: 'Анализ и совершенствование технологических решений в области разведки, бурения, добычи и подготовки газа с применением современных цифровых инструментов, методов патентных исследований и оценки рисков.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/zip/RP_Inghiniring_i_reinghiniring_texnologii_dobychi_gaza.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Проектирование и сопровождение геологоразведочных работ',
+                        description: 'Системный анализ процессов проектирования и сопровождения геологоразведочных работ, от региональной оценки до динамического моделирования и интерпретации данных с использованием специализированного программного обеспечения.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/viq/RP_Proektirovanie_i_soprovoghdenie_geologorazvedochnyx_rabot.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Нормативно-методическое сопровождение разведки и разработки',
+                        description: 'Анализ правовых основ, лицензионных требований и системы договорных отношений в сфере недропользования для обеспечения законности и эффективности геологоразведочных и добычных работ.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/viy/RP_Normativno-metodicheskoe_soprovoghdenie_razvedki_i_razrabotki.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Концептуальный инжиниринг жизненного цикла месторождений',
+                        description: 'Курс направлен на формирование целостного видения и стратегического управления проектами разработки месторождений на ранних стадиях для минимизации рисков и оптимизации решений на протяжении всего жизненного цикла.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/ziy/RP_Konceptualynyi_inghiniring_ghiznennogo_cikla_mestoroghdeniya.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Разработка и внедрение новых передовых технологий в области геологоразведки и подсчета углеводородного сырья',
+                        description: 'Формирование компетенций в области применения современных геолого-геофизических технологий, методов подсчета запасов и технико-экономического обоснования на всех этапах геологоразведочных работ и разработки месторождений углеводородного сырья.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/eis/RP_Razrabotka_i_vnedrenie_novyx_peredovyx_texnologii_v_oblasti_geologorazvedki_i_podscheta_uglevodorodnogo_syryya.pdf',
+                        image: null
+                    }
+                ]
+            },
+            {
+                name: '2 семестр',
+                courses: [
+                    {
+                        title: 'Управление проектами и проектный менеджмент',
+                        description: 'Освоение методологии управления проектами на всех этапах жизненного цикла, включая планирование, контроль сроков, ресурсов, стоимости и рисков, для реализации нефтегазовых проектов.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vij/RP_Upravlenie_proektami_i_proektnyi_menedghment(2).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Построение и актуализация геологических моделей',
+                        description: 'Освоение методов построения, оценки качества и актуализации цифровых геологических моделей на основе комплекса геолого-геофизических данных для подсчета запасов и проектирования разработки месторождений.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/riu/RP_Postroenie_i_aktualizaciya_geologicheskix_modelei.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Построение и актуализация геомеханических моделей',
+                        description: 'Дисциплина охватывает технологии построения и актуализации геомеханических моделей для прогнозирования поведения горных пород в процессе бурения и разработки. Особое внимание уделяется оценке качества моделей и их интеграции с проектными решениями.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/aih/RP_Postroenie_i_aktualizaciya_geomexanicheskix_modelei.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Основы алгоритмизации и программирования в геологии и разработке месторождений',
+                        description: 'Дисциплина охватывает полный цикл проектирования и научно-технического сопровождения гидравлического разрыва пласта (ГРП) — от основ технологии до оценки её эффективности. Студенты изучат методы моделирования процессов ГРП, принципы подбора жидкостей и пропантов, освоят проектирование дизайна трещины с использованием геомеханических моделей, а также научатся проводить экспертизу и контроль качества работ. Особое внимание уделяется интеграции ГРП в гидродинамические модели месторождений для прогнозирования и оптимизации технологического эффекта.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/rix/RP_Osnovy_algoritmizacii_i_programmirovaniya_v_geologii_i_razrabotke_mestoroghdenii(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Проектирование и сопровождение разработки газовых, газоконденсатных, нефтегазоконденсатных месторождений',
+                        description: 'Проектирование и сопровождение полного цикла разработки газовых и газоконденсатных месторождений — от анализа исходных данных и создания моделей до технико-экономического обоснования и составления проектной документации.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vin/RP_Proektirovanie_i_soprovoghdenie_razrabotki_gazovyx,_gazokondensatnyx,_neftegazokondensatnyx_mestoroghdenii.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Петрофизическое и литофациальное моделирование',
+                        description: 'Изучение керна и данных ГИС для построения и сопровождения цифровых геологических и петрофизических моделей продуктивных пластов.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/eih/RP_Petrofizicheskoe_i_litofacialynoe_modelirovanie(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Цифровые геомеханические модели под задачи бурения и разработки новых месторождений',
+                        description: 'Построение и применение цифровых геомеханических моделей для прогнозирования и минимизации рисков при бурении и разработке месторождений.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/zis/RP_Cifrovye_geomexanicheskie_modeli_pod_zadachi_bureniya_i_razrabotki_novyx_mestoroghdenii.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Проектирование и научно-техническое сопровождение гидроразрыва пласта',
+                        description: 'Дисциплина охватывает полный цикл проектирования и научно-технического сопровождения гидравлического разрыва пласта (ГРП) — от основ технологии до оценки её эффективности. Студенты изучат методы моделирования процессов ГРП, принципы подбора жидкостей и пропантов, освоят проектирование дизайна трещины с использованием геомеханических моделей, а также научатся проводить экспертизу и контроль качества работ. Особое внимание уделяется интеграции ГРП в гидродинамические модели месторождений для прогнозирования и оптимизации технологического эффекта.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vin/RP_Proektirovanie_i_nauchno-texnicheskoe_soprovoghdenie_gidrorazryva_plasta.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Проектирование и сопровождение геолого-технических мероприятий',
+                        description: 'Проектирование и анализ геолого-технических мероприятий для интенсификации добычи и повышения эффективности разработки газовых месторождений.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vic/RP_Proektirovanie_i_soprovoghdenie_geologo-texnicheskix_meropriyatii(1).pdf',
+                        image: null
+                    }
+                ]
+            },
+            {
+                name: '3 семестр',
+                courses: [
+                    {
+                        title: 'Организация и управление нефтегазовым производством',
+                        description: 'Освоение принципов и методов управления нефтегазовым производством, включая формирование организационных структур, стратегическое и текущее планирование, а также разработку систем мотивации для эффективного принятия управленческих решений в отрасли.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/zip/RP_Organizaciya_i_upravlenie_neftegazovym_proizvodstvom(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Технологии геолого-промыслового контроля за газовой, газоконденсатной, нефтегазоконденсатной разработкой месторождений',
+                        description: 'Освоение технологий и методов геолого-промыслового контроля, включая гидродинамические исследования скважин и пластов, интерпретацию данных для оценки их состояния и эффективности разработки газовых, газоконденсатных и нефтегазоконденсатных месторождений.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/ric/RP_Texnologii_geologo-promyslovogo_kontrolya_za_gazovoi,_gazokondensatnoi,_neftegazokondensatnoi_razrabotkoi_mestoroghdenii.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Цифровое моделирование скважин',
+                        description: 'Освоение методик расчета и корреляционного анализа ключевых свойств пластовых флюидов (газа, нефти, воды) для построения и адаптации цифровых моделей с целью оптимизации проектных решений при разработке месторождений.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/viq/RP_Cifrovoe_modelirovanie_skvaghin.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Проектирование обустройства газовых и газоконденсатных месторождений',
+                        description: 'Освоение принципов и методик проектирования обустройства газовых и газоконденсатных месторождений, включая категорирование объектов по взрывопожарной опасности и управление проектами для обеспечения безопасной и эффективной эксплуатации производственных объектов.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/zio/RP_Proektirovanie_obustroistva_gazovyx_i_gazokondensatnyx_mestoroghdenii.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Построение и актуализация гидродинамических моделей',
+                        description: 'Формирование компетенций в области построения, актуализации и применения гидродинамических моделей для проектирования, анализа и оптимизации разработки нефтяных и газовых месторождений на основе геолого-технологической информации и современного программного обеспечения.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/viq/RP_Postroenie_i_aktualizaciya_gidrodinamicheskix_modelei.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Построение и актуализация технологических моделей',
+                        description: 'Моделирование и оптимизация работы скважин, систем сбора и подготовки продукции на всех этапах жизненного цикла месторождения для обеспечения технологической эффективности.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/rib/RP_Postroenie_i_aktualizaciya_texnologicheskix_modelei.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Геологическое моделирование и подсчет запасов',
+                        description: 'Создание и анализ цифровых геологических моделей для оценки ресурсной базы и подсчета запасов углеводородов с использованием методов многовариантного моделирования и анализа неопределенностей.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/kek/RP_Geologicheskoe_modelirovanie_i_podschet_zapasov(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Балансовое моделирование подготовки углеводородного сырья',
+                        description: 'Методика составления материальных балансов для объектов производства, хранения и отгрузки сжиженного природного газа с расчетом материальных потоков сырья, продукции и технологических компонентов.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/eil/RP_Balansovoe_modelirovanie_podgotovki_uglevodorodnogo_syryya.pdf',
+                        image: null
+                    },
+                ]
+            },
+            {
+                name: '4 семестр',
+                courses: [
+                    {
+                        title: 'Единый комплекс цифровых моделей месторождения',
+                        description: 'Интеграция геологических, гидродинамических и технологических моделей в единый комплекс для повышения достоверности прогнозных показателей и оптимизации разработки месторождений на всех этапах жизненного цикла.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vid/RP_Edinyi_kompleks_cifrovyx_modelei_mestoroghdeniya.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Экономика инвестиционных проектов',
+                        description: 'Оценка экономической эффективности, рисков и формирование финансовых моделей инвестиционных проектов в нефтегазовой отрасли для обоснования и принятия управленческих решений.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/vif/RP_Ekonomika_investicionnyx_proektov(1).pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Экологические аспекты проектирования и сопровождения разработки и эксплуатации газовых, газоконденсатных, нефтегазоконденсатных месторождений',
+                        description: 'Изучение экологических требований и технологических решений для минимизации воздействия нефтегазовых проектов на природу. В фокусе — законодательство, охрана недр, экологический мониторинг и стратегии декарбонизации.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/aia/RP_Ekologicheskie_aspekty_proektirovaniya_i_soprovoghdeniya_razrabotki_i_ekspluatacii_gazovyx,_gazokondensatnyx,_neftegazokondensatnyx_mestoroghdenii.pdf',
+                        image: null
+                    },
+                    {
+                        title: 'Цифровое вероятностное гидродинамическое моделирование уникальных месторождений',
+                        description: 'Освоение современных подходов к вероятностному гидродинамическому моделированию для оценки неопределенностей и оптимизации разработки сложнопостроенных месторождений. Включает работу с адаптацией моделей, анализом чувствительности и многокритериальной оптимизацией.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/eip/RP_Cifrovoe_veroyatnostnoe_gidrodinamicheskoe_modelirovanie_unikalynyx_mestoroghdenii.pdf',
+                        image: null
+                    }
+                ]
+            }
+        ],
+        selectSemester(index) {
+            this.selectedSemester = index;
+        },
+        openModal(course) {
+            this.selectedCourse = course.title;
+            this.courseDescription = course.description;
+            this.coursePO = `
+                Ознакомиться с предметом, а также перечнем материалов можно
+                <a href="${course.pdfUrl}" target="_blank" class="text-blue-600 underline hover:text-blue-800">здесь</a>.
+            `;
+            this.courseImage = course.image || '';
+            this.isModalOpen = true;
+            document.body.classList.add('modal-open');
+            document.getElementById('modal').classList.remove('hidden');
+        },
+        closeModal() {
+            document.body.classList.remove('modal-open');
+            this.isModalOpen = false;
+        }
+    };
+}
+
+function professors() {
+    return {
+        selectedProfessor: 0,
+        professorList: [
+            {
+                shortName: 'Вотчель В. А.',
+                fullName: 'Вотчель Виталий Андреевич',
+                photo: '{% static "img/plan/votchel.png" %}',
+                position: 'Начальник отдела геомеханического моделирования',
+                phone: '+7 (3452) 545-592',
+                email: 'V_Votchel@vniigaz.gazprom.ru',
+                disciplines: [
+                    {
+                        subject: 'Цифровое геомеханическое моделирование',
+                        skills: [
+                            '<strong>Знать:</strong> Принципы и методы построения трехмерной модели, все этапы построения',
+                            '<strong>Уметь:</strong> Проводить расчеты устойчивости ствола проектируемой скважины; прогноз выхода твердой фазы; формирование рекомендаций по устойчивости скважины',
+                            '<strong>Владеть:</strong> Навыками построения модели механических свойств горных пород; построения модели напряженно-деформированного состояния массива горных пород; построения и калибровки модели устойчивости ствола скважины'
+                        ]
+                    },
+                    {
+                        subject: 'Проектирование и сопровождение геолого-технических мероприятий',
+                        skills: [
+                            '<strong>Знать:</strong> методы и технологии геолого-технических мероприятий, основы проектирования и оценки их эффективности, нормативные требования и экологические стандарты',
+                            '<strong>Уметь:</strong> разрабатывать и реализовывать проекты геолого-технических мероприятий, оценивать их влияние на пласт и добычу, проводить мониторинг и корректировку мероприятий',
+                            '<strong>Владеть:</strong> навыками управления геолого-техническими процессами, применения цифровых инструментов моделирования и аналитики, используемых при сопровождении разработки месторождений'
+                        ]
+                    },
+                    {
+                        subject: 'Бурение скважин в осложненных условиях и сопровождение бурения скважин',
+                        skills: [
+                            '<strong>Знать:</strong> современные технологии и методы бурения скважин в сложных геологических условиях, принципы телеметрического и технологического сопровождения бурения, особенности выбора оборудования и инструментов в зависимости от типа пород и условий бурения',
+                            '<strong>Уметь:</strong> применять методы контроля и анализа параметров бурения в реальном времени, управлять процессами бурения с учетом геологических и технологических факторов, организовывать техническое сопровождение и обеспечивать безопасность работ',
+                            '<strong>Владеть:</strong> навыками использования систем телеметрии, цифровых и инженерных решений для контроля траектории и состояния скважины, способами оптимизации процессов бурения и предотвращения аварийных ситуаций на буровой площадке'
+                        ]
+                    },
+                ],
+                tasks: [
+                    'Организация работ отдела по достижению целей и выполнению обязательств',
+                    'Контроль выполнения работ по разработке методических и методологических материалов в области геомеханического моделирования',
+                    'Разработка и внедрение программного обеспечения для моделирования',
+                    'Контроль выполнения проектов по созданию, сопровождению и внедрению результатов ГТМ и обеспечения программного комплекса'
+                ]
+            },
+            {
+                    shortName: 'Делиу Е. А.',
+                    fullName: 'Делиу Екатерина Алимовна',
+                    photo: '{% static "img/plan/deliu.png" %}',
+                    position: 'Ведущий геолог отдела геологоразведочных работ в Дальневосточном регионе',
+                    phone: '+7 (3452)545-863',
+                    email: 'E_Deliu@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Цифровое геологическое моделирование',
+                            skills: [
+                                '<strong>Знать:</strong> принципы и методы построения трехмерной модели, характеристику объемных сеток трехмерной модели, алгоритм переноса скважинных данных на трехмерные сетки',
+                                '<strong>Уметь:</strong> проводить оценку достоверности модели; применять методику создания, оценки качества построения и актуализации цифровой геологической модели\n',
+                                '<strong>Владеть:</strong> навыками построения трехмерных и послойных сеток структурных сейсмических поверхностей, детализированного структурного каркаса по продуктивным объектам; карт и кубов общих и эффективных продуктивных толщин; карт и кубов фильтрационных и емкостных параметров'
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Разработка 2D и 3D геологических моделей строения залежей и месторождений УВ;',
+                        'Составление отчетов по подсчету запасов месторождений УВ;',
+                        'Составление планов и программ ГРР по объектам лицензирования;',
+                        'Подготовка проектов ГРР;',
+                        'Формирование программ освоения месторождений.\n'
+                    ]
+                },
+                {
+                    shortName: 'Малышев И. О.',
+                    fullName: 'Малышев Игорь Олегович',
+                    photo: '{% static "img/plan/malyshev.png" %}',
+                    position: 'Начальник Центра технико-технологических решений по освоению новых месторождений',
+                    phone: '+7 (3452) 545-509',
+                    email: 'I_Malyshev@vniigaz.gazprom.ru',
+
+                    disciplines: [
+                        {
+                            subject: 'Контроль и управление разработкой газовых, газоконденсатных и нефтегазоконденсатных месторождений',
+                            skills: [
+                                '<strong>Знать:</strong> технологические режимы, параметры работы скважин',
+                                '<strong>Уметь:</strong> анализировать технологические потери углеводородного сырья при добыче в соответствии с принятой схемой и технологией разработки месторождений',
+                                '<strong>Владеть:</strong> навыком анализировать динамику добычи углеводородного сырья, навыком внедрения мероприятий по повышению эффективности работы оборудования по добыче углеводородного сырья'
+                            ]
+                        },
+                        {
+                            subject: 'Проектирование и разработка газовых газоконденсатных нефтегазоконденсатных месторождений',
+                            skills: [
+                                '<strong>Знать:</strong> современные методы проектирования, основы разработки и сопровождения месторождений, принципы подсчета запасов и цифрового моделирования, технологические процессы и нормативно-правовые рамки',
+                                '<strong>Уметь:</strong> разрабатывать проекты и планы разработки месторождений, применять цифровые модели для оптимизации добычи, анализировать эффективность технологий, организовывать сопровождение и контроль реализации проектов',
+                                '<strong>Владеть:</strong> инструментами цифрового моделирования, методами прогнозирования и управления ресурсами, технологиями сопровождения и технической поддержки разработки, навыками координации комплексных инженерных решений и проектного менеджмента'
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Организация деятельности Центра по выполнению задач и функций, возложенных на Центр в области комплексного научно-технического сопровождения работ по ГРП, геомеханического моделирования, концептуального инжиниринга новых месторождений, комплексного анализа перспектив освоения участков недр и разработки решений по развитию минерально-сырьевой базы ПАО «Газпром».'
+                    ]
+                },
+                {
+                    shortName: 'Самойлов А. С.',
+                    fullName: 'Самойлов Александр Сергеевич',
+                    photo: '{% static "img/plan/samoylov.png" %}',
+                    position: 'Заместитель начальника Центра технико-технологических решений по освоению новых месторождений',
+                    phone: '+7 (3452) 545-590',
+                    email: 'A_Samoylov@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Инжиниринг и реинжиниринг технологий добычи газа',
+                            skills: [
+                                '<strong>Знать:</strong> основные принципы, методы и технологии добычи газа, включая современные инженерные подходы, конструктивные особенности газовых месторождений и методы их изучения, основы цифрового моделирования и автоматизации процессов добычи, влияние технологических процессов на эффективность и безопасность эксплуатации месторождений, нормативные требования и экологические аспекты добычи газа',
+                                '<strong>Уметь:</strong> проводить инженерный анализ и оценку состояния газового месторождения, разрабатывать и оптимизировать технологические схемы добычи газа с применением современных методов, применять цифровые и программные средства для моделирования и управления процессами добычи, осуществлять техническое сопровождение, контроль и мониторинг добычи, организовывать научно-исследовательские работы и внедрять инновационные решения',
+                                '<strong>Владеть:</strong> современными информационно-коммуникационными технологиями и цифровыми двойниками в нефтегазовой отрасли, методами и инструментами балансирования и моделирования гидродинамических и геомеханических процессов, технологиями проектирования и технологического сопровождения гидроразрыва пласта, навыками управления рисками в инвестиционных и производственных проектах, практическими навыками комплексного инженерного подхода в разработке газовых месторождений'
+                            ],
+
+                        },
+                        {
+                            subject: 'Оперативное управление промыслом',
+                            skills: [
+                                '<strong>Знать:</strong> основы организации и управления нефтегазовым промыслом, методы мониторинга и анализа производственных процессов, требования безопасности и экологические нормы, современные технологии добычи и методы оптимизации работы объектов',
+                                '<strong>Уметь:</strong> планировать и координировать работы на промысловых объектах, анализировать данные производственного контроля, принимать решения по обеспечению бесперебойной и безопасной эксплуатации оборудования, организовывать взаимодействие между подразделениями',
+                                '<strong>Владеть:</strong> инструментами оперативного управления, навыками проведения технического аудита, средствами автоматизации производственных процессов и системами мониторинга состояния объектов, методами повышения эффективности работы промысла и управлением рисками'
+                            ],
+
+                        },
+                    ],
+                    tasks: [
+                        'Обеспечение своевременного и качественного выполнения научно-исследовательских и тематических работ, курируемых Центром, а также работ по:',
+                        '- проектированию, научно-техническому и инженерному сопровождению работ по гидроразрыву пласта;',
+                        '- прогнозированию добычи, обоснованию технологических коэффициентов извлечения газа, конденсата и нефти, расчетам технологических показателей разработки для новых месторождений углеводородов;',
+                        'разработке предложений по технологическому развитию применяемых методов воздействия для интенсификации притока',
+                        'разработке и обоснованию предложений по типу и оборудованию заканчивания скважин',
+                        '- экспертизе созданных технологических моделей системы промысловой подготовки и межпромыслового транспорта УВ.'
+                    ]
+                },
+                {
+                    shortName: 'Шварц А. В.',
+                    fullName: 'Шварц Анна Викторовна',
+                    photo: '{% static "img/plan/shvarts.png" %}',
+                    position: 'Старший научный сотрудник отдела геомеханического моделирования',
+                    phone: '+7 (3452) 545-842',
+                    email: 'A_Shvarts@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Цифровое вероятностное геологическое моделирование',
+                            skills: [
+                                '<strong>Знать:</strong> технологические процессы добычи углеводородного сырья',
+                                '<strong>Уметь:</strong> проводить оценку достоверности модели; применять методику создания, оценки качества построения и актуализации цифровой вероятностной геологической модели',
+                                '<strong>Владеть:</strong> навыками построения цифровых вероятностных геологических моделей'
+                            ]
+                        },
+                        {
+                            subject: 'Цифровое вероятностное гидродинамическое моделирование',
+                            skills: [
+                                '<strong>Знать:</strong> геолого-геофизическую и геолого-технологическую информацию, использованную для построения модели; схему фрагментации месторождения; индексацию участков; перечень моделируемых объектов',
+                                '<strong>Уметь:</strong> проводить оценку достоверности модели; применять методику создания, оценки качества построения и актуализации цифровой вероятностной геологической модели',
+                                '<strong>Владеть:</strong> навыками построения цифровых вероятностных гидродинамических моделей'
+                            ]
+                        },
+                        {
+                            subject: 'Цифровая модель пластового флюида',
+                            skills: [
+                                '<strong>Знать:</strong> возможные форматы построения модели флюида, физико-химические свойства компонентов и фракций пластового флюида, свойства пластовой и закачиваемой воды',
+                                '<strong>Уметь:</strong> выполнять расчеты скоростей флюидов, скоростей коррозии и эрозии трубопровода, парафиноотложений; формировать исходные данные для задания состава и свойств флюида в ТМ; оформлять состав флюида для моделирования систем сбора и установок подготовки',
+                                '<strong>Владеть:</strong> навыками построения и настройки модели пластового флюида'
+                            ]
+                        },
+                        {
+                            subject: 'Единый комплекс цифровых моделей месторождения',
+                            skills: [
+                                '<strong>Знать:</strong> методы и принципы проектирования геолого-технических мероприятий, оценку их эффективности, нормативные и экологические требования',
+                                '<strong>Уметь:</strong> разрабатывать и реализовывать проекты мероприятий, проводить мониторинг и корректировку, анализировать влияние на добычу и пласт',
+                                '<strong>Владеть:</strong> навыками управления процессами, применять цифровые инструменты моделирования и аналитики для сопровождения разработки месторождений'
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Осуществление научного руководства проведения исследований по отдельным проблемам в области разработки месторождений УВ, цифровой обработки и интерпретации геолого-промысловых исследований скважин и пластов;',
+                        'Разработка научно-технических решений по наиболее сложным проблемам, методам проведения исследований и разработок',
+                        'Научно-техническое сопровождение геомеханико-фильтрационных моделей'
+                    ]
+                },
+                {
+                    shortName: 'Малышкин А. А.',
+                    fullName: 'Малышкин Антон Андреевич',
+                    photo: '{% static "img/plan/malyshkin.png" %}',
+                    position: 'Начальник отдела научно-технического сопровождения гидроразрыва пласта',
+                    phone: 'уточнить',
+                    email: 'A_Malyshkin@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Проектирование и научно-техническое сопровождение гидроразрыва пласта',
+                            skills: [
+                                '<strong>Знать:</strong> современные технологии и методы гидроразрыва пласта, этапы проектирования и подготовки работ, критерии эффективности и основные нормативные требования',
+                                '<strong>Уметь:</strong> разрабатывать проекты гидроразрыва пласта с учётом геологических особенностей, переводить проектные решения в технологические регламенты, контролировать проведение работ и анализировать их результаты',
+                                '<strong>Владеть:</strong> современными цифровыми и аналитическими инструментами для проектирования и мониторинга ГРП, навыками документирования и сопровождения всех стадий работ, методами оценки эффективности и безопасности гидроразрыва пласта'
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Уточнить',
+                    ]
+                },
+                {
+                    shortName: 'Юсько М. Н.',
+                    fullName: 'Юсько Марина Николаевна',
+                    photo: '{% static "img/plan/yusko.png" %}',
+                    position: 'Начальник отдела комплексного прогноза добычи новых месторождений (г. Тюмень)',
+                    phone: '+7 (3452) 545-595',
+                    email: 'M_Yusko@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Алгоритмизация и программирование в решении задач моделирования',
+                            skills: [
+                                '<strong>Знать:</strong> методы взаимодействия средств автоматизированной системы управления технологическим процессом, телемеханики, систем автоматического управления оборудования по добыче углеводородного сырья, способы управления ими',
+                                '<strong>Уметь:</strong> оценивать состояние оборудования по добыче углеводородного сырья после ремонта',
+                                '<strong>Владеть:</strong> навыками ведения учета наличия и состояния оборудования по добыче углеводородного сырья'
+                            ]
+                        },
+                        {
+                            subject: 'Цифровые двойники месторождений',
+                            skills: [
+                                '<strong>Знать:</strong> основы создания и применения цифровых моделей, принципы интеграции данных, современные технологии цифрового моделирования и мониторинга процессов',
+                                '<strong>Уметь:</strong> разрабатывать и использовать цифровые двойники для анализа и оптимизации производственных и технологических процессов, интегрировать данные из разных источников, проводить моделирование и прогнозирование',
+                                '<strong>Владеть:</strong> навыками работы с программным обеспечением для создания цифровых двойников, методами визуализации и аналитики, инструментами поддержки принятия решений и сопровождения жизненного цикла объектов',
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Руководство разработкой технических заданий, методических и рабочих программ, технико-экономических обоснований;',
+                        'Организация и контроль выполнения работ по прогнозированию добычи, обоснованию технологических коэффициентов извлечения газа, конденсата и нефти, обоснованию типа; заканчивания скважин, расчету технологических показателей разработки для новых месторождений углеводородов;',
+                        'Участие в подготовке проектов договоров, планов и программ работ по освоению новых месторождений УВ'
+                    ]
+                },
+                {
+                    shortName: 'Тукмакова Т. Н.',
+                    fullName: 'Тукмакова Татьяна Нуриахметовна',
+                    photo: '{% static "img/plan/tukmakova.png" %}',
+                    position: 'Главный эксперт центра технико-технологических решений по освоению новых месторождений',
+                    phone: 'уточнить',
+                    email: 'T_Tukmakova@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Нормативно-правовые основы разведки и освоения',
+                            skills: [
+                                '<strong>Знать:</strong> основные нормативные документы, методики сопровождения разведочных и разработочных процессов, требования к безопасности и экологии, стандарты управления проектами',
+                                '<strong>Уметь:</strong> анализировать и применять нормативно-правовые акты, разрабатывать методические материалы, обеспечивать соблюдение стандартов и регламентов, сопровождать процессы разведки и разработки',
+                                '<strong>Владеть:</strong> навыками организации нормативной документации, мониторинга соответствия проектной и фактической деятельности нормативным требованиям, работать с системами контроля качества и управления рисками'
+                            ]
+                        },
+                        {
+                            subject: 'Управление рисками при реализации инвестиционных проектов',
+                            skills: [
+                                '<strong>Знать:</strong> основы теории и практики управления рисками, методологии идентификации, оценки и анализа рисков, нормативно-правовые требования и инструменты управления рисками в инвестиционных проектах',
+                                '<strong>Уметь:</strong> выявлять и классифицировать риски, разрабатывать стратегии их минимизации, проводить количественный и качественный анализ, применять методы мониторинга и контроля рисковой среды',
+                                '<strong>Владеть:</strong> навыками использования программных средств для анализа рисков, разработки риск-менеджмент планов, организации коммуникаций и управления изменениями, а также принимать обоснованные управленческие решения с учетом рисков',
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Уточнить',
+                    ]
+                },
+                {
+                    shortName: 'Южаков А. А.',
+                    fullName: 'Южаков Андрей Александрович',
+                    photo: '{% static "img/plan/yujakov.png" %}',
+                    position: 'Заместитель начальника отдела научно-методического сопровождения водопользования и природоохранной деятельности при разработке месторождения',
+                    phone: 'уточнить',
+                    email: 'A_Yujakov@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Декарбонизация в нефтегазовой отрасли',
+                            skills: [
+                                '<strong>Знать:</strong> основные международные и российские методы декарбонизации, такие как улавливание и хранение углерода CCS, использование возобновляемых источников энергии, снижение выбросов метана, технологические и организационные схемы снижения углеродного следа, нормативные требования и международные обязательства',
+                                '<strong>Уметь:</strong> анализировать возможности внедрения технологий улавливания и хранения CO2, разрабатывать стратегии низкоуглеродного перехода, оценивать эффективность экологических и экономических решений, вести мониторинг выбросов парниковых газов и управлять проектами по снижению углеродного следа',
+                                '<strong>Владеть:</strong> навыками моделирования сценариев декарбонизации, организации экологического менеджмента и взаимодействия с государственными и корпоративными структурами для достижения стандартов по снижению выбросов'
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Уточнить',
+                    ]
+                },
+                {
+                    shortName: 'Рычков Д. А.',
+                    fullName: 'Рычков Дмитрий Александрович',
+                    photo: '{% static "img/plan/rychkov.png" %}',
+                    position: 'Начальник отдела создания цифровых технологических моделей новых месторождений',
+                    phone: 'уточнить',
+                    email: 'D_Rychkov@vniigaz.gazprom.ru',
+                    disciplines: [
+                        {
+                            subject: 'Балансовое моделирование подготовки углеводородного сырья',
+                            skills: [
+                                '<strong>Знать:</strong> основы балансного моделирования, методы оценки и прогнозирования состава и качества углеводородного сырья, процессы его подготовки и очистки, нормативные требования',
+                                '<strong>Уметь:</strong> строить модели баланса углеводородного сырья, анализировать данные технологических процессов, выполнять расчеты и оптимизировать подготовку сырья',
+                                '<strong>Владеть:</strong> навыками использования программных средств для моделирования процессов подготовки, анализа технологических потоков, а также интеграции данных для принятия инженерных решений'
+                            ]
+                        },
+                        {
+                            subject: 'Цифровое технологическое моделирование',
+                            skills: [
+                                '<strong>Знать:</strong> основы цифрового моделирования, методы расчёта и анализа параметров скважин, физико-химические процессы в пласте и скважине, программные комплексы для моделирования',
+                                '<strong>Уметь:</strong> строить цифровые модели скважин, анализировать их поведение в различных условиях, проводить прогнозирование эффективности бурения и эксплуатации, использовать специализированное ПО',
+                                '<strong>Владеть:</strong> навыками работы с программами 3D-моделирования, методами численного моделирования, инструментами визуализации и оценки параметров скважин',
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Уточнить',
+                    ]
+                },
+                {
+                    shortName: 'Игнатьев С. Ф.',
+                    fullName: 'Игнатьев Сергей Фёдорович',
+                    photo: '{% static "img/plan/ignatiev.png" %}',
+                    position: 'Начальник центра разработки проектов геологоразведочных работ в Восточно-Сибирском и Дальневосточном регионах',
+                    disciplines: [
+                        {
+                            subject: 'Разработка и внедрение новых передовых технологий в области геологоразведки и подсчета углеводородного сырья',
+                            skills: [
+                                '<strong>Знать:</strong> современные технологии и методы в геологоразведке, принципы подсчёта запасов, инновационные инструменты и цифровые решения, а также нормативные и экономические аспекты внедрения новых технологий',
+                                '<strong>Уметь:</strong> анализировать перспективы применения новых методов, разрабатывать внедренческие проекты, оценивать эффективность технологий, адаптировать и интегрировать инновации в существующие процессы',
+                                '<strong>Владеть:</strong> навыками работы с современным программным обеспечением и оборудованием, проводить экспериментальные исследования, управлять цифровыми платформами и проектами внедрения технологий'
+                            ]
+                        },
+                        {
+                            subject: 'Цифровое геологическое моделирование',
+                            skills: [
+                                '<strong>Знать:</strong> методы вероятностного моделирования, особенности геологических данных, принципы построения цифровых моделей с учетом неопределенностей, современные программные комплексы',
+                                '<strong>Уметь:</strong> создавать вероятностные геологические модели, анализировать распределение запасов, оценивать риски и неопределенности, применять методы статистического анализа и визуализации данных',
+                                '<strong>Владеть:</strong> навыками работы с цифровыми инструментами вероятностного моделирования, методами интеграции различных данных, анализом и интерпретацией результатов для принятия обоснованных инженерных решений',
+                            ]
+                        },
+                    ],
+                    tasks: [
+                        'Уточнить',
+                    ]
+                },
+            ],
+        selectProfessor(index) {
+            this.selectedProfessor = index;
+        }
+    };
+}
+</script>
+{% endblock %}

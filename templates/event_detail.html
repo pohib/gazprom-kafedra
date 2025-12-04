@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ event.title }} | Календарь событий{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-blue-100 py-10 relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 opacity-30 blur-3xl"
+        style="background: radial-gradient(circle at 20% 0%, rgba(0,94,184,0.4), transparent 55%),
+                radial-gradient(circle at 80% 100%, rgba(0,160,255,0.35), transparent 55%);">
+    </div>
+
+    <div class="relative">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="animate-[fadeIn1_0.6s_ease-out]">
+                <a href="{% url 'news:events_calendar' %}"
+                    class="inline-flex items-center mb-10 px-7 py-3 bg-gazprom-gradient2 hover:bg-gazprom-gradient text-white font-black text-base md:text-lg rounded-2xl shadow-[0_20px_40px_rgba(0,94,184,0.4)] hover:shadow-[0_28px_60px_rgba(0,94,184,0.6)] transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden btn-glow backdrop-blur">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Назад к календарю
+                </a>
+
+                {% if event.image %}
+                <div class="mb-10 rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.45)] border border-white/40 glow-card">
+                    <img src="{{ event.image.url }}" alt="{{ event.title }}"
+                        class="w-full h-72 md:h-[420px] object-cover">
+                </div>
+                {% endif %}
+
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-8 text-center">
+                    {{ event.title }}
+                </h1>
+
+                <div class="bg-white/70 backdrop-blur-xl rounded-3xl p-8 md:p-10 mb-10 shadow-[0_25px_60px_rgba(0,0,0,0.18)] border border-white/60 animate-[floatSoft_8s_ease-in-out_infinite]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {% if event.event_date_start %}
+                        <div class="flex items-center p-5 bg-gazprom-gradient text-white rounded-2xl shadow-xl meta-card">
+                            <div class="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center mr-5 text-2xl">
+                                📅
+                            </div>
+                            <div>
+                                <div class="text-xl font-bold leading-snug mb-1">
+                                    {% if event.event_date_end %}
+                                        {{ event.event_date_start|date:"d.m.Y" }}<br>– {{ event.event_date_end|date:"d.m.Y" }}
+                                    {% else %}
+                                        {{ event.event_date_start|date:"d.m.Y" }}
+                                    {% endif %}
+                                </div>
+                                <div class="text-blue-100 text-sm font-medium uppercase tracking-wide">Дата проведения</div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if event.registration_deadline %}
+                        <div class="flex items-center p-5 bg-deadline-gradient text-white rounded-2xl shadow-xl meta-card">
+                            <div class="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center mr-5 text-2xl">⏰</div>
+                            <div>
+                                <div class="text-xl font-bold leading-snug mb-1">{{ event.registration_deadline|date:"d.m.Y" }}</div>
+                                <div class="text-orange-100 text-sm font-medium uppercase tracking-wide">Заявки до</div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if event.location %}
+                        <div class="flex items-center p-5 bg-location-gradient text-white rounded-2xl shadow-xl meta-card">
+                            <div class="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center mr-5 text-2xl">📍</div>
+                            <div>
+                                <div class="text-xl font-bold leading-snug mb-1">{{ event.location }}</div>
+                                <div class="text-emerald-100 text-sm font-medium uppercase tracking-wide">Место проведения</div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if event.venue %}
+                        <div class="flex items-center p-5 bg-venue-gradient text-white rounded-2xl shadow-xl meta-card lg:col-span-1 md:col-span-2">
+                            <div class="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center mr-5 text-2xl">🏛️</div>
+                            <div>
+                                <div class="text-xl font-bold leading-snug mb-1">{{ event.venue }}</div>
+                                <div class="text-indigo-100 text-sm font-medium uppercase tracking-wide">Площадка</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if event.tags %}
+                <div class="mb-10">
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-4 flex items-center">
+                        🏷️ <span class="ml-2">Теги</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in event.get_tags_list %}
+                        <span class="px-4 py-2 tag-chip-base text-sky-900 font-semibold text-sm rounded-xl border border-sky-400/40 shadow-sm hover:shadow-md transition-all duration-200 cursor-default tag-chip">
+                            #{{ tag }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.18)] border border-white/70 mb-12 prose prose-lg max-w-none">
+                    {{ event.description|linebreaks }}
+                </div>
+                <div class="flex justify-between items-stretch gap-4 mb-4">
+                    {% if prev_event %}
+                        <a href="{% url 'news:event_detail' prev_event.pk %}"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-gazprom-gradient2 hover:bg-gazprom-gradient text-white font-semibold text-sm md:text-base rounded-2xl shadow-[0_16px_36px_rgba(0,94,184,0.4)] hover:shadow-[0_24px_48px_rgba(0,94,184,0.6)] transition-all duration-400 transform hover:-translate-y-1 relative overflow-hidden btn-glow backdrop-blur">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Предыдущее мероприятие
+                        </a>
+                    {% endif %}
+
+                    {% if next_event %}
+                        <a href="{% url 'news:event_detail' next_event.pk %}"
+                        class="ml-auto inline-flex items-center justify-center px-6 py-3 bg-gazprom-gradient2 hover:bg-gazprom-gradient text-white font-semibold text-sm md:text-base rounded-2xl shadow-[0_16px_36px_rgba(0,94,184,0.4)] hover:shadow-[0_24px_48px_rgba(0,94,184,0.6)] transition-all duration-400 transform hover:-translate-y-1 relative overflow-hidden btn-glow backdrop-blur">
+                            Следующее мероприятие
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

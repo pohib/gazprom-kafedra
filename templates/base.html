@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description"
+        content="Официальный сайт базовой кафедры ВНИИГАЗ Тюменского индустриального университета. Информация о кафедре, учебном плане, поступлении, событиях, достижениях и партнёрах.">
+    <meta name="keywords"
+        content="ВНИИГАЗ, ТИУ, базовая кафедра, обучение, учебный план, поступление, события, достижения, партнёры">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Кафедра ВНИИГАЗ{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.5.2/dist/cdn.min.js"></script>
+    <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body>
+<header>
+    <nav class="glass-header shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-nowrap justify-between items-center h-20">
+                <div class="flex items-center space-x-4 flex-shrink-0 min-w-0">
+                    <a href="{% url 'index' %}" class="flex items-center space-x-2">
+                        <img alt="Логотип Газпром ВНИИГАЗ" class="h-14 w-auto max-w-[110px]" src="{% static 'img/logo-gazprom-white.png' %}">
+                        <img alt="Логотип ТИУ" class="h-14 w-auto max-w-[110px]" src="{% static 'img/logo-tiu.png' %}">
+                    </a>
+                </div>
+                <div class="burger-menu md:hidden ml-4 cursor-pointer">
+                    <i class="fas fa-bars fa-2x"></i>
+                </div>
+                <div class="nav-menu md:flex flex-nowrap flex-1 justify-between items-center min-w-0 overflow-x-auto">
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Главная</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'plan' %}active{% endif %}" href="{% url 'plan' %}">Учебный план</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'enrollment' %}active{% endif %}" href="{% url 'enrollment' %}">Поступление</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'events' %}active{% endif %}" href="{% url 'news:events' %}">События</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'achievements' %}active{% endif %}" href="{% url 'achievements' %}">Достижения</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'partners' %}active{% endif %}" href="{% url 'partners' %}">Партнёры</a>
+                    <a class="nav-item px-2 lg:px-3 py-2 rounded-md text-base lg:text-lg font-medium text-black
+                        {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="flex-1 flex flex-col">
+    {% block content %}
+    {% endblock %}
+</main>
+<footer class="bg-gray-800 text-gray-200 py-8 mt-auto w-full">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="font-bold text-lg mb-4"><i class="fa-solid fa-address-card"></i> Адреса</h3>
+                <p>
+                    ВНИИГАЗ Газпром:<br>
+                    ул. Перекопская, 19, Тюмень, Россия<br><br>
+                    Тюменский индустриальный университет:<br>
+                    ул. Мельникайте, 70, Тюмень, Россия
+                </p>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4"><i class="fa-solid fa-school"></i> Приёмная кафедры</h3>
+                <ul>
+                    <li><a class="hover:text-gray-400" href="mailto:bkgazpromvniigaz@tyuiu.ru">bkgazpromvniigaz@tyuiu.ru</a></li>
+                    <li><a class="hover:text-gray-400" href="tel:+7(3452)54-55-90">+7 (3452) 54-55-90</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4"><i class="fa-solid fa-star"></i> Социальные сети</h3>
+                <ul class="flex space-x-4">
+                    <li><a class="hover:text-gray-400" href="https://vk.com/bk_gazpromvniigaz">ВКонтакте</a></li>
+                    <li><a class="hover:text-gray-400" href="https://taplink.io/id:010939312:fb8a">Официальный сайт</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4"><i class="fa-solid fa-book-open"></i> Заведующий кафедрой</h3>
+                <ul>
+                    <li>Самойлов Александр Сергеевич</li>
+                    <li>и.о. заведующего кафедрой</li>
+                    <li><a class="hover:text-gray-400" href="mailto:A_Samoylov@vniigaz.gazprom.ru">A_Samoylov@vniigaz.gazprom.ru</a></li>
+                    <li><a class="hover:text-gray-400" href="tel:+7 (3452) 54 55 90">+7 (3452) 54 55 90</a></li>
+                </ul>
+            </div>
+            <div>
+                <img alt="Логотип Газпром ВНИИГАЗ" class="h-24 w-auto logo" src="{% static 'img/logo-gazprom-white.png' %}">
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <p>&copy; {% now "Y" %} ООО Газпром ВНИИГАЗ ФГБОУ ВО ТИУ</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'js/navbar.js' %}"></script>
+<script>
+    document.getElementById('scrollIcon')?.addEventListener('click', function () {
+        document.getElementById('targetSection')?.scrollIntoView({behavior: 'smooth'});
+    });
+</script>
+
+{% block extra_scripts %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}
+</body>
+</html>

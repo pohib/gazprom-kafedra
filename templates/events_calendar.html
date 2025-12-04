@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load event_filters %}
+{% load month_filters %}
+{% load static %}
+
+{% block title %}Календарь событий{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gazprom-page py-8 relative overflow-hidden">
+    <div class="page-scale">
+        <div class="container mx-auto px-4 max-w-7xl relative z-10">
+            <div class="text-center mb-16 float-animation">
+                <div class="inline-flex items-center px-16 py-8 rounded-3xl shadow-2xl mb-8 relative z-20" style="
+                        background: linear-gradient(135deg, #005EB8 0%, #004A8D 40%, #45a8ff 100%) !important;
+                        border: 4px solid rgba(255,255,255,0.4) !important;
+                        box-shadow: 0 30px 60px rgba(0,94,184,0.6), inset 0 1px 0 rgba(255,255,255,0.3) !important;
+                    ">
+                    <div class="text-white">
+                        <h1 class="text-5xl md:text-7xl font-black mb-4 leading-tight" 
+                            style="
+                                color: #FFFFFF !important;
+                                text-shadow: 
+                                    3px 3px 6px rgba(0,0,0,0.9),
+                                    0 0 30px rgba(255,255,255,0.4) !important;
+                            ">
+                            Календарь событий
+                        </h1>
+                        <p class="text-2xl md:text-3xl font-bold leading-relaxed" 
+                            style="
+                                color: #FFFFFF !important;
+                                text-shadow: 
+                                    2px 2px 4px rgba(0,0,0,0.8),
+                                    0 0 20px rgba(255,255,255,0.3) !important;
+                        ">
+                            Базовая кафедра Газпром ВНИИГАЗ
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar-visual mx-auto mb-20">
+                <div class="calendar-nav">
+                    {% if current_year > years.0 %}
+                    <button class="calendar-nav-btn" onclick="changeYear(-1)">‹ {{ current_year|add:"-1" }}</button>
+                    {% else %}
+                    <button class="calendar-nav-btn opacity-0 cursor-default" disabled>‹</button>
+                    {% endif %}
+
+                    <div class="calendar-nav-title">
+                        {{ current_year }}
+                    </div>
+
+                    {% if current_year < years|last %}
+                    <button class="calendar-nav-btn" onclick="changeYear(1)">{{ current_year|add:"1" }} ›</button>
+                    {% else %}
+                    <button class="calendar-nav-btn opacity-0 cursor-default" disabled>›</button>
+                    {% endif %}
+                </div>
+
+                
+                <div class="calendar-month-switch mb-8">
+                    {% for month_num in months %}
+                    <button class="month-btn 
+                        {% if month_num == selected_month %}active{% endif %}
+                        {% if month_num in months_with_events %}has-events{% endif %}" 
+                        onclick="selectMonth({{ month_num }})">
+                        {{ month_num|get_month_name }}
+                        {% if month_num in months_with_events %}
+                        <span class="event-indicator"></span>
+                        {% endif %}
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <div class="calendar-grid mb-6">
+                    <div class="calendar-day-header">Пн</div>
+                    <div class="calendar-day-header">Вт</div>
+                    <div class="calendar-day-header">Ср</div>
+                    <div class="calendar-day-header">Чт</div>
+                    <div class="calendar-day-header">Пт</div>
+                    <div class="calendar-day-header">Сб</div>
+                    <div class="calendar-day-header">Вс</div>
+                </div>
+
+                <div class="calendar-grid">
+                    {% for day_num in days %}
+                    <div class="calendar-cell">
+                        <div class="calendar-day 
+                            {% if day_num in days_with_events_count %}has-events{% endif %}
+                            {% if day_num == selected_day %}active{% endif %}
+                            {% if day_num == now.day and selected_year == now.year and selected_month == now.month %}today{% endif %}"
+                            onclick="selectDay({{ day_num }})">
+                            <span class="day-number">{{ day_num }}</span>
+                            {% if day_num in days_with_events_count %}
+                            <div class="event-badge">{{ days_with_events_count|get_item:day_num }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="flex justify-center mt-8 mb-8">
+                    <button type="button"
+                            class="filter-btn px-8 py-3 rounded-2xl text-white font-bold shadow-2xl"
+                            onclick="resetCalendar()">
+                        Сбросить фильтры
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                {% if events %}
+                    {% for event in events %}
+                    <a href="{% url 'news:event_detail' event.pk %}"
+                    class="group event-card rounded-3xl p-8 hover:shadow-[0_35px_60px_rgba(0,94,184,0.25)] transition-all duration-500 overflow-hidden border border-gray-100/50">
+
+                        <div class="flex flex-col h-full">
+                            <div class="relative mb-8 h-64 rounded-3xl overflow-hidden group-hover:scale-110 transition-all duration-700">
+                                {% if event.image %}
+                                    <img src="{{ event.image.url }}" alt="{{ event.title }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <div class="w-full h-full bg-gradient-to-br from-[var(--gazprom-blue)] via-[var(--gazprom-blue-dark)] to-[var(--gazprom-gold)] flex items-center justify-center">
+                                        <svg class="w-24 h-24 text-white/80" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                {% endif %}
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            </div>
+
+                            <h2 class="text-2xl xl:text-3xl font-black text-[var(--gazprom-dark)] mb-6 group-hover:text-[var(--gazprom-blue)] transition-all duration-300 line-clamp-2 leading-tight">
+                                {{ event.title }}
+                            </h2>
+
+                            <div class="space-y-4 mb-8">
+                                {% if event.event_date_start %}
+                                <div class="flex items-center p-4 bg-date-soft rounded-2xl border border-blue-100/50">
+                                    <span class="w-12 h-12 bg-gazprom-solid text-white rounded-2xl flex items-center justify-center mr-4 text-xl font-bold shadow-lg">
+                                        📅
+                                    </span>
+                                    <div class="font-semibold text-lg">
+                                        {% if event.event_date_end %}
+                                            {{ event.event_date_start|date:"d.m.Y" }} — {{ event.event_date_end|date:"d.m.Y" }}
+                                        {% else %}
+                                            {{ event.event_date_start|date:"d.m.Y" }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if event.registration_deadline %}
+                                <div class="flex items-center p-4 bg-deadline-soft rounded-2xl border border-orange-100/50">
+                                    <span class="w-12 h-12 bg-orange-500 text-white rounded-2xl flex items-center justify-center mr-4 text-xl font-bold shadow-lg">
+                                        ⏰
+                                    </span>
+                                    <span class="font-semibold text-lg">Заявки до: {{ event.registration_deadline|date:"d.m.Y" }}</span>
+                                </div>
+                                {% endif %}
+
+                                {% if event.location %}
+                                <div class="flex items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-100/50">
+                                    <span class="w-12 h-12 bg-green-500 text-white rounded-2xl flex items-center justify-center mr-4 text-xl font-bold shadow-lg">📍</span>
+                                    <span class="font-semibold text-lg">{{ event.location }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            {% if event.tags %}
+                            <div class="flex flex-wrap gap-2 mb-8">
+                                {% for tag in event.get_tags_list %}
+                                <span class="px-4 py-2 bg-tag backdrop-blur-sm text-[var(--gazprom-blue-dark)] text-sm font-bold rounded-xl border border-[var(--gazprom-blue)]/30 shadow-sm transition-all duration-300 hover:bg-tag-hover">
+                                    #{{ tag }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <div class="mt-auto pt-8 border-t border-gray-200/50">
+                                <span class="inline-block px-10 py-4 filter-btn bg-gradient-to-r from-[var(--gazprom-blue)] to-[var(--gazprom-blue-dark)] hover:from-[var(--gazprom-blue-dark)] hover:to-[var(--gazprom-blue)] text-white font-black text-xl rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2">
+                                    Подробнее <span class="ml-2">→</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-span-full py-16 text-center">
+                        <div class="inline-flex items-center justify-center space-x-8 mb-8">
+                            <div class="flex-shrink-0">
+                                <svg class="w-36 h-36 text-blue-400/80" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="text-5xl font-bold text-gray-800 mt-10 leading-tight">
+                                    {% if selected_day %}
+                                        На {{ selected_day }} {{ selected_month|get_month_name|lower }} {{ selected_year }} года<br>мероприятий не запланировано
+                                    {% elif selected_month %}
+                                        В {{ selected_month|get_month_name|lower }} {{ selected_year }} года<br>мероприятий не запланировано
+                                    {% elif selected_year %}
+                                        В {{ selected_year }} году<br>мероприятий не запланировано
+                                    {% else %}
+                                        На данный момент мероприятий нет
+                                    {% endif %}
+                                </h3>
+                                <p class="text-gray-600 text-lg mt-4">
+                                    Выберите другую дату
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            {% if events.has_other_pages %}
+            <div class="flex justify-center mt-24">
+                <nav class="glass-nav rounded-3xl p-6 flex space-x-4">
+                    {% if events.has_previous %}
+                        <a href="?page={{ events.previous_page_number }}{% if year %}&year={{ year }}{% endif %}{% if month %}&month={{ month }}{% endif %}{% if day %}&day={{ day }}{% endif %}" 
+                            class="px-8 py-4 bg-white/70 hover:bg-white text-gray-800 font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                            ‹ Предыдущая
+                        </a>
+                    {% endif %}
+                    
+                    <span class="px-12 py-4 bg-gradient-to-r from-[var(--gazprom-blue)] to-[var(--gazprom-blue-dark)] text-white font-black rounded-2xl shadow-2xl min-w-[200px] text-center">
+                        {{ events.number }} / {{ events.paginator.num_pages }}
+                    </span>
+                    
+                    {% if events.has_next %}
+                        <a href="?page={{ events.next_page_number }}{% if year %}&year={{ year }}{% endif %}{% if month %}&month={{ month }}{% endif %}{% if day %}&day={{ day }}{% endif %}" 
+                            class="px-8 py-4 bg-white/70 hover:bg-white text-gray-800 font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                            Следующая ›
+                        </a>
+                    {% endif %}
+                </nav>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+function selectDay(day) {
+    const year = {{ selected_year }};
+    const month = {{ selected_month }};
+
+    const url = `/events/calendar/year/${year}/month/${month}/day/${day}/`;
+
+    const params = new URLSearchParams(window.location.search);
+    params.delete('page');
+    const queryString = params.toString();
+    
+    window.location.href = url + (queryString ? '?' + queryString : '');
+}
+
+function selectMonth(month) {
+    const year = {{ selected_year }};
+    
+    const url = `/events/calendar/year/${year}/month/${month}/`;
+    
+    const params = new URLSearchParams(window.location.search);
+    params.delete('page');
+    params.delete('day');
+    const queryString = params.toString();
+    
+    window.location.href = url + (queryString ? '?' + queryString : '');
+}
+
+function changeYear(direction) {
+    const currentYear = {{ current_year }};
+    const years = {{ years|safe }};
+    const newYear = currentYear + direction;
+
+    if (years.includes(newYear)) {
+        const month = {{ selected_month }};
+        const url = month 
+            ? `/events/calendar/year/${newYear}/month/${month}/`
+            : `/events/calendar/year/${newYear}/`;
+        window.location.href = url;
+    }
+}
+
+
+function resetCalendar() {
+    window.location.href = '/events/calendar/';
+}
+</script>
+{% endblock %}

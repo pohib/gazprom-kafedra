@@ -1,0 +1,374 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="bg-gray-100 py-12 shadow-xl animate__animated animate__fadeInUp">
+        <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 px-4 lg:px-6 mb-8 lg:mb-0 box-border">
+                <div class="flex items-center space-x-6 mb-4">
+                    <img alt="Логотип Газпром ВНИИГАЗ" class="w-48" src="{% static 'img/logo-gazprom-white.png' %}">
+                    <img alt="Логотип ТИУ" class="w-48" src="{% static 'img/logo-tiu.png' %}">
+                </div>
+                <p class="text-l text-blue-400 font-semibold mb-4">Магистратура по направлению 21.04.01 НЕФТЕГАЗОВОЕ ДЕЛО</p>
+                <h1 class="text-4xl font-bold mb-8">
+                    Инжиниринг геологоразведки
+                    <span>
+                        <span class="text-gray-900">и</span>
+                        <span class="text-blue-500"> разработки газовых месторождений</span>
+                    </span>
+                </h1>
+                <div class="grid grid-cols-2 gap-4 md:gap-8 bg-gray-100 text-left">
+                    <div class="animate__delay-1s animate__animated animate__fadeInUp">
+                        <span class="block text-sm text-gray-700">Бюджет:</span>
+                        <span class="block text-2xl font-bold gradient-text">14</span>
+                    </div>
+                    <div class="animate__delay-1s animate__animated animate__fadeInUp">
+                        <span class="block text-sm text-gray-700">Договор:</span>
+                        <span class="block text-2xl font-bold gradient-text">6</span>
+                    </div>
+                    <div class="animate__delay-2s animate__animated animate__fadeInUp col-span-2">
+                        <span class="block text-sm text-gray-702">Форма обучения:</span>
+                        <span class="text-2xl font-bold gradient-text">очная</span>
+                    </div>
+                    <!--
+                    <div class="animate__delay-2s animate__animated animate__fadeInUp">
+                        <span class="block text-sm text-gray-700">Сроки подачи:</span>
+                        <span class="block text-2xl font-bold gradient-text">11.07 - 16.08</span>
+                    </div>
+                    -->
+                </div>
+            </div>
+
+            <div class="w-3/4 h-3/4 flex justify-center lg:justify-end relative">
+                <div class="absolute inset-0 bg-white opacity-10 backdrop-blur-lg"></div>
+                <img alt="Тематическая картинка" class="w-3/4 h-3/4 opacity-80 relative animate__animated animate__fadeIn"
+                    src="{% static 'img/header/factory-hero.png' %}">
+            </div>
+        </div>
+        <div class="text-center w-full cursor-pointer" id="scrollIcon">
+            <i class="fa fa-arrow-down opacity-50 font-bold text-2xl"></i>
+        </div>
+    </div>
+    <section class="container mt-8 mx-auto wow animate__animated animate__fadeInUp" id="targetSection">
+        <div x-data="{
+            items: [
+                { src: '{% static 'img/carousel/image-1.jpg' %}', title: 'Выступление на форуме «Россия»', description: 'Студентка базовой кафедры ВНИИГАЗа ТИУ на выставке-форуме «Россия».' },
+                { src: '{% static 'img/carousel/image-2.jpg' %}', title: 'Уникальные проекты магистрантов', description: 'Магистранты создают уникальные проекты и вносят значительный вклад в научно-исследовательскую деятельность Института.' },
+                { src: '{% static 'img/carousel/image-3.jpg' %}', title: 'Магистранты и ученые', description: 'Магистранты 1 и 2 курсов встретились с учеными Института на лекции.' },
+                { src: '{% static 'img/carousel/image-4.jpg' %}', title: '«Энергия опыта»', description: 'Магистранты знакомятся с учеными Института в рамках проекта «Энергия опыта».' },
+                { src: '{% static 'img/carousel/image-5.jpg' %}', title: 'Чемпионат по инжинирингу', description: 'Магистранты выступили на Командном чемпионате по инжинирингу освоения месторождений на площадке БЦ «Атриум» (г. Тюмень).' },
+                { src: '{% static 'img/carousel/image-6.jpg' %}', title: 'Практика в Тюмени', description: 'Магистранты проходят практику в Тюменском центре исследований пластовых систем ООО «Газпром ВНИИГАЗ».' },
+                { src: '{% static 'img/carousel/image-7.jpg' %}', title: 'Посещение Сибирского Учебного Центра', description: 'Магистранты базовой кафедры ООО «Газпром ВНИИГАЗ» ТИУ посетили один из крупнейших тренинговых центров Тюменской области, Сибирский Учебный Центр.' },
+                { src: '{% static 'img/carousel/image-8.jpg' %}', title: 'Выступление на международной олимпиаде', description: 'Студенты базовой кафедры «Газпром ВНИИГАЗ» ТИУ выступили в Лиге Северной Евразии Международной олимпиады PetroCup.' }
+            ],
+            active: 0
+        }">
+            <div class="relative w-full h-custom">
+                <div class="snap overflow-auto relative flex-nowrap flex transition-all"
+                    style="scroll-behavior: smooth; scroll-snap-type: x mandatory;"
+                    x-on:scroll.debounce="active = Math.round($event.target.scrollLeft / ($event.target.scrollWidth / items.length))"
+                    x-ref="slider">
+                    <template x-for="(item, index) in items" :key="index">
+                        <div class="w-full flex-shrink-0 h-custom relative scroll-snap-align-start">
+                            <img :src="item.src" alt="..." class="block w-full h-full object-cover rounded-lg shadow-lg">
+                            <div class="gradient-overlay"></div>
+                            <div class="absolute bottom-10 left-10 text-white">
+                                <h2 class="text-2xl font-bold" x-text="item.title"></h2>
+                                <p x-text="item.description"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <button aria-label="Previous"
+                    class="absolute top-0 bottom-0 left-0 w-1/12 bg-transparent transition-shadow duration-300 hover:shadow-xl flex items-center justify-center"
+                    x-on:click="
+                        stopAutoSlide();
+                        $refs.slider.scrollLeft = Math.max(0, $refs.slider.scrollLeft - $refs.slider.clientWidth);
+                        startAutoSlide();
+                    ">
+                    <svg class="h-12 w-12 text-gray-400 hover:text-white transition-colors duration-300" style="margin-top: 30px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+                <button aria-label="Next"
+                        class="absolute top-0 bottom-0 right-0 w-1/12 bg-transparent transition-shadow duration-300 hover:shadow-xl flex items-center justify-center"
+                        x-on:click="
+                            stopAutoSlide();
+                            $refs.slider.scrollLeft = Math.max(0, $refs.slider.scrollLeft + $refs.slider.clientWidth);
+                            startAutoSlide();
+                        ">
+                    <svg class="h-12 w-12 text-gray-400 hover:text-white transition-colors duration-300" style="margin-top: 30px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <template x-for="(item, index) in items" :key="index">
+                        <span
+                            class="carousel-dot"
+                            :class="active === index ? 'carousel-dot-active' : ''"
+                            @click="stopAutoSlide(); $refs.slider.scrollLeft = index * $refs.slider.clientWidth; active = index; startAutoSlide();">
+                        </span>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="container mt-16 mx-auto">
+        <div class="text-center mb-8">
+            <h2 class="animate_animated animate__fadeInUp text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg">
+                О базовой кафедре ООО «Газпром ВНИИГАЗ» ФГБОУ ВО «Тюменский индустриальный университет»
+            </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="feature-card p-6 wow animate__slideInUp">
+                <img alt="Feature Image" class="feature-image" src="{% static 'img/header/header-plan.png' %}">
+                <div class="feature-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">План</h3>
+                <div class="rounded-lg">
+                    <p class="feature-text">
+                        Внедрить работу кафедры в деятельность ООО «Газпром ВНИИГАЗ» как полноценной структуры,
+                        отвечающей за
+                        качество кадрового потенциала и сократить затраты на переквалификацию и апгрейд.
+                    </p>
+                </div>
+            </div>
+            <div class="feature-card p-6 wow animate__slideInUp">
+                <img alt="Feature Image" class="feature-image" src="{% static 'img/header/header-1.png' %}">
+                <div class="feature-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Миссия и цель деятельности кафедры</h3>
+                <p class="feature-text">
+                    Базовая кафедра стала полноценным участником в миссии создания научного и технологического
+                    суверенитета
+                    путем обеспечения высококвалифицированными кадрами газовой отрасли, в частности под потребности
+                    компании
+                    и вуза, с возможностью непрерывного развития собственного научного потенциала.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700">
+    <section class="container mt-16 mx-auto relative">
+        <img alt="Logo" class="blur-img absolute top-0 translate-y-2/4 right-0 h-full opacity-50"
+            src="{% static 'img/header/3d-gazprom-logo.png' %}">
+        <div class="task-container bg-white shadow-md p-6 rounded-lg wow animate__fadeIn">
+            <div class="task-title flex items-center mb-6">
+                <div class="feature-icon text-3xl mr-4">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-black">Задачи</h3>
+            </div>
+            <div class="task-list mt-4 space-y-6">
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-user-tie icon text-2xl text-blue-500 mr-4"></i>
+                    <p>назначение руководителя НИР из числа ведущих исследователей компании (главные специалисты,
+                        ведущие научные сотрудники, руководители, начальники отдела)</p>
+                </div>
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-handshake icon text-2xl text-blue-500 mr-4"></i>
+                    <p>содействие в выполнении научно-исследовательских работ</p>
+                </div>
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-cloud icon text-2xl text-blue-500 mr-4"></i>
+                    <p>применение облачных технологий в образовании и организации учебного процесса</p>
+                </div>
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-laptop-code icon text-2xl text-blue-500 mr-4"></i>
+                    <p>внедрение в рабочий процесс необходимого программного обеспечения для исследований</p>
+                </div>
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-chalkboard-teacher icon text-2xl text-blue-500 mr-4"></i>
+                    <p>проведение лекций по основным направлениям Центров ВНИИГАЗ, участвующих в подготовке
+                        обучающихся</p>
+                </div>
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-industry icon text-2xl text-blue-500 mr-4"></i>
+                    <p>внедрение производственных практик в процесс обучения</p>
+                </div>
+                <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
+                    <i class="fas fa-briefcase icon text-2xl text-blue-500 mr-4"></i>
+                    <p>трудоустройство в компанию уже с первого семестра магистратуры, в случае успешного прохождения
+                        вступительных испытаний и при соответствии кадровым требованиям компании</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700">
+    <section class="hero-wrapper">
+        <div class="hero">
+            <div class="shadow-xl hero-title wow animate__slideInDown">О формате обучения по Учебному плану 2025</div>
+            <div class="shadow-xl hero-subtitle wow animate__slideInDown">Концептуальный инжиниринг — базовый элемент обучения
+            </div>
+        </div>
+    </section>
+    <section class="mobile-gallery">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="wow fadeInDown">
+                <img alt="Schema 1" class="h-auto max-w-full rounded-lg cursor-pointer shadow-lg" onclick="openPreview(this)"
+                    src="{% static 'img/schemas/schema_1.png' %}">
+            </div>
+            <div class="wow animate__fadeInDown">
+                <img alt="Schema 2" class="h-auto max-w-full rounded-lg cursor-pointer shadow-lg" onclick="openPreview(this)"
+                    src="{% static 'img/schemas/schema_2.png' %}">
+            </div>
+            <div class="wow animate__fadeInDown">
+                <img alt="Schema 3" class="h-auto max-w-full rounded-lg cursor-pointer shadow-lg" onclick="openPreview(this)"
+                    src="{% static 'img/schemas/schema_3.png' %}">
+            </div>
+        </div>
+    </section>
+    <div class="fixed z-10 inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden" id="previewModal"
+        onclick="closePreview(event)">
+        <div class="relative" onclick="event.stopPropagation()">
+            <img class="w-3/4 md:w-full h-auto rounded-lg" id="previewImage" src="">
+            <button class="absolute sm:hidden top-2 right-2 text-white text-2xl" onclick="closePreview(event)">&times;</button>
+        </div>
+    </div>
+    <section class="container mx-auto mt-16 p-4" id="places-block">
+        <div class="bg-gray-100 p-8 rounded-lg shadow-lg text-center wow animate__fadeIn">
+            <h2 class="text-2xl font-bold mb-8">Количество мест БК ООО Газпром ВНИИГАЗ</h2>
+            <div class="flex flex-col md:flex-row justify-around">
+                <div class="flex flex-row justify-around w-full items-center">
+                    <div class="flex flex-col items-center mb-4 md:mb-0">
+                        <div class="shadow-xl w-24 h-24 bg-gradient-to-r from-blue-200 to-blue-400 text-4xl font-bold text-gray-700 flex items-center justify-center rounded-full2 mb-2">
+                            14
+                        </div>
+                        <p class="text-lg font-medium text-gray-700 text-center">Бюджетных мест</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="shadow-xl w-24 h-24 bg-gradient-to-r from-blue-200 to-blue-400 text-4xl font-bold text-gray-700 flex items-center justify-center rounded-full2 mb-2">
+                            6
+                        </div>
+                        <p class="text-lg font-medium text-gray-700 text-center">Договорных мест<span class="text-blue-500">*</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-left text-sm text-blue-500 mt-4">
+                <div class="text-sm text-gray-600 text-right">
+                    <p>Стоимость обучения – 298,9 тыс. руб.</p>
+                    <p>при наличии более 61 балла – 276,4 тыс. руб.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto mt-16 p-4" id="location-block">
+        <div class="bg-gray-100 p-8 rounded-lg shadow-lg text-center wow animate__fadeIn">
+            <h2 class="text-2xl font-bold mb-8">Где будет проходить обучение</h2>
+            <div class="flex flex-col md:flex-row items-center justify-around mb-8">
+                <div class="flex flex-col items-center mb-4 md:mb-0">
+                    <div class="text-xl font-semibold text-blue-600 mb-2 bg-gradient-to-r from-blue-200 to-transparent bg-opacity-50 p-2 rounded-md">
+                        ВНИИГАЗ
+                    </div>
+                    <p class="text-lg font-medium text-gray-700">г.Тюмень, ул. Перекопская, 19</p>
+                    <img alt="Фото ВНИИГАЗ" class="w-full h-64 object-cover rounded-lg shadow-lg mt-4" src="{% static 'img/atrium.jpg' %}">
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="text-xl font-semibold text-blue-600 mb-2 bg-gradient-to-r from-blue-200 to-transparent bg-opacity-50 p-2 rounded-md">
+                        ТИУ, корпус 7
+                    </div>
+                    <p class="text-lg font-medium text-gray-700">г.Тюмень, ул. Мельникайте, 70</p>
+                    <img alt="Фото ТИУ корпус 7" class="w-full h-64 object-cover rounded-lg shadow-lg mt-4" src="{% static 'img/main.png' %}">
+                </div>
+            </div>
+            <div class="mt-8">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8f688cdeca421c4a13199b7dd54c0304e041bd952b1210ea4a40fd22fc68923d&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    var slider = document.querySelector('.snap');
+    var controller = document.querySelector('.controller');
+    var items = slider?.children;
+    var intervalId;
+
+    function autoSlide() {
+        var scrollLeft = slider.scrollLeft;
+        var scrollWidth = slider.scrollWidth;
+        var clientWidth = slider.clientWidth;
+        var active = Math.round(scrollLeft / (scrollWidth / items.length));
+
+        if (active === items.length - 1) {
+            slider.scrollTo({
+                left: 0,
+                behavior: 'smooth'
+            });
+        } else {
+            slider.scrollTo({
+                left: (active + 1) * clientWidth,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    function startAutoSlide() {
+        intervalId = setInterval(autoSlide, 7000);
+    }
+
+    function stopAutoSlide() {
+        clearInterval(intervalId);
+    }
+
+    startAutoSlide();
+
+    controller?.addEventListener('mouseenter', stopAutoSlide);
+    controller?.addEventListener('mouseleave', startAutoSlide);
+
+    let currentImageIndex = 0;
+    const images = document.querySelectorAll('.mobile-gallery img');
+
+    function openPreview(img) {
+        const src = img.src;
+        const previewImage = document.getElementById('previewImage');
+        previewImage.src = src;
+        currentImageIndex = Array.from(images).indexOf(img);
+        document.getElementById('previewModal').classList.remove('hidden');
+        document.body.classList.add('no-scroll');
+        document.addEventListener('keydown', keyHandler);
+        document.getElementById('location-block').classList.add('hidden');
+        document.getElementById('places-block').classList.add('hidden');
+    }
+
+    function closePreview(event) {
+        document.getElementById('previewModal').classList.add('hidden');
+        document.removeEventListener('keydown', keyHandler);
+        document.body.classList.remove('no-scroll');
+        document.getElementById('location-block').classList.remove('hidden');
+        document.getElementById('places-block').classList.remove('hidden');
+    }
+
+    function keyHandler(event) {
+        const previewImage = document.getElementById('previewImage');
+        switch (event.key) {
+            case 'Escape':
+                closePreview(event);
+                break;
+            case 'ArrowLeft':
+                currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
+                previewImage.src = images[currentImageIndex].src;
+                break;
+            case 'ArrowRight':
+                currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+                previewImage.src = images[currentImageIndex].src;
+                break;
+        }
+    }
+
+    document.getElementById('scrollIcon')?.addEventListener('click', function () {
+        document.getElementById('targetSection')?.scrollIntoView({behavior: 'smooth'});
+    });
+</script>
+{% endblock %}
