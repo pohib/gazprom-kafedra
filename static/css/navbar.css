@@ -17,9 +17,6 @@ nav {
     z-index: 1000;
     font-weight: 500;
     font-size: 1.1rem;
-    /*    фиксированный размер текста*/
-
-
 }
 
 .logo {
@@ -136,6 +133,21 @@ body > *:nth-child(2) {
     }
 }
 
+@media (min-width: 1024px) {
+    .nav-text {
+        font-size: 1rem;
+        line-height: 1.75rem;
+    }
+}
+
+/*
+@media (min-width: 1024px) {
+    .nav-text {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+}
+*/
 .burger-menu {
     display: none;
 }

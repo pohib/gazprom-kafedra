@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Выпускники{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<section class="graduates-section">
+    <div class="graduates-glass">
+        <div class="graduates-container">
+            <div class="graduates-header">
+                <h1>Доска почёта</h1>
+                <p class="subtitle">Наши выпускники - гордость кафедры</p>
+                <div class="header-underline"></div>
+            </div>
+
+            {% if graduates %}
+            <div class="statistics-section">
+                <div class="stat-item">
+                    <div class="stat-number">{{ total_graduates }}</div>
+                    <div class="stat-label">Всего выпускников</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ graduation_years|length }}</div>
+                    <div class="stat-label">Лет выпуска</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ unique_groups|length }}</div>
+                    <div class="stat-label">Различных групп</div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if graduation_years %}
+            <div class="filter-section" id="filterSection">
+                <button class="filter-btn-1 active" onclick="filterGraduates('all')">
+                    <i class="fas fa-graduation-cap"></i> Все выпускники
+                </button>
+                {% for year in graduation_years %}
+                <button class="filter-btn-1" onclick="filterGraduates('{{ year }}')">
+                    <i class="fas fa-calendar-alt"></i> {{ year }}
+                </button>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if graduates %}
+            <div class="graduates-grid" id="graduatesGrid">
+                {% for graduate in graduates %}
+                <div class="graduate-card" data-year="{{ graduate.graduation_year }}">
+                    <div class="graduate-photo-container">
+                        {% if graduate.photo %}
+                            <img src="{{ graduate.photo.url }}" alt="{{ graduate.full_name }}" class="graduate-photo">
+                        {% else %}
+                            <div class="graduate-photo-placeholder">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        {% endif %}
+                        <div class="photo-overlay"></div>
+                    </div>
+
+                    <div class="graduate-info">
+                        <h3 class="graduate-name">{{ graduate.full_name }}</h3>
+                        
+                        <div class="graduate-group">
+                            <i class="fas fa-users"></i>
+                            {{ graduate.group }}
+                        </div>
+
+                        <div class="graduate-date">
+                            <i class="fas fa-calendar-check"></i>
+                            {{ graduate.graduation_month }}, {{ graduate.graduation_year }}
+                        </div>
+
+                        <div class="graduate-specialization">
+                            <span class="specialization-label">Направление деятельности</span>
+                            {{ graduate.specialization }}
+                        </div>
+
+                        {% if graduate.description %}
+                        <p style="margin-top: 12px; color: #666; font-size: 0.9rem; line-height: 1.5;">
+                            {{ graduate.description }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-inbox"></i>
+                </div>
+                <h2>Выпускники ещё не добавлены</h2>
+                <p>Вскоре здесь появятся наши успешные выпускники!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<script>
+    function filterGraduates(year) {
+        const cards = document.querySelectorAll('.graduate-card');
+        const buttons = document.querySelectorAll('.filter-btn-1');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        cards.forEach(card => {
+            if (year === 'all' || card.dataset.year === year) {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.animation = 'fadeInUp 0.6s ease-out';
+                }, 0);
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}
