@@ -931,7 +931,7 @@ html body #modal {
     height: 2px;
     background-color: var(--accent-color);
     position: absolute;
-    bottom: -3px;
+    bottom: -8px;
     left: 0;
 }
 
