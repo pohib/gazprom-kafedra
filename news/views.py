@@ -6,10 +6,7 @@ from .models import News, NewsImage, NewsSettings, Event
 import random
 from django.core.paginator import Paginator
 from calendar import monthrange
-from django.db.models import Q, F
 import os
-from django.core.cache import cache
-from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
 VK_ACCESS_TOKEN = os.getenv('VK_ACCESS_TOKEN', 'default_value_if_missing')

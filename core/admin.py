@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.db.models import Count
 from .models import Visit
-from collections import Counter
 
 @admin.register(Visit)
 class VisitAdmin(admin.ModelAdmin):

@@ -3,12 +3,17 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Visit
 from .geoip_utils import get_location_from_ip
+from django.conf import settings
+import logging
+from django.http import HttpResponseForbidden
+
+logger = logging.getLogger(__name__)
 
 class UniqueVisitMiddleware(MiddlewareMixin):
     CACHE_TIME = timedelta(minutes=30)
 
     def process_request(self, request):
-        exclude_paths = ['/admin/', '/static/', '/media/', '/api/']
+        exclude_paths = [settings.ADMIN_URL, '/static/', '/media/']
         if any(request.path.startswith(ex) for ex in exclude_paths):
             return
 
@@ -23,6 +28,7 @@ class UniqueVisitMiddleware(MiddlewareMixin):
 
         if not recent_visit and session_key:
             city, country = get_location_from_ip(ip)
+            logger.info(f"👤 Новый посетитель: {ip} → {city}, {country}")
             Visit.objects.create(
                 ip_address=ip,
                 city=city,
@@ -30,6 +36,8 @@ class UniqueVisitMiddleware(MiddlewareMixin):
                 session_key=session_key,
                 user_agent=request.META.get('HTTP_USER_AGENT', '')[:500]
             )
+        else:
+            logger.debug(f"👁️  Повторный визит: {ip}")
 
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -38,3 +46,10 @@ class UniqueVisitMiddleware(MiddlewareMixin):
         else:
             ip = request.META.get('REMOTE_ADDR')
         return ip.strip()
+class BlockBotsInAdminMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if request.path.startswith(settings.ADMIN_URL or '/admin/'):
+            user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+            bot_patterns = ['googlebot', 'bingbot', 'yandexbot', 'slurp']
+            if any(bot in user_agent for bot in bot_patterns):
+                return HttpResponseForbidden()
