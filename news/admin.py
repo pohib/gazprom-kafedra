@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import News, NewsImage, NewsSettings, Event
 from django.utils.html import format_html
+from django.core.cache import cache
 
 class NewsImageInline(admin.TabularInline):
     model = NewsImage
@@ -35,6 +36,10 @@ class NewsAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).order_by('-date')
+    
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        cache.delete('events_page_data')
 
 @admin.register(NewsSettings)
 class NewsSettingsAdmin(admin.ModelAdmin):

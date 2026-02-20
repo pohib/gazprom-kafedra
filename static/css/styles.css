@@ -5,7 +5,6 @@ html {
 }
 
 html, body {
-    overflow-x: hidden;
     width: 100%;
     max-width: 100%;
 }
@@ -172,7 +171,7 @@ button.outline-none:hover {
     width: 12rem;
     height: 100%;
     opacity: 15%;
-    object-fit: cover; /* Для адекватного отображения, если изображение не квадратное */
+    object-fit: cover;
 }
 
 .feature-card:hover .feature-image {
@@ -180,7 +179,6 @@ button.outline-none:hover {
     opacity: 0.3;
 }
 
-/* Переход на состояние без наведения */
 .feature-card .feature-image {
     animation: headerOutDown 1s ease-out;
     filter: blur(0px);
@@ -1067,7 +1065,7 @@ html body #modal {
     transform: translateX(-50%);
     white-space: nowrap;
     top: 95%;
-    margin-top: 8px;
+    margin-top: var(--label-offset, 8px);
     box-shadow: 0 4px 24px rgba(32, 56, 90, 0.4);
     opacity: 0.98;
     border: 1px solid rgba(120, 161, 255, 0.171);
@@ -1533,7 +1531,7 @@ html body #modal {
     z-index: 48;
     left: 50%;
     top: 100%;
-    margin-top: 12px;
+    margin-top: var(--popover-margin, 12px);;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1);
     font-size: 0.95rem;
@@ -1545,7 +1543,7 @@ html body #modal {
 
 #map-zoom-wrapper .popover.map-popover,
 #map-zoom-wrapper.scale-marker .popover.map-popover {
-    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(15px);
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(var(--popover-y-offset, 10px));
 }
 
 .popover.map-popover.visible {
@@ -1583,7 +1581,20 @@ html body #modal {
 
 #map-zoom-wrapper .popover.map-popover.hiding,
 #map-zoom-wrapper.scale-marker .popover.map-popover.hiding {
-    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(15px) !important;
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(var(--popover-y-hiding, 15px)) !important;
+}
+
+.map-container .popover.map-popover.popover-bottom {
+    top: 100%;
+    margin-top: var(--popover-margin, 12px);
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(var(--popover-y-offset, 10px));
+}
+
+.map-container .popover.map-popover.popover-top {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: var(--popover-margin, 12px);
+    transform: translateX(-50%) scale(var(--popover-scale, 1)) translateY(calc(-1 * var(--popover-y-offset, 10px)));
 }
 
 .glass {
@@ -2128,12 +2139,11 @@ html body #modal {
         0 18px 45px rgba(0, 0, 0, 0.18),
         0 0 0 1px rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px); /* для Safari */
+    -webkit-backdrop-filter: blur(18px);
 
     border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-/* по желанию — лёгкий анимированный отблеск по краям */
 .graduates-glass::before {
     content: '';
     position: absolute;

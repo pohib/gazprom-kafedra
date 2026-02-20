@@ -8,13 +8,16 @@ from django.core.paginator import Paginator
 from calendar import monthrange
 import os
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 VK_ACCESS_TOKEN = os.getenv('VK_ACCESS_TOKEN', 'default_value_if_missing')
 VK_GROUP_ID = os.getenv('VK_GROUP_ID', 'default_group_id')
 VK_API_VERSION = os.getenv('VK_API_VERSION', '5.131')
 
-@cache_page(60 * 15)
 def events(request):
+    cached_data = cache.get('events_page_data')
+    if cached_data:
+        return render(request, 'events.html', {'posts_extended': cached_data})
     settings = NewsSettings.objects.first()
     NEWS_COUNT = settings.news_count if settings else 6
     url = 'https://api.vk.com/method/wall.get'
@@ -37,11 +40,18 @@ def events(request):
     vk_ids = set()
 
     for post in posts:
-        source_id = str(post['id'])
+        original_post = post
+        
+        if 'copy_history' in post and post['copy_history']:
+            original_post = post['copy_history'][0]
+            source_id = f"{post['id']}_{original_post.get('id', '')}"
+        else:
+            source_id = str(post['id'])
+        
         vk_ids.add(source_id)
 
-        new_title = post['text']
-        new_body = post['text']
+        new_title = original_post.get('text', '')
+        new_body = original_post.get('text', '')
         date = datetime.fromtimestamp(post['date'], tz=dt_timezone.utc)
 
         views_count = 0
@@ -50,6 +60,9 @@ def events(request):
 
         news_obj, created = News.objects.get_or_create(source_id=source_id)
 
+        if news_obj.is_title_edited or news_obj.is_body_edited or not news_obj.is_published:
+            continue
+        
         if not news_obj.is_title_edited:
             news_obj.title = new_title
         if not news_obj.is_body_edited:
@@ -57,14 +70,15 @@ def events(request):
 
         news_obj.date = date
         news_obj.views = views_count
-        news_obj.is_published = True
         news_obj.save()
 
         old_images = {img.image_url: img.crop_position for img in news_obj.images.all()}
         news_obj.images.all().delete()
 
-        if 'attachments' in post:
-            for att in post['attachments']:
+        attachments_source = original_post if 'attachments' in original_post else post
+        
+        if 'attachments' in attachments_source:
+            for att in attachments_source['attachments']:
                 if att['type'] == 'photo':
                     sizes = att['photo']['sizes']
                     max_photo = max(sizes, key=lambda x: x['height'] * x['width'])
@@ -77,12 +91,13 @@ def events(request):
 
     News.objects.filter(source_id__isnull=False).exclude(source_id__in=vk_ids).delete()
     
-    news_obj.auto_title_sentences = 1
     
     news_to_display = News.objects.filter(is_published=True).order_by('-date')[:NEWS_COUNT]
 
     logo_variants = ['blue', 'white']
+    
     extended_posts = []
+    
     for post in news_to_display:
         has_images = post.images.exists()
         logo_choice = None
@@ -93,6 +108,7 @@ def events(request):
             'logo_choice': logo_choice,
         })
         
+    cache.set('events_page_data', extended_posts, 60 * 15)
     return render(request, 'events.html', {'posts_extended': extended_posts})
 
 def events_calendar(request, year=None, month=None, day=None):

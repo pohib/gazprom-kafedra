@@ -4,14 +4,14 @@
 {% block title %}Поступление{% endblock %}
 
 {% block content %}
-<section class="overflow-hidden max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8 animate__animated animate__fadeIn"
+<section class="overflow-hidden max-w-7xl w-screen mx-auto p-6 bg-white shadow-md rounded-lg mt-2 animate__animated animate__fadeIn"
         id="admission-info">
     <div class="text-center">
-        <h1 class="text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg animate__animated animate__fadeInDown">
-            Инструкция абитуриенту</h1>
+        <h1 class="text-4xl font-bold text-center text-white mt-2 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg animate__animated animate__fadeInDown">
+            Порядок заключения целевого обучения на базовой кафедре ООО "Газпром ВНИИГАЗ"</h1>
     </div>
 
-    <div class="mt-6 flex justify-around items-start">
+    <div class="mt-12 flex justify-around items-start">
         <div class="number-container animate__animated animate__fadeInLeft">
             <div class="hexagon">14</div>
             <p class="number-text text-lg">Бюджетных мест</p>
@@ -29,7 +29,7 @@
 
     <div class="mt-8 bg-blue-50 p-6 rounded-lg animate__animated animate__zoomIn">
         <div class="text-center">
-            <h2 class="text-2xl font-bold text-blue-700 text-center mb-6">Ты - Потенциальный кандидат!!!</h2>
+            <!--<h2 class="text-2xl font-bold text-blue-700 text-center mb-6">Ты - Потенциальный кандидат!!!</h2>-->
             <div class="rounded-full border-solid border-3 border-blue-400 p-2 mx-auto w-24 h-24 flex items-center justify-center">
                 <img alt="profile" class="w-auto h-16 mx-auto" src="{% static 'img/icons/candidate.png' %}">
             </div>
@@ -38,11 +38,12 @@
 
         <div class="relative pt-10 pb-10 flex flex-col items-center">
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     1
                 </div>
                 <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
-                    <i class="fas fa-clipboard-list plan-item-icon"></i>
                     <div class="plan-item-content">
                         <span class="highlight">Определиться с тем, где хотелось бы работать (ООО «Газпром ВНИИГАЗ» или компании партнеры)</span>
                     </div>
@@ -50,11 +51,12 @@
             </div>
 
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     2
                 </div>
                 <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
-                    <i class="fas fa-envelope plan-item-icon"></i>
                     <div class="plan-item-content">
                         <span class="highlight">Согласие на участие в проекте в виде отправленного резюме</span>
                     </div>
@@ -62,24 +64,24 @@
             </div>
 
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     3
                 </div>
-                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
-                    <i class="fas fa-users plan-item-icon"></i>
-                    <div class="plan-item-content">
-                        <span class="highlight">Встречи, онлайн/офлайн собеседования с сотрудниками БК ВНИИГАЗ</span>
-                        <ul class="list-disc list-inside pl-6 space-y-2 text-base">
-                            <li class="flex items-start"><i class="fas fa-comment-alt plan-item-icon text-blue-300"></i><span
-                                    class="highlight"> Собеседование, обсуждение дальнейшей работы с сотрудниками компании-партнера</span>
-                            </li>
-                        </ul>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full space-y-4">
+                    <div class="flex flex-col items-start">
+                        <span class="highlight">Встречи, онлайн/очные собеседования с сотрудниками БК ВНИИГАЗ;</span>
                     </div>
+                        <div class="flex flex-col items-start">
+                            <span class="highlight">Собеседование, обсуждение дальнейшей работы с сотрудниками компании-партнера</span>
+                        </div>
                 </div>
             </div>
-
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     4
                 </div>
                 <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
@@ -91,8 +93,62 @@
             </div>
 
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     5
+                </div>
+                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
+                    <i class="fas fa-user-check plan-item-icon"></i>
+                    <div class="plan-item-content">
+                        <span class="highlight">Пройти очное вступительное испытание в формате устного собеседования</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-2">
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">{{ plan_event.day1 }}</div>
+                                <div class="text-lg">{{ plan_event.month1 }}</div>
+                                <div class="text-sm">{{ plan_event.year }}</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">{{ plan_event.day2 }}</div>
+                                <div class="text-lg">{{ plan_event.month2 }}</div>
+                                <div class="text-sm">{{ plan_event.year }}</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">{{ plan_event.day3 }}</div>
+                                <div class="text-lg">{{ plan_event.month3 }}</div>
+                                <div class="text-sm">{{ plan_event.year }}</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">{{ plan_event.day4 }}</div>
+                                <div class="text-lg">{{ plan_event.month4 }}</div>
+                                <div class="text-sm">{{ plan_event.year }}</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">{{ plan_event.day5 }}</div>
+                                <div class="text-lg">{{ plan_event.month5 }}</div>
+                                <div class="text-sm">{{ plan_event.year }}</div>
+                            </div>
+                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
+                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
+                                <div class="text-2xl">{{ plan_event.day6 }}</div>
+                                <div class="text-lg">{{ plan_event.month6 }}</div>
+                                <div class="text-sm">{{ plan_event.year }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 w-full max-w-lg flex items-center">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
+                    6
                 </div>
                 <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
                     <i class="fas fa-file-signature plan-item-icon"></i>
@@ -103,57 +159,9 @@
             </div>
 
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
-                    6
-                </div>
-                <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
-                    <i class="fas fa-user-check plan-item-icon"></i>
-                    <div class="plan-item-content">
-                        <span class="highlight">Пройти вступительные испытания офлайн-устное собеседование</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
-                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
-                                <div class="text-2xl">10</div>
-                                <div class="text-lg">Июл</div>
-                                <div class="text-sm">2025</div>
-                            </div>
-                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
-                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
-                                <div class="text-2xl">17</div>
-                                <div class="text-lg">Июл</div>
-                                <div class="text-sm">2025</div>
-                            </div>
-                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
-                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
-                                <div class="text-2xl">24</div>
-                                <div class="text-lg">Июл</div>
-                                <div class="text-sm">2025</div>
-                            </div>
-                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
-                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
-                                <div class="text-2xl">31</div>
-                                <div class="text-lg">Июл</div>
-                                <div class="text-sm">2025</div>
-                            </div>
-                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
-                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
-                                <div class="text-2xl">7</div>
-                                <div class="text-lg">Авг</div>
-                                <div class="text-sm">2025</div>
-                            </div>
-                            <div class="bg-blue-500 text-white p-2 rounded-lg text-center w-full lg:w-[120px]">
-                                <i class="fas fa-calendar-alt mb-1 text-xl"></i>
-                                <div class="text-2xl">16</div>
-                                <div class="text-lg">Авг</div>
-                                <div class="text-sm">2025</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     7
                 </div>
                 <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">
@@ -165,7 +173,9 @@
             </div>
 
             <div class="mb-8 w-full max-w-lg flex items-center">
-                <div class="bg-blue-500 w-10 h-10 flex items-center justify-center rounded-full text-white">
+                <div class="flex-none w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center 
+                            bg-blue-500 text-white text-xl md:text-2xl lg:text-3xl font-bold 
+                            rounded-full shadow-lg mx-auto">
                     8
                 </div>
                 <div class="bg-white shadow-md p-4 rounded-lg ml-4 w-full">

@@ -18,7 +18,7 @@
 </div>
 
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
   {% for item in posts_extended %}
     {% with post=item.post logo_choice=item.logo_choice %}
       <div class="bg-white rounded shadow p-4 news-card cursor-pointer flex flex-col" onclick="openModal({{ forloop.counter0 }})" style="min-height: 400px;">

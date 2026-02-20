@@ -25,7 +25,7 @@
 </div>
 
 <div class="max-w-7xl mx-auto px-4 py-8" x-data="curriculum()">
-    <h1 class="header">Дисциплины</h1>
+    <h1 class="header font-semibold">Дисциплины</h1>
     <div class="flex flex-col md:flex-row mt-8">
         <div class="w-full md:w-1/4 bg-white p-4 rounded shadow-lg flex flex-col items-center mb-4 md:mb-0">
             <ul class="w-full">
@@ -64,11 +64,8 @@
             <button @click="closeModal()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Закрыть</button>
         </div>
     </div>
-
-<!-- Professors Section -->
-    <h1 class="header mt-16">Преподавательский состав</h1>
+    <h1 class="header mt-16 font-semibold">Преподавательский состав</h1>
     <div class="flex flex-col md:flex-row mt-8" x-data="professors()">
-        <!-- Professor Selection -->
         <div class="w-full md:w-1/4 bg-white p-4 rounded shadow-lg flex flex-col items-center">
             <ul class="w-full">
                 <template :key="index" x-for="(professor, index) in professorList">
@@ -79,7 +76,6 @@
                 </template>
             </ul>
         </div>
-        <!-- Professor Details -->
         <div class="w-full md:w-3/4 bg-white p-4 ml-0 md:ml-4 mt-4 md:mt-0 rounded shadow-lg ">
             <div class="professor-info" x-show="selectedProfessor !== null">
                 <div class="flex justify-center mb-4">
@@ -133,10 +129,97 @@
         </div>
     </div>
 </div>
+
 <div class="container mx-auto mt-10">
-    <h1 class="header md-hidden">Учебный план (таблица)</h1>
+    <h1 class="header md-hidden font-semibold">Учебный план (таблица)</h1>
     <div class="overflow-x-auto">
-        <table class="table-auto border-collapse w-full">
+        <div class="md:hidden space-y-4">
+            <div class="md:hidden mt-4 mb-8 border-t pt-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-semibold tracking-wide text-gray-800">
+                        Легенда
+                    </h2>
+                    <div class="h-px flex-1 bg-gray-200 ml-4"></div>
+                </div>
+                <div class="space-y-3 text-sm text-gray-700">
+                    <div class="flex items-center gap-3">
+                        <span class="w-4 h-4 rounded-sm bg-blue-200 border border-gray-300"></span>
+                        <span>Дисциплины, предусмотренные ФГОС</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="w-4 h-4 rounded-sm bg-blue-300 border border-gray-300"></span>
+                        <span>Дисциплины, разработанные БК "Газпром ВНИИГАЗ"</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="w-4 h-4 rounded-sm bg-blue-400 border border-gray-300"></span>
+                        <span>Элективные дисциплины</span>
+                    </div>
+                </div>
+            </div>
+            <details class="group border border-gray-200 rounded-lg bg-white mt-8">
+                <summary class="cursor-pointer list-none flex justify-between items-center p-4 font-semibold">
+                    1 семестр
+                    <span class="transition group-open:rotate-180">⌄</span>
+                </summary>
+                <div class="px-4 pb-4 space-y-2 text-sm mt-2">
+                    <div class="p-3 rounded-xl bg-blue-200">Философские проблемы в науке и технике</div>
+                    <div class="p-3 rounded-xl bg-blue-200">Информационно-коммуникационные технологии</div>
+                    <div class="p-3 rounded-xl bg-blue-200">Системный анализ и моделирование</div>
+                    <div class="p-3 rounded-xl bg-blue-200">Педагогика и психология</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Инжиниринг и реинжиниринг технологий добычи газа</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Проектирование и сопровождение геологоразведочных работ</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Нормативно-методическое сопровождение разведки и разработки</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Концептуальный инжиниринг жизненного цикла месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Разработка и внедрение новых передовых технологий в области геологоразведки и подсчета углеводородного сырья</div>
+                </div>
+            </details>
+            <details class="group border border-gray-200 rounded-lg bg-white mt-8">
+                <summary class="cursor-pointer list-none flex justify-between items-center p-4 font-semibold">
+                    2 семестр
+                    <span class="transition group-open:rotate-180">⌄</span>
+                </summary>
+                <div class="px-4 pb-4 space-y-2 text-sm mt-2">
+                    <div class="p-3 rounded-xl bg-blue-200">Управление проектами и проектный менеджмент</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Построение и актуализация геологических моделей</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Построение и актуализация геомеханических моделей</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Основы алгоритмизации и программирования в геологии и разработке месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Проектирование и сопровождение разработки газовых, газоконденсатных, нефтегазоконденсатных месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Петрофизическое и литофациальное моделирование</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Цифровые геомеханические модели под задачи бурения и разработки новых месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Проектирование и научно-техническое сопровождение гидроразрыва пласта</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Проектирование и сопровождение геолого-технических мероприятий</div>
+                </div>
+            </details>
+            <details class="group border border-gray-200 rounded-lg bg-white mt-8">
+                <summary class="cursor-pointer list-none flex justify-between items-center p-4 font-semibold">
+                    3 семестр
+                    <span class="transition group-open:rotate-180">⌄</span>
+                </summary>
+                <div class="px-4 pb-4 space-y-2 text-sm mt-2">
+                    <div class="p-3 rounded-xl bg-blue-200">Организация и управление нефтегазовым производством</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Технологии геолого-промыслового контроля за газовой, газоконденсатной, нефтегазоконденсатной разработкой месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Цифровое моделирование скважин</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Проектирование обустройства газовых и газоконденсатных месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Построение и актуализация гидродинамических моделей</div>
+                    <div class="p-3 rounded-xl bg-blue-300">Построение и актуализация технологических моделей</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Геологическое моделирование и подсчет запасов</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Балансовое моделирование подготовки углеводородного сырья</div>
+                </div>
+            </details>
+            <details class="group border border-gray-200 rounded-lg bg-white mt-8">
+                <summary class="cursor-pointer list-none flex justify-between items-center p-4 font-semibold">
+                    4 семестр
+                    <span class="transition group-open:rotate-180">⌄</span>
+                </summary>
+                <div class="px-4 pb-4 space-y-2 text-sm mt-2">
+                    <div class="p-3 rounded-xl bg-blue-400">Единый комплекс цифровых моделей месторождения</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Экономика инвестиционных проектов</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Экологические аспекты проектирования и сопровождения разработки и эксплуатации газовых, газоконденсатных, нефтегазоконденсатных месторождений</div>
+                    <div class="p-3 rounded-xl bg-blue-400">Цифровое вероятностное гидродинамическое моделирование уникальных месторождений</div>
+                </div>
+            </details>
+        </div>
+        <table class="hidden md:table table-auto border-collapse w-full">
             <thead>
                 <tr>
                     <th class="border p-2"></th>
@@ -216,14 +299,41 @@
                     <td class="border p-2"></td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="border-t border-gray-300 bg-gray-50 px-6 py-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-sm font-semibold tracking-wide text-gray-800">
+                                Легенда
+                            </h2>
+                            <div class="h-px flex-1 bg-gray-200 ml-4"></div>
+                        </div>
+                        <div class="flex flex-wrap gap-x-8 gap-y-3 text-sm text-gray-700">
+                            
+                            <div class="flex items-center gap-3">
+                                <span class="w-4 h-4 rounded-sm bg-blue-200 border border-gray-300"></span>
+                                <span>Дисциплины, предусмотренные ФГОС</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-4 h-4 rounded-sm bg-blue-300 border border-gray-300"></span>
+                                <span>Дисциплины, разработанные БК "Газпром ВНИИГАЗ"</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-4 h-4 rounded-sm bg-blue-400 border border-gray-300"></span>
+                                <span>Элективные дисциплины</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
-<div class="container mx-auto mt-10">
+
+<div class="container mx-auto mt-10 font-semibold">
     <h1 class="header">Используемое программное обеспечение</h1>
     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- ТНавигатор -->
             <a href="{% static 'docs/tnavigator.pdf' %}" target="_blank" 
                 class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
                 <div class="h-1 bg-gradient-to-r from-red-500 to-blue-600"></div>
@@ -240,8 +350,6 @@
                     </div>
                 </div>
             </a>
-
-            <!-- Isoline GIS -->
             <a href="{% static 'docs/IsolineGIS.pdf' %}" target="_blank"
                 class="software-card group relative bg-transparent rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
                 <div class="h-1 bg-gradient-to-r from-green-500 to-blue-600"></div>
@@ -509,7 +617,13 @@ function curriculum() {
                         description: 'Освоение современных подходов к вероятностному гидродинамическому моделированию для оценки неопределенностей и оптимизации разработки сложнопостроенных месторождений. Включает работу с адаптацией моделей, анализом чувствительности и многокритериальной оптимизацией.',
                         pdfUrl: 'https://www.tyuiu.ru/sveden/files/eip/RP_Cifrovoe_veroyatnostnoe_gidrodinamicheskoe_modelirovanie_unikalynyx_mestoroghdenii.pdf',
                         image: null
-                    }
+                    },
+                    {
+                        title: 'Оперативное управление промыслом',
+                        description: 'Освоение современных подходов к вероятностному гидродинамическому моделированию для оценки неопределенностей и оптимизации разработки сложнопостроенных месторождений. Включает работу с адаптацией моделей, анализом чувствительности и многокритериальной оптимизацией.',
+                        pdfUrl: 'https://www.tyuiu.ru/sveden/files/viz/RP_Operativnoe_upravlenie_promyslom(1).pdf',
+                        image: null
+                    },
                 ]
             }
         ],
@@ -540,7 +654,7 @@ function professors() {
         selectedProfessor: 0,
         professorList: [
             {
-                shortName: 'Вотчель В. А.',
+                shortName: 'Вотчель В.А.',
                 fullName: 'Вотчель Виталий Андреевич',
                 photo: '{% static "img/plan/votchel.png" %}',
                 position: 'Начальник отдела геомеханического моделирования',
@@ -580,7 +694,7 @@ function professors() {
                 ]
             },
             {
-                    shortName: 'Делиу Е. А.',
+                    shortName: 'Делиу Е.А.',
                     fullName: 'Делиу Екатерина Алимовна',
                     photo: '{% static "img/plan/deliu.png" %}',
                     position: 'Ведущий геолог отдела геологоразведочных работ в Дальневосточном регионе',
@@ -595,6 +709,14 @@ function professors() {
                                 '<strong>Владеть:</strong> навыками построения трехмерных и послойных сеток структурных сейсмических поверхностей, детализированного структурного каркаса по продуктивным объектам; карт и кубов общих и эффективных продуктивных толщин; карт и кубов фильтрационных и емкостных параметров'
                             ]
                         },
+                        {
+                            subject: 'Разработка и внедрение новых передовых технологий в области геологоразведки и подсчета углеводородного сырья',
+                            skills: [
+                                '<strong>Знать:</strong> принципы разработки и внедрения новых технологий в геологоразведке и подсчете углеводородного сырья, методы 2D/3D моделирования пластов, алгоритмы оценки запасов и интерпретации сейсмических данных.',
+                                '<strong>Уметь:</strong> применять современные технологии для геологоразведки, проводить моделирование продуктивных объектов, оценивать качество построения цифровых моделей и актуализировать данные по скважинам.\n',
+                                '<strong>Владеть:</strong> навыками работы с ПО для геологического моделирования, построения структурных сеток и карт продуктивных толщин, анализа фильтрационно-емкостных параметров.'
+                            ]
+                        },
                     ],
                     tasks: [
                         'Разработка 2D и 3D геологических моделей строения залежей и месторождений УВ;',
@@ -605,7 +727,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Малышев И. О.',
+                    shortName: 'Малышев И.О.',
                     fullName: 'Малышев Игорь Олегович',
                     photo: '{% static "img/plan/malyshev.png" %}',
                     position: 'Начальник Центра технико-технологических решений по освоению новых месторождений',
@@ -635,7 +757,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Самойлов А. С.',
+                    shortName: 'Самойлов А.С.',
                     fullName: 'Самойлов Александр Сергеевич',
                     photo: '{% static "img/plan/samoylov.png" %}',
                     position: 'Заместитель начальника Центра технико-технологических решений по освоению новых месторождений',
@@ -671,7 +793,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Шварц А. В.',
+                    shortName: 'Шварц А.В.',
                     fullName: 'Шварц Анна Викторовна',
                     photo: '{% static "img/plan/shvarts.png" %}',
                     position: 'Старший научный сотрудник отдела геомеханического моделирования',
@@ -718,7 +840,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Малышкин А. А.',
+                    shortName: 'Малышкин А.А.',
                     fullName: 'Малышкин Антон Андреевич',
                     photo: '{% static "img/plan/malyshkin.png" %}',
                     position: 'Начальник отдела научно-технического сопровождения гидроразрыва пласта',
@@ -740,7 +862,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Юсько М. Н.',
+                    shortName: 'Юсько М.Н.',
                     fullName: 'Юсько Марина Николаевна',
                     photo: '{% static "img/plan/yusko.png" %}',
                     position: 'Начальник отдела комплексного прогноза добычи новых месторождений (г. Тюмень)',
@@ -769,7 +891,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Тукмакова Т. Н.',
+                    shortName: 'Тукмакова Т.Н.',
                     fullName: 'Тукмакова Татьяна Нуриахметовна',
                     photo: '{% static "img/plan/tukmakova.png" %}',
                     position: 'Главный эксперт центра технико-технологических решений по освоению новых месторождений',
@@ -799,26 +921,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Южаков А. А.',
-                    fullName: 'Южаков Андрей Александрович',
-                    photo: '{% static "img/plan/yujakov.png" %}',
-                    position: 'Заместитель начальника отдела научно-методического сопровождения водопользования и природоохранной деятельности при разработке месторождения',
-                    disciplines: [
-                        {
-                            subject: 'Декарбонизация в нефтегазовой отрасли',
-                            skills: [
-                                '<strong>Знать:</strong> основные международные и российские методы декарбонизации, такие как улавливание и хранение углерода CCS, использование возобновляемых источников энергии, снижение выбросов метана, технологические и организационные схемы снижения углеродного следа, нормативные требования и международные обязательства',
-                                '<strong>Уметь:</strong> анализировать возможности внедрения технологий улавливания и хранения CO2, разрабатывать стратегии низкоуглеродного перехода, оценивать эффективность экологических и экономических решений, вести мониторинг выбросов парниковых газов и управлять проектами по снижению углеродного следа',
-                                '<strong>Владеть:</strong> навыками моделирования сценариев декарбонизации, организации экологического менеджмента и взаимодействия с государственными и корпоративными структурами для достижения стандартов по снижению выбросов'
-                            ]
-                        },
-                    ],
-                    tasks: [
-                        'Уточнить',
-                    ]
-                },
-                {
-                    shortName: 'Рычков Д. А.',
+                    shortName: 'Рычков Д.А.',
                     fullName: 'Рычков Дмитрий Александрович',
                     photo: '{% static "img/plan/rychkov.png" %}',
                     position: 'Начальник отдела создания цифровых технологических моделей новых месторождений (г. Тюмень)',
@@ -848,7 +951,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Игнатьев С. Ф.',
+                    shortName: 'Игнатьев С.Ф.',
                     fullName: 'Игнатьев Сергей Фёдорович',
                     photo: '{% static "img/plan/ignatiev.png" %}',
                     position: 'Начальник центра разработки проектов геологоразведочных работ в Восточно-Сибирском и Дальневосточном регионах',
@@ -878,7 +981,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Шарафутдинов Р. Ф.',
+                    shortName: 'Шарафутдинов Р.Ф.',
                     fullName: 'Шарафутдинов Руслан Фархатович',
                     photo: '{% static "img/plan/sharafutdinov.png" %}',
                     position: 'Советник ООО «Газпром ВНИИГАЗ»',
@@ -905,7 +1008,7 @@ function professors() {
                     ]
                 },
                 {
-                    shortName: 'Сергеева Н. Л.',
+                    shortName: 'Сергеева Н.Л.',
                     fullName: 'Сергеева Надежда Леонидовна',
                     photo: '{% static "img/plan/sergeeva.png" %}',
                     position: 'Руководитель проекта отдела ценообразования и методологии',

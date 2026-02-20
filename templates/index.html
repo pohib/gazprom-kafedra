@@ -8,19 +8,22 @@
     <div class="bg-gray-100 py-12 shadow-xl animate__animated animate__fadeInUp">
         <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center">
             <div class="lg:w-1/2 px-4 lg:px-6 mb-8 lg:mb-0 box-border">
-                <div class="flex items-center space-x-6 mb-4">
+                <div class="flex items-center mb-4">
                     <img alt="Логотип Газпром ВНИИГАЗ" class="w-48" src="{% static 'img/logo-gazprom-white.png' %}">
                     <img alt="Логотип ТИУ" class="w-48" src="{% static 'img/logo-tiu.png' %}">
                 </div>
                 <p class="text-l text-blue-400 font-semibold mb-4">Магистратура по направлению 21.04.01 НЕФТЕГАЗОВОЕ ДЕЛО</p>
                 <h1 class="text-4xl font-bold mb-8">
-                    Инжиниринг геологоразведки
+                    Инжиниринг геологоразведки и разработки газовых месторождений
+                    <!--
                     <span>
                         <span class="text-gray-900">и</span>
                         <span class="text-blue-500"> разработки газовых месторождений</span>
                     </span>
+                    -->
                 </h1>
                 <div class="grid grid-cols-2 gap-4 md:gap-8 bg-gray-100 text-left">
+                    <!--
                     <div class="animate__delay-1s animate__animated animate__fadeInUp">
                         <span class="block text-sm text-gray-700">Бюджет:</span>
                         <span class="block text-2xl font-bold gradient-text">14</span>
@@ -29,7 +32,8 @@
                         <span class="block text-sm text-gray-700">Договор:</span>
                         <span class="block text-2xl font-bold gradient-text">6</span>
                     </div>
-                    <div class="animate__delay-2s animate__animated animate__fadeInUp col-span-2">
+                    -->
+                    <div class="animate__animated animate__fadeInUp col-span-2" style="animation-delay: 0.3s;">
                         <span class="block text-sm text-gray-702">Форма обучения:</span>
                         <span class="text-2xl font-bold gradient-text">очная</span>
                     </div>
@@ -59,7 +63,6 @@
                 { src: '{% static 'img/carousel/image-2.jpg' %}', title: 'Уникальные проекты магистрантов', description: 'Магистранты создают уникальные проекты и вносят значительный вклад в научно-исследовательскую деятельность Института.' },
                 { src: '{% static 'img/carousel/image-3.jpg' %}', title: 'Магистранты и ученые', description: 'Магистранты 1 и 2 курсов встретились с учеными Института на лекции.' },
                 { src: '{% static 'img/carousel/image-4.jpg' %}', title: '«Энергия опыта»', description: 'Магистранты знакомятся с учеными Института в рамках проекта «Энергия опыта».' },
-                { src: '{% static 'img/carousel/image-5.jpg' %}', title: 'Чемпионат по инжинирингу', description: 'Магистранты выступили на Командном чемпионате по инжинирингу освоения месторождений на площадке БЦ «Атриум» (г. Тюмень).' },
                 { src: '{% static 'img/carousel/image-6.jpg' %}', title: 'Практика в Тюмени', description: 'Магистранты проходят практику в Тюменском центре исследований пластовых систем ООО «Газпром ВНИИГАЗ».' },
                 { src: '{% static 'img/carousel/image-7.jpg' %}', title: 'Посещение Сибирского Учебного Центра', description: 'Магистранты базовой кафедры ООО «Газпром ВНИИГАЗ» ТИУ посетили один из крупнейших тренинговых центров Тюменской области, Сибирский Учебный Центр.' },
                 { src: '{% static 'img/carousel/image-8.jpg' %}', title: 'Выступление на международной олимпиаде', description: 'Студенты базовой кафедры «Газпром ВНИИГАЗ» ТИУ выступили в Лиге Северной Евразии Международной олимпиады PetroCup.' }
@@ -117,7 +120,7 @@
     <section class="container mt-16 mx-auto">
         <div class="text-center mb-8">
             <h2 class="animate_animated animate__fadeInUp text-4xl font-bold text-center text-white mt-8 mb-4 p-4 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg shadow-lg">
-                О базовой кафедре ООО «Газпром ВНИИГАЗ» ФГБОУ ВО «Тюменский индустриальный университет»
+                О базовой кафедре
             </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -165,33 +168,33 @@
             <div class="task-list mt-4 space-y-6">
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-user-tie icon text-2xl text-blue-500 mr-4"></i>
-                    <p>назначение руководителя НИР из числа ведущих исследователей компании (главные специалисты,
+                    <p>Назначение руководителя НИР из числа ведущих исследователей компании (главные специалисты,
                         ведущие научные сотрудники, руководители, начальники отдела)</p>
                 </div>
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-handshake icon text-2xl text-blue-500 mr-4"></i>
-                    <p>содействие в выполнении научно-исследовательских работ</p>
+                    <p>Содействие в выполнении научно-исследовательских работ</p>
                 </div>
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-cloud icon text-2xl text-blue-500 mr-4"></i>
-                    <p>применение облачных технологий в образовании и организации учебного процесса</p>
+                    <p>Применение облачных технологий в образовании и организации учебного процесса</p>
                 </div>
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-laptop-code icon text-2xl text-blue-500 mr-4"></i>
-                    <p>внедрение в рабочий процесс необходимого программного обеспечения для исследований</p>
+                    <p>Внедрение в рабочий процесс необходимого программного обеспечения для исследований</p>
                 </div>
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-chalkboard-teacher icon text-2xl text-blue-500 mr-4"></i>
-                    <p>проведение лекций по основным направлениям Центров ВНИИГАЗ, участвующих в подготовке
+                    <p>Проведение лекций по основным направлениям Центров ВНИИГАЗ, участвующих в подготовке
                         обучающихся</p>
                 </div>
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-industry icon text-2xl text-blue-500 mr-4"></i>
-                    <p>внедрение производственных практик в процесс обучения</p>
+                    <p>Внедрение производственных практик в процесс обучения</p>
                 </div>
                 <div class="task-item p-6 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 bg-gray-100 flex items-center wow animate__pulse">
                     <i class="fas fa-briefcase icon text-2xl text-blue-500 mr-4"></i>
-                    <p>трудоустройство в компанию уже с первого семестра магистратуры, в случае успешного прохождения
+                    <p>Трудоустройство в компанию уже с первого семестра магистратуры, в случае успешного прохождения
                         вступительных испытаний и при соответствии кадровым требованиям компании</p>
                 </div>
             </div>
@@ -263,14 +266,14 @@
                     <div class="text-xl font-semibold text-blue-600 mb-2 bg-gradient-to-r from-blue-200 to-transparent bg-opacity-50 p-2 rounded-md">
                         ВНИИГАЗ
                     </div>
-                    <p class="text-lg font-medium text-gray-700">г.Тюмень, ул. Перекопская, 19</p>
+                    <p class="text-lg font-medium text-gray-700">г. Тюмень, ул. Перекопская, 19</p>
                     <img alt="Фото ВНИИГАЗ" class="w-full h-64 object-cover rounded-lg shadow-lg mt-4" src="{% static 'img/atrium.jpg' %}">
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="text-xl font-semibold text-blue-600 mb-2 bg-gradient-to-r from-blue-200 to-transparent bg-opacity-50 p-2 rounded-md">
                         ТИУ, корпус 7
                     </div>
-                    <p class="text-lg font-medium text-gray-700">г.Тюмень, ул. Мельникайте, 70</p>
+                    <p class="text-lg font-medium text-gray-700">г. Тюмень, ул. Мельникайте, 70</p>
                     <img alt="Фото ТИУ корпус 7" class="w-full h-64 object-cover rounded-lg shadow-lg mt-4" src="{% static 'img/main.png' %}">
                 </div>
             </div>
