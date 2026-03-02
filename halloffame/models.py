@@ -30,6 +30,7 @@ class Graduate(models.Model):
         max_length=20,
         default=current_month_name_ru,
     )
+    status = models.CharField('Статус', max_length=1000, blank=True, null=True, help_text="Например: Работает в ПАО 'Газпром'")
     specialization = models.CharField('Направление производственной деятельности', max_length=300)
     photo = models.ImageField(
         'Фото',

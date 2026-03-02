@@ -3,9 +3,9 @@ from .models import Graduate
 
 @admin.register(Graduate)
 class GraduateAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'group', 'graduation_year', 'specialization')
+    list_display = ('full_name', 'group', 'graduation_year', 'specialization', 'status')
     list_filter = ('graduation_year', 'group')
-    search_fields = ('full_name', 'group', 'specialization')
+    search_fields = ('full_name', 'group', 'specialization', 'status')
     ordering = ('-graduation_year', 'full_name')
     
     fieldsets = (
@@ -16,6 +16,6 @@ class GraduateAdmin(admin.ModelAdmin):
             'fields': ('graduation_year', 'graduation_month')
         }),
         ('Профессиональная информация', {
-            'fields': ('specialization', 'description')
+            'fields': ('specialization', 'description', 'status')
         }),
     )

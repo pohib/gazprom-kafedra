@@ -49,43 +49,54 @@
             {% if graduates %}
             <div class="graduates-grid" id="graduatesGrid">
                 {% for graduate in graduates %}
-                <div class="graduate-card" data-year="{{ graduate.graduation_year }}">
-                    <div class="graduate-photo-container">
-                        {% if graduate.photo %}
-                            <img src="{{ graduate.photo.url }}" alt="{{ graduate.full_name }}" class="graduate-photo">
-                        {% else %}
-                            <div class="graduate-photo-placeholder">
-                                <i class="fas fa-user-graduate"></i>
+                    <div class="graduate-card" data-year="{{ graduate.graduation_year }}">
+                        <div class="graduate-photo-container">
+                            {% if graduate.photo %}
+                                <img src="{{ graduate.photo.url }}" alt="{{ graduate.full_name }}" class="graduate-photo">
+                            {% else %}
+                                <div class="graduate-photo-placeholder">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                            {% endif %}
+                            <div class="photo-overlay"></div>
+                        </div>
+                        <div class="graduate-info">
+                            <h3 class="graduate-name">{{ graduate.full_name }}</h3>
+                            
+                            <div class="graduate-group">
+                                <i class="fas fa-users"></i> {{ graduate.group }}
                             </div>
-                        {% endif %}
-                        <div class="photo-overlay"></div>
+                            <div class="graduate-date">
+                                <i class="fas fa-calendar-check"></i> {{ graduate.graduation_month }}, {{ graduate.graduation_year }}
+                            </div>
+                            <div class="graduate-specialization">
+                                <span class="specialization-label">Направление деятельности</span>
+                                <div class="line-clamp-spec">{{ graduate.specialization }}</div>
+                            </div>
+                            {% if graduate.status %}
+                                <div class="graduate-status-badge">
+                                    <i class="fas fa-briefcase"></i> {{ graduate.status }}
+                                </div>
+                            {% endif %}
+                            {% if graduate.description %}
+                            <p class="description-preview">
+                                {{ graduate.description }}
+                            </p>
+                            <span class="read-more-link"
+                                onclick="openModal(
+                                    '{{ graduate.full_name|escapejs }}', 
+                                    '{{ graduate.group|escapejs }}', 
+                                    '{{ graduate.graduation_month|escapejs }}, {{ graduate.graduation_year }}', 
+                                    '{{ graduate.specialization|escapejs }}', 
+                                    '{{ graduate.description|escapejs }}', 
+                                    '{% if graduate.photo %}{{ graduate.photo.url }}{% endif %}',
+                                    '{{ graduate.status|escapejs }}'
+                                )">
+                                Подробнее
+                            </span>
+                            {% endif %}
+                        </div>
                     </div>
-
-                    <div class="graduate-info">
-                        <h3 class="graduate-name">{{ graduate.full_name }}</h3>
-                        
-                        <div class="graduate-group">
-                            <i class="fas fa-users"></i>
-                            {{ graduate.group }}
-                        </div>
-
-                        <div class="graduate-date">
-                            <i class="fas fa-calendar-check"></i>
-                            {{ graduate.graduation_month }}, {{ graduate.graduation_year }}
-                        </div>
-
-                        <div class="graduate-specialization">
-                            <span class="specialization-label">Направление деятельности</span>
-                            {{ graduate.specialization }}
-                        </div>
-
-                        {% if graduate.description %}
-                        <p style="margin-top: 12px; color: #666; font-size: 0.9rem; line-height: 1.5;">
-                            {{ graduate.description }}
-                        </p>
-                        {% endif %}
-                    </div>
-                </div>
                 {% endfor %}
             </div>
             {% else %}
@@ -99,6 +110,32 @@
             {% endif %}
         </div>
     </div>
+    <div id="graduateModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content-2" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-scrollable-container">
+                <div class="modal-photo-side">
+                    <img id="modalPhoto" src="" alt="">
+                    <div id="modalPhotoPlaceholder" class="graduate-photo-placeholder" style="display: none; font-size: 3rem; color: #0070c0;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                </div>
+                <div class="modal-info-side">
+                    <h2 id="modalName"></h2>
+                    <div id="modalStatus" class="modal-status-tag"></div>
+                    <div id="modalMeta" style="color: #0070c0; font-weight: bold; margin-bottom: 20px;"></div>
+                    <div class="modal-spec-box">
+                        <small>НАПРАВЛЕНИЕ ДЕЯТЕЛЬНОСТИ</small>
+                        <p id="modalSpec" style="margin-top: 8px; font-size: 1rem; color: #1e293b; font-weight: 500;"></p>
+                    </div>
+                    <div class="modal-section">
+                        <small style="color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase;">О выпускнике</small>
+                        <p id="modalDesc" style="line-height: 1.6; color: #333; white-space: pre-wrap; margin-top: 10px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <script>
@@ -106,17 +143,76 @@
         const cards = document.querySelectorAll('.graduate-card');
         const buttons = document.querySelectorAll('.filter-btn-1');
         buttons.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+        if (event && event.currentTarget) {
+            event.currentTarget.classList.add('active');
+        }
         cards.forEach(card => {
             if (year === 'all' || card.dataset.year === year) {
                 card.style.display = 'block';
-                setTimeout(() => {
-                    card.style.animation = 'fadeInUp 0.6s ease-out';
-                }, 0);
             } else {
                 card.style.display = 'none';
             }
         });
+    }
+
+    function openModal(name, group, year, spec, desc, photo) {
+        const modal = document.getElementById('graduateModal');
+        const scrollContainer = document.querySelector('.modal-scrollable-container');
+        const modalContent = document.querySelector('.modal-content-2');
+        const infoSide = document.querySelector('.modal-info-side');
+        const nameEl = document.getElementById('modalName');
+        const metaEl = document.getElementById('modalMeta');
+        const specEl = document.getElementById('modalSpec');
+        const descEl = document.getElementById('modalDesc');
+        const img = document.getElementById('modalPhoto');
+        const placeholder = document.getElementById('modalPhotoPlaceholder');
+        const statusEl = document.getElementById('modalStatus');
+        if (status && status !== '' && status !== 'None') {
+            statusEl.innerHTML = `<i class="fas fa-briefcase"></i> ${status}`;
+            statusEl.style.display = 'inline-flex';
+        } else {
+            statusEl.style.display = 'none';
+        }
+        nameEl.innerText = name;
+        metaEl.innerHTML = `<i class="fas fa-users"></i> ${group} &nbsp;&nbsp; <i class="fas fa-calendar-alt"></i> ${year}`;
+        specEl.innerText = spec;
+        descEl.innerText = desc || "Биография выпускника скоро будет дополнена.";
+        if (photo && photo !== '' && photo !== 'None') {
+            img.src = photo;
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+        } else {
+            img.style.display = 'none';
+            placeholder.style.display = 'flex';
+        }
+        if (scrollContainer) scrollContainer.scrollTop = 0;
+        if (modalContent) modalContent.scrollTop = 0;
+        if (infoSide) infoSide.scrollTop = 0;
+        modal.classList.add('active');
+        if (window.innerWidth > 850) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('graduateModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+            closeModal();
+        }
+    });
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('graduateModal');
+        if (event.target == modal) {
+            closeModal();
+        }
     }
 </script>
 {% endblock %}
