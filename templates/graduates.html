@@ -69,19 +69,15 @@
                             <div class="graduate-date">
                                 <i class="fas fa-calendar-check"></i> {{ graduate.graduation_month }}, {{ graduate.graduation_year }}
                             </div>
-                            <div class="graduate-specialization">
-                                <span class="specialization-label">Направление деятельности</span>
-                                <div class="line-clamp-spec">{{ graduate.specialization }}</div>
+
+                            {% if graduate.short_info %}
+                            <div class="brief-info-container">
+                                <span class="brief-info-label">КОРОТКО О ВЫПУСКНИКЕ</span>
+                                <p class="description-preview">
+                                    {{ graduate.short_info }}
+                                </p>
                             </div>
-                            {% if graduate.status %}
-                                <div class="graduate-status-badge">
-                                    <i class="fas fa-briefcase"></i> {{ graduate.status }}
-                                </div>
                             {% endif %}
-                            {% if graduate.description %}
-                            <p class="description-preview">
-                                {{ graduate.description }}
-                            </p>
                             <span class="read-more-link"
                                 onclick="openModal(
                                     '{{ graduate.full_name|escapejs }}', 
@@ -90,11 +86,16 @@
                                     '{{ graduate.specialization|escapejs }}', 
                                     '{{ graduate.description|escapejs }}', 
                                     '{% if graduate.photo %}{{ graduate.photo.url }}{% endif %}',
-                                    '{{ graduate.status|escapejs }}'
+                                    '{{ graduate.status|escapejs }}',
+                                    '{{ graduate.vkr_theme|escapejs }}',
+                                    '{{ graduate.scientific_supervisor|escapejs }}',
+                                    '{{ graduate.key_skills|escapejs }}',
+                                    '{{ graduate.achievements|escapejs }}',
+                                    '{{ graduate.current_work_place|escapejs }}',
+                                    '{{ graduate.get_contacts_html|safe|escapejs }}'
                                 )">
                                 Подробнее
                             </span>
-                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
@@ -111,26 +112,63 @@
         </div>
     </div>
     <div id="graduateModal" class="modal-overlay" onclick="closeModal()">
-        <div class="modal-content-2" onclick="event.stopPropagation()">
+        <div class="modal-content-2 wider-modal" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal()">&times;</button>
+            
             <div class="modal-scrollable-container">
+                
                 <div class="modal-photo-side">
                     <img id="modalPhoto" src="" alt="">
                     <div id="modalPhotoPlaceholder" class="graduate-photo-placeholder" style="display: none; font-size: 3rem; color: #0070c0;">
                         <i class="fas fa-user-graduate"></i>
                     </div>
                 </div>
+
                 <div class="modal-info-side">
                     <h2 id="modalName"></h2>
+                    
                     <div id="modalStatus" class="modal-status-tag"></div>
+                    
                     <div id="modalMeta" style="color: #0070c0; font-weight: bold; margin-bottom: 20px;"></div>
-                    <div class="modal-spec-box">
+                    
+                    <div class="modal-spec-box" id="boxSpec">
                         <small>НАПРАВЛЕНИЕ ДЕЯТЕЛЬНОСТИ</small>
                         <p id="modalSpec" style="margin-top: 8px; font-size: 1rem; color: #1e293b; font-weight: 500;"></p>
                     </div>
-                    <div class="modal-section">
-                        <small style="color: #94a3b8; font-weight: 800; font-size: 0.75rem; text-transform: uppercase;">О выпускнике</small>
-                        <p id="modalDesc" style="line-height: 1.6; color: #333; white-space: pre-wrap; margin-top: 10px;"></p>
+
+                    <div class="modal-details-grid">
+                        <div id="boxVkr" class="modal-detail-box">
+                            <small><i class="fas fa-graduation-cap"></i> Тема ВКР/диплома</small>
+                            <p id="modalVkr"></p>
+                        </div>
+                        <div id="boxSupervisor" class="modal-detail-box">
+                            <small><i class="fas fa-user-tie"></i> Научный руководитель</small>
+                            <p id="modalSupervisor"></p>
+                        </div>
+                        <div id="boxWork" class="modal-detail-box full-width">
+                            <small><i class="fas fa-briefcase"></i> Текущее место работы</small>
+                            <p id="modalWork"></p>
+                        </div>
+                    </div>
+
+                    <div id="boxSkills" class="modal-section-v2">
+                        <small>КЛЮЧЕВЫЕ НАВЫКИ</small>
+                        <div id="modalSkills" class="skills-container"></div>
+                    </div>
+
+                    <div id="boxAchievements" class="modal-section-v2">
+                        <small>ДОСТИЖЕНИЯ</small>
+                        <p id="modalAchievements" class="modal-text-small"></p>
+                    </div>
+
+                    <div class="modal-section-v2">
+                        <small>О ВЫПУСКНИКЕ</small>
+                        <p id="modalDesc" class="modal-text-small" style="line-height: 1.6; color: #333; white-space: pre-wrap; margin-top: 10px;"></p>
+                    </div>
+
+                    <div id="boxContacts" class="modal-section-v2 contacts-box">
+                        <small>КОНТАКТЫ</small>
+                        <p id="modalContacts" class="modal-text-small"></p>
                     </div>
                 </div>
             </div>
@@ -155,45 +193,87 @@
         });
     }
 
-    function openModal(name, group, year, spec, desc, photo) {
+    function openModal(name, group, year, spec, desc, photo, status, vkr, supervisor, skills, achievements, work, contacts) {
         const modal = document.getElementById('graduateModal');
-        const scrollContainer = document.querySelector('.modal-scrollable-container');
-        const modalContent = document.querySelector('.modal-content-2');
         const infoSide = document.querySelector('.modal-info-side');
-        const nameEl = document.getElementById('modalName');
-        const metaEl = document.getElementById('modalMeta');
-        const specEl = document.getElementById('modalSpec');
-        const descEl = document.getElementById('modalDesc');
+
+        const isValid = (val) => val && val !== '' && val !== 'None' && val !== 'undefined';
+
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalMeta').innerHTML = `<i class="fas fa-users"></i> ${group} &nbsp;&nbsp; 
+                                                            <i class="fas fa-calendar-alt"></i> ${year}`;
+        document.getElementById('modalSpec').innerText = spec;
+        document.getElementById('modalDesc').innerText = isValid(desc) ? desc : "Биография выпускника скоро будет дополнена.";
+
+        const statusEl = document.getElementById('modalStatus');
+        if (statusEl) {
+            if (isValid(status)) {
+                statusEl.innerHTML = `<i class="fas fa-graduation-cap"></i> ${status}`;
+                statusEl.style.display = 'inline-flex';
+            } else {
+                statusEl.style.display = 'none';
+            }
+        }
+
         const img = document.getElementById('modalPhoto');
         const placeholder = document.getElementById('modalPhotoPlaceholder');
-        const statusEl = document.getElementById('modalStatus');
-        if (status && status !== '' && status !== 'None') {
-            statusEl.innerHTML = `<i class="fas fa-briefcase"></i> ${status}`;
-            statusEl.style.display = 'inline-flex';
-        } else {
-            statusEl.style.display = 'none';
+        if (img && placeholder) {
+            if (isValid(photo)) {
+                img.src = photo;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+            } else {
+                img.style.display = 'none';
+                placeholder.style.display = 'flex';
+            }
         }
-        nameEl.innerText = name;
-        metaEl.innerHTML = `<i class="fas fa-users"></i> ${group} &nbsp;&nbsp; <i class="fas fa-calendar-alt"></i> ${year}`;
-        specEl.innerText = spec;
-        descEl.innerText = desc || "Биография выпускника скоро будет дополнена.";
-        if (photo && photo !== '' && photo !== 'None') {
-            img.src = photo;
-            img.style.display = 'block';
-            placeholder.style.display = 'none';
-        } else {
-            img.style.display = 'none';
-            placeholder.style.display = 'flex';
+
+        const setField = (id, value, boxId, isHTML = false) => {
+            const field = document.getElementById(id);
+            const box = document.getElementById(boxId);
+            if (field && box) {
+                if (isValid(value)) {
+                    if (isHTML) {
+                        field.innerHTML = value;
+                    } else {
+                        field.innerText = value;
+                    }
+                    box.style.display = 'block';
+                } else {
+                    box.style.display = 'none';
+                }
+            }
+        };
+
+        setField('modalVkr', vkr, 'boxVkr');
+        setField('modalSupervisor', supervisor, 'boxSupervisor');
+        setField('modalWork', work, 'boxWork');
+        setField('modalAchievements', achievements, 'boxAchievements');
+        setField('modalContacts', contacts, 'boxContacts', true);
+
+        const skillsContainer = document.getElementById('modalSkills');
+        const boxSkills = document.getElementById('boxSkills');
+        if (skillsContainer && boxSkills) {
+            if (isValid(skills)) {
+                skillsContainer.innerHTML = '';
+                skills.split(',').forEach(s => {
+                    const cleanSkill = s.trim();
+                    if (cleanSkill) {
+                        const span = document.createElement('span');
+                        span.className = 'skill-tag-v2';
+                        span.innerText = cleanSkill;
+                        skillsContainer.appendChild(span);
+                    }
+                });
+                boxSkills.style.display = 'block';
+            } else {
+                boxSkills.style.display = 'none';
+            }
         }
-        if (scrollContainer) scrollContainer.scrollTop = 0;
-        if (modalContent) modalContent.scrollTop = 0;
-        if (infoSide) infoSide.scrollTop = 0;
+
         modal.classList.add('active');
-        if (window.innerWidth > 850) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'hidden';
-        }
+        document.body.style.overflow = 'hidden';
+        if (infoSide) infoSide.scrollTop = 0;
     }
 
     function closeModal() {
