@@ -53,7 +53,6 @@
             </div>
           {% endif %}
         {% endif %}
-
         <h2 class="text-xl font-semibold underline-title">
           {% if post.is_title_edited %}
             {{ post.title }}
@@ -62,7 +61,6 @@
           {% endif %}
         </h2>
         <p class="text-gray-700 mt-2 flex-grow">{{ post.body|truncatechars:300 }}</p>
-
         <div class="text-gray-500 text-sm mt-2 flex items-center justify-between">
           <div class="flex items-center">
             <i class="fas fa-eye mr-1"></i>
@@ -76,8 +74,6 @@
     <p>Пока нет новостей.</p>
   {% endfor %}
 </div>
-
-
 
 <div id="modal"
     class="hidden fixed inset-x-0 top-20 bottom-0 bg-gray-900 bg-opacity-75 flex items-start justify-center z-50 p-4 overflow-auto">
@@ -162,13 +158,11 @@ function openModal(index) {
     const modal = document.getElementById('modal');
     const post = postsData[index];
     if (!post) return;
-
     document.getElementById('modal-title').textContent = post.title;
     document.getElementById('modal-body').innerHTML = post.body;
     document.getElementById('modal-views').textContent = post.views;
     document.getElementById('modal-date').textContent =
         new Date(post.date * 1000).toLocaleDateString('ru-RU');
-
     const imagesContainer = document.getElementById('modal-images');
     imagesContainer.innerHTML = '';
     post.images.forEach((src, idx) => {
@@ -184,8 +178,6 @@ function openModal(index) {
             imagesContainer.appendChild(img);
         }
     });
-
-
     modal.classList.remove('hidden');
     document.body.classList.add('no-scroll');
 }
@@ -200,7 +192,6 @@ document.addEventListener('keydown', e => {
   if (e.key === "Escape") {
     const fullImageModal = document.getElementById('modal-image-full');
     const newsModal = document.getElementById('modal');
-
     if (!fullImageModal.classList.contains('hidden')) {
       closeFullImage();
     } else if (!newsModal.classList.contains('hidden')) {
@@ -209,11 +200,9 @@ document.addEventListener('keydown', e => {
   }
 });
 
-
 document.getElementById('modal').addEventListener('click', e => {
     if (e.target.id === 'modal') closeModal();
 });
-
 
 function openFullImage(src, index = 0) {
   const fullImageModal = document.getElementById('modal-image-full');
@@ -234,14 +223,12 @@ function closeFullImage() {
   }
 }
 
-
 function changeImage(direction) {
     if (!postsData[currentPostIndex]) return;
     const images = postsData[currentPostIndex].images;
     currentFullImageIndex += direction;
     if (currentFullImageIndex < 0) currentFullImageIndex = images.length - 1;
     if (currentFullImageIndex >= images.length) currentFullImageIndex = 0;
-
     const fullImage = document.getElementById('modal-image-full-img');
     fullImage.src = images[currentFullImageIndex];
 }

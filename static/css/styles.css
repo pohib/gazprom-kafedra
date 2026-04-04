@@ -926,6 +926,7 @@ html body #modal {
 .underline-title {
     display: inline-block;
     position: relative;
+    margin-top: 10px;
 }
 
 .underline-title::after {
@@ -3038,4 +3039,8 @@ html body #modal {
     background: rgba(0, 112, 192, 0.03);
     border-radius: 8px;
     border: 1px solid rgba(0, 112, 192, 0.08);
+}
+
+.text-white-custom {
+    color: white !important;
 }

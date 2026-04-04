@@ -15,7 +15,6 @@
                 <p class="subtitle">Наши выпускники - гордость кафедры</p>
                 <div class="header-underline"></div>
             </div>
-
             {% if graduates %}
             <div class="statistics-section">
                 <div class="stat-item">
@@ -32,7 +31,6 @@
                 </div>
             </div>
             {% endif %}
-
             {% if graduation_years %}
             <div class="filter-section" id="filterSection">
                 <button class="filter-btn-1 active" onclick="filterGraduates('all')">
@@ -45,7 +43,6 @@
                 {% endfor %}
             </div>
             {% endif %}
-
             {% if graduates %}
             <div class="graduates-grid" id="graduatesGrid">
                 {% for graduate in graduates %}
@@ -69,7 +66,6 @@
                             <div class="graduate-date">
                                 <i class="fas fa-calendar-check"></i> {{ graduate.graduation_month }}, {{ graduate.graduation_year }}
                             </div>
-
                             {% if graduate.short_info %}
                             <div class="brief-info-container">
                                 <span class="brief-info-label">КОРОТКО О ВЫПУСКНИКЕ</span>
@@ -123,7 +119,6 @@
                         <i class="fas fa-user-graduate"></i>
                     </div>
                 </div>
-
                 <div class="modal-info-side">
                     <h2 id="modalName"></h2>
                     
@@ -135,7 +130,6 @@
                         <small>НАПРАВЛЕНИЕ ДЕЯТЕЛЬНОСТИ</small>
                         <p id="modalSpec" style="margin-top: 8px; font-size: 1rem; color: #1e293b; font-weight: 500;"></p>
                     </div>
-
                     <div class="modal-details-grid">
                         <div id="boxVkr" class="modal-detail-box">
                             <small><i class="fas fa-graduation-cap"></i> Тема ВКР/диплома</small>
@@ -150,22 +144,18 @@
                             <p id="modalWork"></p>
                         </div>
                     </div>
-
                     <div id="boxSkills" class="modal-section-v2">
                         <small>КЛЮЧЕВЫЕ НАВЫКИ</small>
                         <div id="modalSkills" class="skills-container"></div>
                     </div>
-
                     <div id="boxAchievements" class="modal-section-v2">
                         <small>ДОСТИЖЕНИЯ</small>
                         <p id="modalAchievements" class="modal-text-small"></p>
                     </div>
-
                     <div class="modal-section-v2">
                         <small>О ВЫПУСКНИКЕ</small>
                         <p id="modalDesc" class="modal-text-small" style="line-height: 1.6; color: #333; white-space: pre-wrap; margin-top: 10px;"></p>
                     </div>
-
                     <div id="boxContacts" class="modal-section-v2 contacts-box">
                         <small>КОНТАКТЫ</small>
                         <p id="modalContacts" class="modal-text-small"></p>
@@ -175,7 +165,6 @@
         </div>
     </div>
 </section>
-
 <script>
     function filterGraduates(year) {
         const cards = document.querySelectorAll('.graduate-card');
@@ -192,19 +181,15 @@
             }
         });
     }
-
     function openModal(name, group, year, spec, desc, photo, status, vkr, supervisor, skills, achievements, work, contacts) {
         const modal = document.getElementById('graduateModal');
         const infoSide = document.querySelector('.modal-info-side');
-
         const isValid = (val) => val && val !== '' && val !== 'None' && val !== 'undefined';
-
         document.getElementById('modalName').innerText = name;
         document.getElementById('modalMeta').innerHTML = `<i class="fas fa-users"></i> ${group} &nbsp;&nbsp; 
                                                             <i class="fas fa-calendar-alt"></i> ${year}`;
         document.getElementById('modalSpec').innerText = spec;
         document.getElementById('modalDesc').innerText = isValid(desc) ? desc : "Биография выпускника скоро будет дополнена.";
-
         const statusEl = document.getElementById('modalStatus');
         if (statusEl) {
             if (isValid(status)) {
@@ -214,7 +199,6 @@
                 statusEl.style.display = 'none';
             }
         }
-
         const img = document.getElementById('modalPhoto');
         const placeholder = document.getElementById('modalPhotoPlaceholder');
         if (img && placeholder) {
@@ -227,7 +211,6 @@
                 placeholder.style.display = 'flex';
             }
         }
-
         const setField = (id, value, boxId, isHTML = false) => {
             const field = document.getElementById(id);
             const box = document.getElementById(boxId);
@@ -244,13 +227,11 @@
                 }
             }
         };
-
         setField('modalVkr', vkr, 'boxVkr');
         setField('modalSupervisor', supervisor, 'boxSupervisor');
         setField('modalWork', work, 'boxWork');
         setField('modalAchievements', achievements, 'boxAchievements');
         setField('modalContacts', contacts, 'boxContacts', true);
-
         const skillsContainer = document.getElementById('modalSkills');
         const boxSkills = document.getElementById('boxSkills');
         if (skillsContainer && boxSkills) {
@@ -270,24 +251,20 @@
                 boxSkills.style.display = 'none';
             }
         }
-
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         if (infoSide) infoSide.scrollTop = 0;
     }
-
     function closeModal() {
         const modal = document.getElementById('graduateModal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
     }
-
     document.addEventListener('keydown', function(e) {
         if (e.key === "Escape") {
             closeModal();
         }
     });
-
     window.onclick = function(event) {
         const modal = document.getElementById('graduateModal');
         if (event.target == modal) {
